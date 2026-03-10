@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Buying & Google Ads · Projet · Hugo Bourgeois</title>
+  <link rel="icon" type="image/x-icon" href="../Brand/favicon.ico" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
+
+    /* ─── @property: gradient buttons ─── */
+    @property --pos-x        { syntax: '<percentage>'; initial-value: 11.14%;   inherits: false; }
+    @property --pos-y        { syntax: '<percentage>'; initial-value: 140%;     inherits: false; }
+    @property --spread-x     { syntax: '<percentage>'; initial-value: 150%;     inherits: false; }
+    @property --spread-y     { syntax: '<percentage>'; initial-value: 180.06%;  inherits: false; }
+    @property --color-1      { syntax: '<color>';      initial-value: #0a0700;  inherits: false; }
+    @property --color-2      { syntax: '<color>';      initial-value: #1a1000;  inherits: false; }
+    @property --color-3      { syntax: '<color>';      initial-value: #3d2700;  inherits: false; }
+    @property --color-4      { syntax: '<color>';      initial-value: #7a5200;  inherits: false; }
+    @property --color-5      { syntax: '<color>';      initial-value: #c9a84c;  inherits: false; }
+    @property --border-angle { syntax: '<angle>';      initial-value: 20deg;    inherits: true;  }
+    @property --border-color-1 { syntax: '<color>';   initial-value: hsla(42,75%,60%,0.2);  inherits: true; }
+    @property --border-color-2 { syntax: '<color>';   initial-value: hsla(42,75%,40%,0.75); inherits: true; }
+    @property --stop-1       { syntax: '<percentage>'; initial-value: 37.35%;   inherits: false; }
+    @property --stop-2       { syntax: '<percentage>'; initial-value: 61.36%;   inherits: false; }
+    @property --stop-3       { syntax: '<percentage>'; initial-value: 78.42%;   inherits: false; }
+    @property --stop-4       { syntax: '<percentage>'; initial-value: 89.52%;   inherits: false; }
+    @property --stop-5       { syntax: '<percentage>'; initial-value: 100%;     inherits: false; }
+
+    /* ─── @property: showcase border beam ─── */
+    @property --beam-pos { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+    :root {
+      --brand-9:  #c9a84c;
+      --brand-10: #dbb96a;
+      --neutral-1: #111;
+      --neutral-2: #191919;
+      --neutral-3: #222;
+      --neutral-4: #2a2a2a;
+      --neutral-5: #313131;
+      --neutral-6: #3a3a3a;
+      --neutral-7: #484848;
+      --neutral-8: #606060;
+      --neutral-9: #6e6e6e;
+      --neutral-10: #7b7b7b;
+      --neutral-11: #b4b4b4;
+      --neutral-12: #eee;
+      --page-width: 1280px;
+      --h-pad: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+    html { font-size: 16px; line-height: 1.5; scroll-behavior: smooth; }
+    body {
+      background-color: var(--neutral-1);
+      color: var(--neutral-11);
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-weight: 400; letter-spacing: -0.02em; overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px var(--h-pad);
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(17,17,17,0.85); backdrop-filter: blur(16px);
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 600; color: var(--neutral-12);
+      letter-spacing: -0.04em; text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo-dot { width: 8px; height: 8px; background: var(--brand-9); border-radius: 50%; }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { color: var(--neutral-10); text-decoration: none; font-size: 0.9rem; letter-spacing: -0.01em; transition: color 0.2s ease; }
+    .nav-links a:hover { color: var(--neutral-12); }
+    .nav-cta {
+      background: var(--brand-9); color: #000 !important; font-weight: 600 !important;
+      padding: 10px 20px; border-radius: 100px;
+      transition: background 0.2s ease, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--brand-10) !important; transform: translateY(-1px); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: -20px; right: -20px; height: 16px; }
+    .nav-dropdown-trigger { display: flex; align-items: center; gap: 5px; }
+    .nav-dropdown-trigger svg { transition: transform 0.25s ease; opacity: 0.6; }
+    .nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); opacity: 1; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 14px); left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      background: rgba(20,20,20,0.96); border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(24px); border-radius: 12px; padding: 6px; min-width: 160px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease; z-index: 200;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown-menu a {
+      display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 8px;
+      color: var(--neutral-10); font-size: 0.85rem; text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.06); color: var(--neutral-12); }
+    .menu-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-9); opacity: 0.6; flex-shrink: 0; }
+    .nav-dropdown-menu a:hover .menu-dot { opacity: 1; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; width: 100%; overflow: hidden;
+      background: #0a0800; padding-top: 65px;
+    }
+
+    /* Gradient bars */
+    .gradient-bars {
+      position: absolute; inset: 0; z-index: 0;
+      display: flex; align-items: flex-end; gap: 2px;
+      padding: 0 2px;
+    }
+    .g-bar {
+      flex: 1; height: calc(var(--bar-h) * 100%);
+      background: linear-gradient(to top,
+        rgba(201,168,76,0.72) 0%,
+        rgba(201,168,76,0.18) 55%,
+        transparent 100%
+      );
+      border-radius: 3px 3px 0 0;
+      animation: pulseBar 4s ease-in-out infinite alternate;
+    }
+    @keyframes pulseBar {
+      0%   { opacity: 0.45; transform: scaleY(1); }
+      100% { opacity: 0.9;  transform: scaleY(1.1); }
+    }
+
+    /* dark overlay so bars don't compete with text */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,8,0,0.55) 0%,
+        rgba(10,8,0,0.20) 40%,
+        rgba(10,8,0,0.72) 100%
+      );
+    }
+
+    .grain {
+      position: absolute; inset: 0; z-index: 2;
+      pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* back button */
+    .back-btn {
+      position: fixed; bottom: 32px; left: 32px; z-index: 300;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 18px 10px 14px; border-radius: 100px;
+      background: rgba(17,17,17,0.88); border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      color: var(--neutral-10); font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.06em; text-decoration: none; font-family: inherit;
+      transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .back-btn:hover { color: var(--brand-9); border-color: rgba(201,168,76,0.35); transform: translateY(-2px); }
+    .back-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ─── HERO CONTENT ─── */
+    .hero-content {
+      position: relative; z-index: 3;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 72px var(--h-pad) 60px;
+      max-width: calc(var(--page-width) + var(--h-pad) * 2);
+      margin: 0 auto; gap: 28px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 18px;
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 100px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(201,168,76,0.85);
+    }
+    .hero-badge-dot {
+      width: 5px; height: 5px; background: var(--brand-9); border-radius: 50%;
+      box-shadow: 0 0 8px rgba(201,168,76,0.9);
+      animation: dot-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(201,168,76,0.9); }
+      50%       { opacity: 0.5; transform: scale(0.75); box-shadow: 0 0 3px rgba(201,168,76,0.4); }
+    }
+
+    .hero-h1 {
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 0.88;
+      color: var(--neutral-12); text-align: center;
+    }
+    .hero-h1 em { font-style: normal; color: var(--brand-9); }
+
+    .hero-lead {
+      font-size: clamp(0.88rem, 1.5vw, 1.05rem);
+      color: rgba(238,238,238,0.32); letter-spacing: -0.01em;
+      text-align: center; max-width: 580px; line-height: 1.75;
+    }
+
+    .hero-meta {
+      display: flex; align-items: center; gap: 9px; flex-wrap: wrap; justify-content: center;
+    }
+    .hero-meta-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em;
+      color: var(--neutral-8);
+    }
+    .hero-meta-sep { color: var(--neutral-6); font-size: 0.7rem; }
+
+    /* ─── SHOWCASE CARD ─── */
+
+    /* Shimmer sweep animation */
+    @keyframes sc-shimmer-slide {
+      to { transform: translate(calc(100cqw - 100%), 0); }
+    }
+    @keyframes sc-spin-around {
+      0%       { transform: translateZ(0) rotate(0deg); }
+      15%, 35% { transform: translateZ(0) rotate(90deg); }
+      65%, 85% { transform: translateZ(0) rotate(270deg); }
+      100%     { transform: translateZ(0) rotate(360deg); }
+    }
+    @keyframes iconBounce {
+      0%, 100% { transform: translateY(0); }
+      20%      { transform: translateY(-5px); }
+      40%      { transform: translateY(0); }
+      60%      { transform: translateY(-2px); }
+      80%      { transform: translateY(0); }
+    }
+    @keyframes sc-fade-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Wrapper: overflow:hidden clips shimmer to card shape */
+    .hero-showcase-wrap {
+      width: 100%; max-width: 1060px;
+      border-radius: 22px; position: relative; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.13);
+      box-shadow: 0 0 60px rgba(201,168,76,0.08), 0 24px 80px rgba(0,0,0,0.55);
+    }
+
+    /* Shimmer layer: blurred conic gradient sliding across border */
+    .sc-shimmer {
+      position: absolute; inset: 0; z-index: 0;
+      filter: blur(2px); container-type: size;
+      overflow: visible; pointer-events: none;
+    }
+    .sc-shimmer-track {
+      position: absolute; inset: 0;
+      height: 100cqh; aspect-ratio: 1;
+      animation: sc-shimmer-slide 3s ease-in-out infinite alternate;
+    }
+    .sc-shimmer-conic {
+      position: absolute; inset: -100%;
+      background: conic-gradient(
+        from calc(270deg - 45deg),
+        transparent 0, rgba(201,168,76,0.9) 90deg, transparent 90deg
+      );
+      animation: sc-spin-around 6s linear infinite;
+    }
+
+    /* Inner glow at bottom */
+    .sc-shine {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      box-shadow: inset 0 -10px 20px rgba(201,168,76,0.07);
+      border-radius: inherit;
+    }
+
+    /* Backdrop: solid cover leaving only 1px border gap where shimmer shows */
+    .sc-backdrop {
+      position: absolute; z-index: 1; inset: 1px;
+      background: linear-gradient(145deg, #0d0b02, #0a0800);
+      border-radius: 21px; pointer-events: none;
+    }
+
+    /* Showcase content above shimmer layers */
+    .hero-showcase {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+    }
+
+    /* ─── PANELS ─── */
+    .sc-panels {
+      padding: 28px 28px 16px; min-height: 440px;
+      display: flex; align-items: flex-start;
+    }
+    .sc-panel { display: none; width: 100%; }
+    .sc-panel.active {
+      display: block;
+      animation: sc-fade-in 0.28s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+
+    /* Panel 1, Écosystème: 2×2 tool grid */
+    .sc-tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .sc-tool-p {
+      display: flex; flex-direction: column; gap: 7px;
+      padding: 14px 13px;
+      background: rgba(255,255,255,0.022);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 11px; cursor: default;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .sc-tool-p:hover { border-color: rgba(201,168,76,0.22); background: rgba(201,168,76,0.035); }
+    .sc-tool-p-icon {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.14);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      color: var(--brand-9);
+    }
+    .sc-tool-p-icon svg { width: 15px; height: 15px; }
+    .sc-tool-p-icon img { width: 17px; height: 17px; filter: brightness(0) saturate(100%) invert(71%) sepia(35%) saturate(700%) hue-rotate(2deg) brightness(90%); }
+    .sc-tool-p-name { font-size: 0.79rem; font-weight: 600; color: var(--neutral-11); letter-spacing: -0.01em; }
+    .sc-tool-p-sub { font-size: 0.68rem; color: var(--neutral-9); line-height: 1.55; }
+
+    /* Panel 2, Campagnes: 2×2 grid */
+    .sc-camp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .sc-camp-p {
+      padding: 14px 13px;
+      background: rgba(255,255,255,0.022);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 11px; display: flex; flex-direction: column; gap: 6px;
+      transition: border-color 0.2s ease; cursor: default;
+    }
+    .sc-camp-p:hover { border-color: rgba(201,168,76,0.18); }
+    .sc-camp-row { display: flex; align-items: center; gap: 7px; }
+    .sc-camp-icon { width: 22px; height: 22px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--brand-9); }
+    .sc-camp-icon svg { width: 13px; height: 13px; }
+    .sc-camp-badge {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--brand-9);
+      background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 100px; padding: 2px 8px;
+    }
+    .sc-camp-name { font-size: 0.8rem; font-weight: 600; color: var(--neutral-11); letter-spacing: -0.01em; }
+    .sc-camp-desc { font-size: 0.69rem; color: var(--neutral-9); line-height: 1.55; }
+
+    /* Panel 3, Métriques: 3×2 KPI grid */
+    .sc-metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .sc-metric-card {
+      padding: 13px 12px;
+      background: rgba(255,255,255,0.022);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; display: flex; flex-direction: column; gap: 4px;
+      transition: border-color 0.2s ease; cursor: default;
+    }
+    .sc-metric-card:hover { border-color: rgba(201,168,76,0.2); }
+    .sc-metric-abbr {
+      font-size: 1.05rem; font-weight: 700; color: var(--brand-9);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .sc-metric-name { font-size: 0.74rem; font-weight: 600; color: var(--neutral-11); letter-spacing: -0.01em; }
+    .sc-metric-desc { font-size: 0.65rem; color: var(--neutral-9); line-height: 1.5; }
+
+    /* Panel 5, Compétences: 3×2 grid */
+    .sc-skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .sc-skill-card {
+      padding: 12px 11px;
+      background: rgba(255,255,255,0.022);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; display: flex; flex-direction: column; gap: 6px;
+      transition: border-color 0.2s ease; cursor: default;
+    }
+    .sc-skill-card:hover { border-color: rgba(201,168,76,0.18); }
+    .sc-skill-icon {
+      width: 28px; height: 28px;
+      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.14);
+      border-radius: 7px; display: flex; align-items: center; justify-content: center;
+      color: var(--brand-9);
+    }
+    .sc-skill-icon svg { width: 13px; height: 13px; }
+    .sc-skill-name { font-size: 0.74rem; font-weight: 600; color: var(--neutral-11); letter-spacing: -0.01em; line-height: 1.3; }
+    .sc-skill-desc { font-size: 0.65rem; color: var(--neutral-9); line-height: 1.5; }
+
+    /* Panel 5, Exploration: 2-col platform cards */
+    .sc-explore-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .sc-explore-card {
+      padding: 16px 14px;
+      background: rgba(255,255,255,0.022);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 11px; display: flex; flex-direction: column; gap: 8px;
+      transition: border-color 0.2s ease, background 0.2s ease; cursor: default;
+    }
+    .sc-explore-card:hover { border-color: rgba(201,168,76,0.18); background: rgba(201,168,76,0.02); }
+    .sc-explore-header { display: flex; align-items: center; gap: 8px; }
+    .sc-explore-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--brand-9);
+    }
+    .sc-explore-icon svg { width: 14px; height: 14px; }
+    .sc-explore-icon img { width: 16px; height: 16px; filter: brightness(0) saturate(100%) invert(71%) sepia(35%) saturate(700%) hue-rotate(2deg) brightness(90%); }
+    .sc-explore-name { font-size: 0.84rem; font-weight: 600; color: var(--neutral-11); letter-spacing: -0.01em; }
+    .sc-explore-tag {
+      margin-left: auto; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--neutral-8);
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 100px; padding: 2px 7px; white-space: nowrap;
+    }
+    .sc-explore-desc { font-size: 0.69rem; color: var(--neutral-9); line-height: 1.6; }
+    .sc-explore-features { display: flex; flex-direction: column; gap: 4px; }
+    .sc-explore-feat {
+      display: flex; align-items: flex-start; gap: 6px;
+      font-size: 0.65rem; color: var(--neutral-8); line-height: 1.5;
+    }
+    .sc-explore-feat::before {
+      content: '·'; color: var(--brand-9); opacity: 0.5; flex-shrink: 0; font-size: 0.6rem; margin-top: 1px;
+    }
+
+    /* ─── Panel intro phrase ─── */
+    .sc-panel-intro {
+      font-size: 0.71rem; color: var(--neutral-8); line-height: 1.6;
+      margin-bottom: 13px; padding-left: 10px;
+      border-left: 2px solid rgba(201,168,76,0.28);
+    }
+
+    /* ─── Process steps (Compétences panel) ─── */
+    .sc-process { margin-top: 14px; }
+    .sc-process-title {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--brand-9);
+      margin-bottom: 8px; opacity: 0.75;
+    }
+    .sc-process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .sc-process-step {
+      padding: 10px 11px;
+      background: rgba(255,255,255,0.015);
+      border: 1px solid rgba(201,168,76,0.08);
+      border-radius: 9px; display: flex; flex-direction: column; gap: 4px;
+      cursor: default; transition: border-color 0.2s ease;
+    }
+    .sc-process-step:hover { border-color: rgba(201,168,76,0.18); }
+    .sc-process-num { font-size: 0.6rem; font-weight: 700; color: var(--brand-9); opacity: 0.7; letter-spacing: 0.05em; }
+    .sc-process-step-name { font-size: 0.73rem; font-weight: 600; color: var(--neutral-11); letter-spacing: -0.01em; }
+    .sc-process-step-desc { font-size: 0.62rem; color: var(--neutral-9); line-height: 1.5; }
+
+    /* ─── TAB NAVIGATION BAR ─── */
+    .sc-tabs {
+      display: flex; align-items: center; justify-content: center;
+      padding: 2px 4px 4px;
+      border-top: 1px solid rgba(255,255,255,0.045);
+      background: rgba(10,8,0,0.55);
+      border-radius: 0 0 20px 20px;
+    }
+    .sc-tab {
+      position: relative; flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 10px 6px 8px;
+      background: transparent; border: none; cursor: pointer;
+      font-family: inherit; color: var(--neutral-8);
+      transition: color 0.2s ease;
+    }
+    .sc-tab:hover { color: var(--neutral-10); }
+    .sc-tab.active { color: var(--brand-9); }
+    .sc-tab-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sc-tab-icon svg { width: 14px; height: 14px; }
+    .sc-tab.active .sc-tab-icon svg { animation: iconBounce 0.55s ease-out forwards; }
+    .sc-tab-label {
+      font-size: 0.57rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; white-space: nowrap; line-height: 1;
+    }
+    /* Gold underline whose width matches the label text */
+    .sc-tab::after {
+      content: ''; position: absolute; bottom: 4px; left: 50%;
+      transform: translateX(-50%);
+      width: var(--lineWidth, 0px); height: 2px;
+      background: var(--brand-9); border-radius: 1px;
+      transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .sc-tab:not(.active)::after { width: 0px !important; }
+
+    /* ─── GRADIENT BUTTONS ─── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      letter-spacing: -0.01em; padding: 14px 28px;
+      border-radius: 11px; border: none; cursor: pointer;
+      text-decoration: none; color: #fff;
+      position: relative; appearance: none;
+      background: radial-gradient(
+        var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
+        var(--color-1) var(--stop-1), var(--color-2) var(--stop-2),
+        var(--color-3) var(--stop-3), var(--color-4) var(--stop-4),
+        var(--color-5) var(--stop-5)
+      );
+      --color-1: #0a0700; --color-2: #1a1000;
+      --color-3: #3d2700; --color-4: #7a5200; --color-5: #c9a84c;
+      --border-color-1: hsla(42,75%,60%,0.2); --border-color-2: hsla(42,75%,40%,0.75);
+      transition:
+        --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s,
+        --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s,
+        --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s,
+        --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s,
+        transform 0.15s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+      background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude; pointer-events: none;
+    }
+    .btn-primary:hover {
+      --pos-x: 0%; --pos-y: 91.51%; --spread-x: 120.24%; --spread-y: 103.18%;
+      --color-1: #dbb96a; --color-2: #c9a84c; --color-3: #8b6400; --color-4: #2a1800; --color-5: #000;
+      --border-angle: 190deg;
+      --border-color-1: hsla(42,78%,90%,0.1); --border-color-2: hsla(42,75%,90%,0.6);
+      --stop-1: 0%; --stop-2: 8.8%; --stop-3: 21.44%; --stop-4: 71.34%; --stop-5: 85.76%;
+      transform: translateY(-2px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid var(--brand-9); outline-offset: 3px; }
+    .btn-primary svg { width: 14px; height: 14px; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      letter-spacing: -0.01em; padding: 14px 28px;
+      border-radius: 11px; cursor: pointer; text-decoration: none;
+      color: var(--neutral-10); background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { color: var(--neutral-12); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .btn-ghost svg { width: 14px; height: 14px; }
+
+    /* ─── FOOTER ─── */
+    footer { padding: 40px var(--h-pad); border-top: 1px solid rgba(255,255,255,0.06); background: var(--neutral-1); }
+    .footer-inner {
+      max-width: var(--page-width); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 0.8rem; color: var(--neutral-8); }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a { font-size: 0.8rem; color: var(--neutral-8); text-decoration: none; transition: color 0.2s ease; }
+    .footer-links a:hover { color: var(--neutral-11); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .sc-tool-grid { grid-template-columns: 1fr; }
+      .sc-camp-grid { grid-template-columns: 1fr; }
+      .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .sc-skills-grid { grid-template-columns: 1fr 1fr; }
+      .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
+      .sc-tab-label { display: none; }
+      .sc-tab { padding: 10px 4px; }
+    }
+    @media (max-width: 600px) {
+      .hero-h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+    }
+
+    /* ─── ENTRY ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .d1 { animation-delay: 0.05s; }
+    .d2 { animation-delay: 0.2s; }
+    .d3 { animation-delay: 0.35s; }
+    .d4 { animation-delay: 0.5s; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  
+
+    /* === SHARED NAV / BURGER / MOBILE-MENU / CTA / FOOTER === */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: -20px; right: -20px; height: 16px; }
+    .nav-dropdown-trigger { display: flex; align-items: center; gap: 5px; }
+    .nav-dropdown-trigger svg { transition: transform 0.25s ease; opacity: 0.6; }
+    .nav-dropdown:hover .nav-dropdown-trigger svg,
+    .nav-dropdown.open .nav-dropdown-trigger svg { transform: rotate(180deg); opacity: 1; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 14px); left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      background: rgba(20,20,20,0.96); border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(24px); border-radius: 12px; padding: 6px; min-width: 160px;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 200;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown.open .nav-dropdown-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown-menu a { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 8px; color: #7b7b7b; font-size: 0.85rem; text-decoration: none; transition: background 0.15s, color 0.15s; }
+    .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.06); color: #eee; }
+    .nav-dropdown-menu a .menu-dot { width: 5px; height: 5px; border-radius: 50%; background: #c9a84c; opacity: 0.6; flex-shrink: 0; }
+    .nav-dropdown-menu a:hover .menu-dot { opacity: 1; }
+    .nav-cta { background: #c9a84c !important; color: #000 !important; font-weight: 600 !important; padding: 10px 20px; border-radius: 100px; transition: background 0.2s ease, transform 0.15s !important; }
+    .nav-cta:hover { background: #dbb96a !important; transform: translateY(-1px); }
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 8px; transition: background 0.2s; z-index: 201; position: relative; }
+    .nav-burger:hover { background: rgba(255,255,255,0.06); }
+    .nav-burger span { display: block; width: 22px; height: 1.5px; background: #b4b4b4; border-radius: 2px; transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.2s; transform-origin: center; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: #eee; }
+    .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: #eee; }
+    .mobile-menu { position: fixed; inset: 0; z-index: 150; display: flex; flex-direction: column; background: rgba(11,11,11,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 88px 28px 48px; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: opacity 0.3s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .mobile-menu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .mobile-menu-links { display: flex; flex-direction: column; flex: 1; }
+    .mobile-menu-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .mobile-menu-item > a, .mobile-menu-item-trigger { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; color: #6e6e6e; font-size: 1.45rem; font-weight: 500; letter-spacing: -0.03em; text-decoration: none; background: none; border: none; width: 100%; cursor: pointer; font-family: inherit; transition: color 0.2s; }
+    .mobile-menu-item > a:hover, .mobile-menu-item-trigger:hover { color: #eee; }
+    .mobile-menu-item-trigger svg { transition: transform 0.25s ease; opacity: 0.5; flex-shrink: 0; }
+    .mobile-menu-item.open .mobile-menu-item-trigger { color: #eee; }
+    .mobile-menu-item.open .mobile-menu-item-trigger svg { transform: rotate(180deg); opacity: 1; }
+    .mobile-submenu { overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .mobile-menu-item.open .mobile-submenu { max-height: 300px; }
+    .mobile-submenu a { display: flex; align-items: center; gap: 10px; padding: 11px 0 11px 16px; font-size: 0.95rem; font-weight: 400; letter-spacing: -0.01em; color: #606060; text-decoration: none; transition: color 0.2s; border-bottom: none !important; }
+    .mobile-submenu a:last-child { padding-bottom: 16px; }
+    .mobile-submenu a:hover { color: #eee; }
+    .mobile-menu-bottom { padding-top: 36px; }
+    .mobile-menu-bottom a { display: inline-flex; align-items: center; background: #c9a84c; color: #000; font-weight: 600; padding: 14px 28px; border-radius: 100px; text-decoration: none; font-size: 1rem; letter-spacing: -0.02em; transition: background 0.2s, transform 0.15s; }
+    .mobile-menu-bottom a:hover { background: #dbb96a; transform: translateY(-1px); }
+    @media (max-width: 900px) { .nav-burger { display: flex; } .nav-links { display: none !important; } }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 500; color: #7b7b7b; letter-spacing: 0.04em; text-transform: uppercase; }
+    .hero-tag-dot { width: 6px; height: 6px; background: #c9a84c; border-radius: 50%; }
+    #cta { background: #111; border-top: 1px solid rgba(255,255,255,0.04); text-align: center; position: relative; overflow: hidden; padding: clamp(64px, 8vw, 120px) 24px; }
+    .cta-waves { position: absolute; inset: 0; pointer-events: none; }
+    .cta-waves svg { display: block; width: 100%; height: 100%; }
+    #cta .cta-inner { display: block; text-align: center; max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
+    .cta-h2 { font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 600; color: #eee; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; }
+    .cta-desc { font-size: 1rem; color: #7b7b7b; line-height: 1.7; margin-bottom: 40px; }
+    .container { max-width: 1328px; margin: 0 auto; padding: 0 24px; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; padding: 14px 28px; border-radius: 11px; border: none; cursor: pointer; text-decoration: none; color: #fff; position: relative; appearance: none; background: radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5)); --color-1: #0d0d0d; --color-2: #141000; --color-3: #1e1800; --color-4: #2e2400; --color-5: #3d3000; --border-angle: 200deg; --border-color-1: hsla(42,70%,60%,0.55); --border-color-2: hsla(42,50%,40%,0.15); transition: --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s, --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s, --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s, --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s, transform 0.15s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .btn-secondary::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; pointer-events: none; }
+    .btn-secondary:hover { --pos-x: 0%; --pos-y: 95.51%; --spread-x: 110.24%; --spread-y: 110.2%; --color-1: #1a1400; --color-2: #3d2a00; --color-3: #7a5200; --color-4: #c9a84c; --color-5: #dbb96a; --stop-1: 0%; --stop-2: 25%; --stop-3: 50%; --stop-4: 78%; --stop-5: 100%; --border-angle: 210deg; --border-color-1: hsla(42,75%,90%,0.2); --border-color-2: hsla(42,50%,90%,0.7); transform: translateY(-2px); }
+    .btn-secondary:active { transform: translateY(0); }
+    footer { padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-copy { font-size: 0.8rem; color: #606060; letter-spacing: normal; }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a { font-size: 0.8rem; color: #606060; text-decoration: none; transition: color 0.2s ease; }
+    .footer-links a:hover { color: #b4b4b4; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+    <nav>
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      HB<span style="color:var(--brand-9, #c9a84c)">.</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-dropdown">
+        <a href="../index.html#projects" class="nav-dropdown-trigger">
+          Projets
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown-menu">
+          <a href="../projets/restaurant-authentique.html"><span class="menu-dot"></span>Restaurant L’Authentique</a>
+          <a href="../projets/trouve-ta-ref.html"><span class="menu-dot"></span>Trouve Ta Ref</a>
+          <a href="../projets/media-buying.html"><span class="menu-dot"></span>Media Buying</a>
+        </div>
+      </li>
+      <li><a href="../index.html#tech">Compétences</a></li>
+      <li class="nav-dropdown">
+        <a href="../index.html#interests" class="nav-dropdown-trigger">
+          Intérêts
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown-menu">
+          <a href="../interets/armee.html"><span class="menu-dot"></span>Armée</a>
+          <a href="../interets/musculation.html"><span class="menu-dot"></span>Musculation</a>
+          <a href="../interets/boxe.html"><span class="menu-dot"></span>Boxe</a>
+        </div>
+      </li>
+      <li><a href="mailto:hugo.bourg.pro@gmail.com" class="nav-cta">Me contacter</a></li>
+    </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav class="mobile-menu-links">
+      <div class="mobile-menu-item">
+        <button class="mobile-menu-item-trigger">
+          Projets
+          <svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="mobile-submenu">
+          <a href="../projets/restaurant-authentique.html"><span class="menu-dot"></span>Restaurant L’Authentique</a>
+          <a href="../projets/trouve-ta-ref.html"><span class="menu-dot"></span>Trouve Ta Ref</a>
+          <a href="../projets/media-buying.html"><span class="menu-dot"></span>Media Buying</a>
+        </div>
+      </div>
+      <div class="mobile-menu-item">
+        <a href="../index.html#tech">Compétences</a>
+      </div>
+      <div class="mobile-menu-item">
+        <button class="mobile-menu-item-trigger">
+          Intérêts
+          <svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="mobile-submenu">
+          <a href="../interets/armee.html"><span class="menu-dot"></span>Armée</a>
+          <a href="../interets/musculation.html"><span class="menu-dot"></span>Musculation</a>
+          <a href="../interets/boxe.html"><span class="menu-dot"></span>Boxe</a>
+        </div>
+      </div>
+    </nav>
+    <div class="mobile-menu-bottom">
+      <a href="mailto:hugo.bourg.pro@gmail.com">Me contacter</a>
+    </div>
+  </div>
+
+
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="gradient-bars" id="gradientBars" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="hero-content">
+
+      <div class="hero-badge fade-up d1">
+        <span class="hero-badge-dot"></span>
+        Google Ads · Media Buying
+      </div>
+
+      <h1 class="hero-h1 fade-up d2">
+        Media<br/><em>Buying</em>
+      </h1>
+
+      <p class="hero-lead fade-up d3">
+        Compétences acquises aux côtés du dirigeant de Media Adgency, agence gérant les campagnes Google Ads de grands comptes nationaux, gestion de budgets conséquents, optimisation continue et stratégie multi-canaux.
+      </p>
+      <div class="hero-meta fade-up d3">
+        <span class="hero-meta-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          Stage
+        </span>
+        <span class="hero-meta-sep">·</span>
+        <span class="hero-meta-item">Media Adgency</span>
+        <span class="hero-meta-sep">·</span>
+        <span class="hero-meta-item">2024</span>
+        <span class="hero-meta-sep">·</span>
+        <span class="hero-meta-item">E-commerce</span>
+      </div>
+
+      <!-- Showcase card, tabbed interactive panel -->
+      <div class="hero-showcase-wrap fade-up d4">
+
+        <!-- Shimmer border effect layers -->
+        <div class="sc-shimmer" aria-hidden="true">
+          <div class="sc-shimmer-track">
+            <div class="sc-shimmer-conic"></div>
+          </div>
+        </div>
+        <div class="sc-shine" aria-hidden="true"></div>
+        <div class="sc-backdrop" aria-hidden="true"></div>
+
+        <div class="hero-showcase">
+
+          <!-- ── CONTENT PANELS ── -->
+          <div class="sc-panels">
+
+            <!-- Panel 1: Écosystème -->
+            <div class="sc-panel active" id="sc-ecosystem">
+              <p class="sc-panel-intro">La chaîne d'outils Google interconnectée : chaque plateforme joue un rôle précis dans le suivi, la diffusion et l'optimisation des campagnes.</p>
+              <div class="sc-tool-grid">
+                <div class="sc-tool-p">
+                  <div class="sc-tool-p-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/googletagmanager.svg" alt="Google Tag Manager" />
+                  </div>
+                  <div class="sc-tool-p-name">Google Tag Manager</div>
+                  <div class="sc-tool-p-sub">Pixel de conversion, déclencheurs et balises, tracking précis sans modifier le code source</div>
+                </div>
+                <div class="sc-tool-p">
+                  <div class="sc-tool-p-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/googleanalytics.svg" alt="Google Analytics 4" />
+                  </div>
+                  <div class="sc-tool-p-name">Google Analytics 4</div>
+                  <div class="sc-tool-p-sub">Comportement utilisateur, audiences et suivi des conversions en temps réel</div>
+                </div>
+                <div class="sc-tool-p">
+                  <div class="sc-tool-p-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/googleshopping.svg" alt="Google Merchant Center" />
+                  </div>
+                  <div class="sc-tool-p-name">Merchant Center</div>
+                  <div class="sc-tool-p-sub">Flux produits synchronisé et catalogue e-commerce pour les campagnes Shopping</div>
+                </div>
+                <div class="sc-tool-p">
+                  <div class="sc-tool-p-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/googleads.svg" alt="Google Ads" />
+                  </div>
+                  <div class="sc-tool-p-name">Google Ads</div>
+                  <div class="sc-tool-p-sub">Interface centrale : création des campagnes, budgets, enchères et suivi des performances</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 2: Campagnes -->
+            <div class="sc-panel" id="sc-campaigns">
+              <p class="sc-panel-intro">Quatre formats de campagnes complémentaires, chacun avec sa logique d'enchères, son audience cible et ses leviers d'optimisation propres.</p>
+              <div class="sc-camp-grid">
+                <div class="sc-camp-p">
+                  <div class="sc-camp-row">
+                    <div class="sc-camp-icon">
+                      <!-- Éclair: automatisation IA -->
+                      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <span class="sc-camp-badge">Perf. Max</span>
+                  </div>
+                  <div class="sc-camp-name">Tous canaux</div>
+                  <div class="sc-camp-desc">L'IA de Google diffuse les annonces sur Search, Display, YouTube, Gmail et Maps, budget optimisé en temps réel</div>
+                </div>
+                <div class="sc-camp-p">
+                  <div class="sc-camp-row">
+                    <div class="sc-camp-icon">
+                      <!-- Loupe: recherche de mots-clés -->
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <span class="sc-camp-badge">Search</span>
+                  </div>
+                  <div class="sc-camp-name">Réseau de recherche</div>
+                  <div class="sc-camp-desc">Annonces RSA sur requêtes précises, mots-clés sélectionnés via SEMRush, groupes d'annonces structurés</div>
+                </div>
+                <div class="sc-camp-p">
+                  <div class="sc-camp-row">
+                    <div class="sc-camp-icon">
+                      <!-- Panier: catalogue e-commerce -->
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L22 6H6"/></svg>
+                    </div>
+                    <span class="sc-camp-badge">Shopping</span>
+                  </div>
+                  <div class="sc-camp-name">Catalogue produits</div>
+                  <div class="sc-camp-desc">Fiches produits visuelles issues de Merchant Center, enchères par catégorie, suivi ROAS produit par produit</div>
+                </div>
+                <div class="sc-camp-p">
+                  <div class="sc-camp-row">
+                    <div class="sc-camp-icon">
+                      <!-- Flèches circulaires: reciblage -->
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                    </div>
+                    <span class="sc-camp-badge">Remarketing</span>
+                  </div>
+                  <div class="sc-camp-name">Reciblage d'audiences</div>
+                  <div class="sc-camp-desc">Annonces personnalisées pour visiteurs et paniers abandonnés, reconversion des prospects les plus chauds</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3: Métriques -->
+            <div class="sc-panel" id="sc-metrics">
+              <p class="sc-panel-intro">Les indicateurs clés analysés quotidiennement pour évaluer la santé des campagnes et prendre des décisions d'optimisation éclairées.</p>
+              <div class="sc-metrics-grid">
+                <div class="sc-metric-card">
+                  <div class="sc-metric-abbr">CPC</div>
+                  <div class="sc-metric-name">Coût par clic</div>
+                  <div class="sc-metric-desc">Prix moyen payé à chaque clic sur une annonce, indicateur de rentabilité</div>
+                </div>
+                <div class="sc-metric-card">
+                  <div class="sc-metric-abbr">CTR</div>
+                  <div class="sc-metric-name">Taux de clic</div>
+                  <div class="sc-metric-desc">% d'impressions qui génèrent un clic, reflète la pertinence des annonces</div>
+                </div>
+                <div class="sc-metric-card">
+                  <div class="sc-metric-abbr">ROAS</div>
+                  <div class="sc-metric-name">Retour sur dépense pub</div>
+                  <div class="sc-metric-desc">Revenus générés pour chaque euro investi en publicité Google</div>
+                </div>
+                <div class="sc-metric-card">
+                  <div class="sc-metric-abbr">Conv.</div>
+                  <div class="sc-metric-name">Taux de conversion</div>
+                  <div class="sc-metric-desc">Part des clics aboutissant à un achat ou une action cible souhaitée</div>
+                </div>
+                <div class="sc-metric-card">
+                  <div class="sc-metric-abbr">QS</div>
+                  <div class="sc-metric-name">Quality Score</div>
+                  <div class="sc-metric-desc">Note 1–10 de Google sur la pertinence annonce/page, influence le CPC et la position</div>
+                </div>
+                <div class="sc-metric-card">
+                  <div class="sc-metric-abbr">IS</div>
+                  <div class="sc-metric-name">Part d'impressions</div>
+                  <div class="sc-metric-desc">% des enchères remportées, mesure la couverture de visibilité d'une campagne</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 4: Compétences -->
+            <div class="sc-panel" id="sc-skills">
+              <p class="sc-panel-intro">Ensemble des savoir-faire acquis en situation réelle, appliqués sur des comptes actifs avec des budgets significatifs et des résultats mesurables.</p>
+              <div class="sc-skills-grid">
+                <div class="sc-skill-card">
+                  <div class="sc-skill-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  </div>
+                  <div class="sc-skill-name">Config GTM &amp; Pixel</div>
+                  <div class="sc-skill-desc">Balises et déclencheurs pour un tracking sans intervention sur le code</div>
+                </div>
+                <div class="sc-skill-card">
+                  <div class="sc-skill-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                  </div>
+                  <div class="sc-skill-name">Audiences &amp; Segments</div>
+                  <div class="sc-skill-desc">Listes visiteurs, acheteurs, paniers abandonnés pour le remarketing</div>
+                </div>
+                <div class="sc-skill-card">
+                  <div class="sc-skill-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  </div>
+                  <div class="sc-skill-name">Recherche mots-clés</div>
+                  <div class="sc-skill-desc">Volume, concurrence et longue traîne via SEMRush + mots-clés négatifs</div>
+                </div>
+                <div class="sc-skill-card">
+                  <div class="sc-skill-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  </div>
+                  <div class="sc-skill-name">Gestion de budget</div>
+                  <div class="sc-skill-desc">Budgets journaliers, répartition par campagne et enchères selon ROAS cible</div>
+                </div>
+                <div class="sc-skill-card">
+                  <div class="sc-skill-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                      <rect x="3" y="14" width="4" height="7" rx="1" opacity="0.5"/>
+                      <rect x="10" y="8" width="4" height="13" rx="1" opacity="0.75"/>
+                      <rect x="17" y="3" width="4" height="18" rx="1"/>
+                    </svg>
+                  </div>
+                  <div class="sc-skill-name">Analyse des KPIs</div>
+                  <div class="sc-skill-desc">Lecture CPC, CTR, ROAS, Conv., guide les décisions d'optimisation</div>
+                </div>
+                <div class="sc-skill-card">
+                  <div class="sc-skill-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                  <div class="sc-skill-name">Création campagnes</div>
+                  <div class="sc-skill-desc">Cycle complet : structuration, lancement, optimisation et reporting final</div>
+                </div>
+              </div>
+
+              <!-- Process steps merged from Workflow -->
+              <div class="sc-process">
+                <div class="sc-process-title">Processus d'optimisation</div>
+                <div class="sc-process-steps">
+                  <div class="sc-process-step">
+                    <div class="sc-process-num">01</div>
+                    <div class="sc-process-step-name">Lancement &amp; vérification</div>
+                    <div class="sc-process-step-desc">Contrôle de diffusion, budgets consommés et ajustement des enchères selon les objectifs</div>
+                  </div>
+                  <div class="sc-process-step">
+                    <div class="sc-process-num">02</div>
+                    <div class="sc-process-step-name">Optimisation &amp; analyse</div>
+                    <div class="sc-process-step-desc">Rapports de termes de recherche, mots-clés négatifs, scores de qualité et tests créatifs</div>
+                  </div>
+                  <div class="sc-process-step">
+                    <div class="sc-process-num">03</div>
+                    <div class="sc-process-step-name">Reporting &amp; ajustements</div>
+                    <div class="sc-process-step-desc">Consolidation des KPIs, rapport quotidien et échanges stratégiques sur les prochaines actions</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 5: Exploration personnelle -->
+            <div class="sc-panel" id="sc-explore">
+              <p class="sc-panel-intro">En dehors du stage, exploration personnelle de Meta Ads et TikTok Ads, familiarisation avec les interfaces et les logiques de ciblage propres à chaque plateforme.</p>
+              <div class="sc-explore-grid">
+                <div class="sc-explore-card">
+                  <div class="sc-explore-header">
+                    <div class="sc-explore-icon">
+                      <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg" alt="Meta" />
+                    </div>
+                    <span class="sc-explore-name">Meta Ads</span>
+                    <span class="sc-explore-tag">Perso</span>
+                  </div>
+                  <div class="sc-explore-desc">Création et diffusion de campagnes sur Facebook & Instagram, découverte du gestionnaire de publicités Meta et de sa logique de ciblage par audience.</div>
+                  <div class="sc-explore-features">
+                    <div class="sc-explore-feat">Audiences personnalisées et lookalike</div>
+                    <div class="sc-explore-feat">Formats : carrousel, image, vidéo courte</div>
+                    <div class="sc-explore-feat">Pixel Meta et suivi des événements</div>
+                    <div class="sc-explore-feat">Résultats modestes, apprentissage avant tout</div>
+                  </div>
+                </div>
+                <div class="sc-explore-card">
+                  <div class="sc-explore-header">
+                    <div class="sc-explore-icon">
+                      <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tiktok.svg" alt="TikTok" />
+                    </div>
+                    <span class="sc-explore-name">TikTok Ads</span>
+                    <span class="sc-explore-tag">Perso</span>
+                  </div>
+                  <div class="sc-explore-desc">Exploration du TikTok Ads Manager et de ses spécificités créatives, plateforme orientée contenu vidéo natif avec une logique d'enchères distincte.</div>
+                  <div class="sc-explore-features">
+                    <div class="sc-explore-feat">Interface TikTok Ads Manager</div>
+                    <div class="sc-explore-feat">Ciblage démographique et par intérêt</div>
+                    <div class="sc-explore-feat">Format In-Feed Video natif</div>
+                    <div class="sc-explore-feat">Résultats limités, familiarisation à la plateforme</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /sc-panels -->
+
+          <!-- ── TAB NAVIGATION ── -->
+          <div class="sc-tabs" role="tablist" aria-label="Sections">
+
+            <!-- Tab 1: Écosystème -->
+            <button class="sc-tab active" data-target="sc-ecosystem" role="tab" aria-selected="true" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                  <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Écosystème</strong>
+            </button>
+
+            <!-- Tab 2: Campagnes, mégaphone -->
+            <button class="sc-tab" data-target="sc-campaigns" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M15.54 8.46a5 5 0 010 7.07"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Campagnes</strong>
+            </button>
+
+            <!-- Tab 3: Métriques, courbe -->
+            <button class="sc-tab" data-target="sc-metrics" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Métriques</strong>
+            </button>
+
+            <!-- Tab 4: Compétences, étoile -->
+            <button class="sc-tab" data-target="sc-skills" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Compétences</strong>
+            </button>
+
+            <!-- Tab 5: Exploration, compass -->
+            <button class="sc-tab" data-target="sc-explore" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Exploration</strong>
+            </button>
+
+          </div><!-- /sc-tabs -->
+
+        </div><!-- /hero-showcase -->
+      </div><!-- /hero-showcase-wrap -->
+
+    </div>
+  </section>
+
+
+
+
+  <!-- ═══ FOOTER ═══ -->
+  
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-waves" id="ctaWaves" aria-hidden="true"></div>
+    <div class="container">
+      <div class="cta-inner">
+        <div class="hero-tag" style="margin-bottom:16px"><span class="hero-tag-dot"></span>Contact</div>
+        <h2 class="cta-h2">À la recherche d’une alternance et ouvert aux projets freelance.</h2>
+        <p class="cta-desc">Web, design, vidéo, publicité digitale. <br>Je m’adapte à tes besoins. Écris-moi et on en parle.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+          <a href="mailto:hugo.bourg.pro@gmail.com" class="btn-primary">
+            Me contacter
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="../Brand/CV BOURGEOIS Hugo.pdf" download class="btn-secondary">
+            Télécharger mon CV
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">© 2026 BOURGEOIS Hugo</p>
+      <ul class="footer-links">
+        <li><a href="../index.html#projects">Projets</a></li>
+        <li><a href="../index.html#tech">Compétences</a></li>
+        <li><a href="../index.html#interests">Intérêts</a></li>
+        <li><a href="mailto:hugo.bourg.pro@gmail.com">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+
+  <!-- ═══ BACK BUTTON ═══ -->
+  <a href="../index.html" class="back-btn" aria-label="Retour au portfolio">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+    Portfolio
+  </a>
+
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script>
+    /* ── Gradient bars generator ── */
+    (function () {
+      const container = document.getElementById('gradientBars');
+      if (!container) return;
+      const NUM = 18;
+      for (let i = 0; i < NUM; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'g-bar';
+        const pos = i / (NUM - 1);
+        const dist = Math.abs(pos - 0.5) * 2;
+        const h = 28 + 68 * Math.pow(dist, 1.15);
+        bar.style.setProperty('--bar-h', (h / 100).toFixed(3));
+        bar.style.animationDelay = (i * 0.22).toFixed(2) + 's';
+        bar.style.animationDuration = (3.6 + (i % 4) * 0.4).toFixed(1) + 's';
+        container.appendChild(bar);
+      }
+    })();
+
+    /* ── Showcase tab navigation ── */
+    (function () {
+      const tabs   = document.querySelectorAll('.sc-tab');
+      const panels = document.querySelectorAll('.sc-panel');
+      if (!tabs.length) return;
+
+      /* Measure label text width and apply to --lineWidth */
+      function setLineWidth(tab) {
+        const label = tab.querySelector('.sc-tab-label');
+        if (label) tab.style.setProperty('--lineWidth', label.offsetWidth + 'px');
+      }
+
+      function activateTab(tab) {
+        /* Deactivate all */
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.style.setProperty('--lineWidth', '0px');
+        });
+        panels.forEach(p => p.classList.remove('active'));
+
+        /* Activate chosen */
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        setLineWidth(tab);
+
+        const panel = document.getElementById(tab.dataset.target);
+        if (panel) panel.classList.add('active');
+
+        /* Re-trigger icon bounce animation */
+        const svg = tab.querySelector('.sc-tab-icon svg');
+        if (svg) {
+          svg.style.animation = 'none';
+          void svg.offsetWidth; /* force reflow */
+          svg.style.animation = '';
+        }
+      }
+
+      tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab)));
+
+      /* Set initial underline width */
+      function initLineWidths() {
+        const active = document.querySelector('.sc-tab.active');
+        if (active) setLineWidth(active);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLineWidths);
+      } else {
+        initLineWidths();
+      }
+      window.addEventListener('resize', initLineWidths);
+    })();
+  </script>
+
+
+  <script type="module">
+    import { createNoise2D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4/dist/esm/simplex-noise.js';
+    (function () {
+      const container = document.getElementById('ctaWaves');
+      if (!container) return;
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      container.appendChild(svg);
+      const SC = 'rgba(255,255,255,0.12)', XG = 10, YG = 10;
+      const noise2D = createNoise2D();
+      let b = null, lines = [], paths = [], raf = null;
+      const m = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
+      function ss() { b = container.getBoundingClientRect(); svg.style.width = b.width + 'px'; svg.style.height = b.height + 'px'; }
+      function sl() {
+        paths.forEach(p => p.remove()); paths = []; lines = [];
+        if (!b) return;
+        const {width: w, height: h} = b, oW = w+200, oH = h+30;
+        const tL = Math.ceil(oW/XG), tP = Math.ceil(oH/YG);
+        const xS = (w-XG*tL)/2, yS = (h-YG*tP)/2;
+        for (let i = 0; i < tL; i++) {
+          const pts = [];
+          for (let j = 0; j < tP; j++) pts.push({x:xS+XG*i,y:yS+YG*j,wave:{x:0,y:0},cursor:{x:0,y:0,vx:0,vy:0}});
+          const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+          p.setAttribute('fill','none'); p.setAttribute('stroke',SC); p.setAttribute('stroke-width','1');
+          svg.appendChild(p); paths.push(p); lines.push(pts);
+        }
+      }
+      function mv(p,c=true){return{x:p.x+p.wave.x+(c?p.cursor.x:0),y:p.y+p.wave.y+(c?p.cursor.y:0)};}
+      function mp(t){lines.forEach(pts=>pts.forEach(p=>{const n=noise2D((p.x+t*0.008)*0.003,(p.y+t*0.003)*0.002)*8;p.wave.x=Math.cos(n)*12;p.wave.y=Math.sin(n)*6;const dx=p.x-m.sx,dy=p.y-m.sy,d=Math.hypot(dx,dy),l=Math.max(175,m.vs);if(d<l){const s=1-d/l,f=Math.cos(d*0.001)*s;p.cursor.vx+=Math.cos(m.a)*f*l*m.vs*0.00035;p.cursor.vy+=Math.sin(m.a)*f*l*m.vs*0.00035;}p.cursor.vx+=(0-p.cursor.x)*0.01;p.cursor.vy+=(0-p.cursor.y)*0.01;p.cursor.vx*=0.95;p.cursor.vy*=0.95;p.cursor.x=Math.min(50,Math.max(-50,p.cursor.x+p.cursor.vx));p.cursor.y=Math.min(50,Math.max(-50,p.cursor.y+p.cursor.vy));}));}
+      function dl(){lines.forEach((pts,i)=>{if(pts.length<2||!paths[i])return;const f=mv(pts[0],false);let d=`M ${f.x} ${f.y}`;for(let j=1;j<pts.length;j++){const c=mv(pts[j]);d+=` L ${c.x} ${c.y}`;}paths[i].setAttribute('d',d);});}
+      function tick(t){m.sx+=(m.x-m.sx)*0.1;m.sy+=(m.y-m.sy)*0.1;const dx=m.x-m.lx,dy=m.y-m.ly;m.v=Math.hypot(dx,dy);m.vs+=(m.v-m.vs)*0.1;m.vs=Math.min(100,m.vs);m.lx=m.x;m.ly=m.y;m.a=Math.atan2(dy,dx);mp(t);dl();raf=requestAnimationFrame(tick);}
+      function om(e){if(!b)return;m.x=e.pageX-b.left;m.y=e.pageY-b.top+window.scrollY;if(!m.set){m.sx=m.x;m.sy=m.y;m.lx=m.x;m.ly=m.y;m.set=true;}}
+      ss(); sl();
+      window.addEventListener('mousemove',om);
+      window.addEventListener('resize',function(){ss();sl();});
+      raf=requestAnimationFrame(tick);
+    })();
+  </script>
+  <script>
+    (function () {
+      const burger = document.getElementById('navBurger');
+      const menu = document.getElementById('mobileMenu');
+      if (!burger || !menu) return;
+      function toggleMenu(open) {
+        burger.classList.toggle('open', open);
+        menu.classList.toggle('open', open);
+        menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      burger.addEventListener('click', function () { toggleMenu(!menu.classList.contains('open')); });
+      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { toggleMenu(false); }); });
+      menu.querySelectorAll('.mobile-menu-item-trigger').forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+          const item = trigger.closest('.mobile-menu-item');
+          const wasOpen = item.classList.contains('open');
+          menu.querySelectorAll('.mobile-menu-item').forEach(function (i) { i.classList.remove('open'); });
+          if (!wasOpen) item.classList.add('open');
+        });
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) toggleMenu(false); });
+    })();
+  </script>
+</body>
+</html>
