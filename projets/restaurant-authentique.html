@@ -2010,7 +2010,7 @@
       if (!scrollZone || !scrollBox || !canvas) return;
 
       const ctx = canvas.getContext('2d');
-      const TOTAL_FRAMES = 80;
+      const TOTAL_FRAMES = 120;
       const FRAMES_BASE  = '../Projets-content/Restaurant%20Authentique/frames/frame-';
 
       /* ── helpers ── */
@@ -2034,19 +2034,17 @@
       }
       applyInitialSize();
 
-      /* ── preload all frames ── */
+      /* ── frame store ── */
       const frames = new Array(TOTAL_FRAMES).fill(null);
-      let loadedCount = 0;
 
       function frameUrl(i) {
-        return FRAMES_BASE + String(i + 1).padStart(3, '0') + '.jpg';
+        return FRAMES_BASE + String(i + 1).padStart(3, '0') + '.webp';
       }
 
       function drawFrame(img, cw, ch) {
         if (!img || !img.complete || !img.naturalWidth) return;
         canvas.width  = cw;
         canvas.height = ch;
-        /* object-fit: cover equivalent */
         const iw = img.naturalWidth, ih = img.naturalHeight;
         const scale = Math.max(cw / iw, ch / ih);
         const sw = cw / scale, sh = ch / scale;
@@ -2059,30 +2057,61 @@
       function showFrame(idx, cw, ch) {
         idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(idx)));
         currentFrameIdx = idx;
-        const img = frames[idx];
-        if (img && img.complete && img.naturalWidth) {
-          drawFrame(img, cw, ch);
+        /* Fall back to nearest loaded frame if target not ready */
+        for (let delta = 0; delta < TOTAL_FRAMES; delta++) {
+          const candidate = frames[Math.max(0, idx - delta)];
+          if (candidate && candidate.complete && candidate.naturalWidth) {
+            drawFrame(candidate, cw, ch);
+            return;
+          }
         }
       }
 
-      /* Load frames: first, last, then fill in */
-      function loadFrame(i) {
+      /* ── Progressive loading ──
+         Phase 1: frame 0          (immediate display)
+         Phase 2: frames 1–35      (first scroll quarter, ~8 concurrent)
+         Phase 3: frames 36–119    (rest, 6 concurrent)  */
+      function loadFrame(i, onLoad) {
+        if (frames[i]) return;
         const img = new Image();
         img.onload = function() {
-          loadedCount++;
-          /* Draw frame 0 immediately for initial display */
           if (i === 0) {
             const sz = getInitialSize();
             drawFrame(img, sz.w, sz.h);
           }
+          if (onLoad) onLoad();
         };
         img.src = frameUrl(i);
         frames[i] = img;
       }
 
-      /* Load in smart order: 0, then sequential */
+      function loadBatch(indices, concurrency, onAllDone) {
+        let cursor = 0, active = 0, done = 0;
+        function next() {
+          while (active < concurrency && cursor < indices.length) {
+            const i = indices[cursor++];
+            active++;
+            loadFrame(i, function() {
+              active--;
+              done++;
+              if (done === indices.length && onAllDone) onAllDone();
+              else next();
+            });
+          }
+        }
+        next();
+      }
+
+      /* Phase 1: frame 0 immediately */
       loadFrame(0);
-      for (let i = 1; i < TOTAL_FRAMES; i++) loadFrame(i);
+
+      /* Phase 2: frames 1–35 with 8 parallel requests */
+      const phase2 = Array.from({ length: 35 }, (_, i) => i + 1);
+      loadBatch(phase2, 8, function() {
+        /* Phase 3: remaining frames with 6 parallel requests */
+        const phase3 = Array.from({ length: TOTAL_FRAMES - 36 }, (_, i) => i + 36);
+        loadBatch(phase3, 6);
+      });;
 
       /* ── scroll update ── */
       let ticking = false;
