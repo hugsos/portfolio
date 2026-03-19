@@ -218,13 +218,9 @@
 
     /* ─── SHOWCASE CARD ─── */
 
-    /* Shimmer sweep animation — landscape (horizontal slide) */
+    /* Shimmer sweep animation */
     @keyframes sc-shimmer-slide {
       to { transform: translate(calc(100cqw - 100%), 0); }
-    }
-    /* Shimmer sweep animation — portrait (vertical slide) */
-    @keyframes sc-shimmer-slide-v {
-      to { transform: translate(0, calc(100cqh - 100cqw)); }
     }
     @keyframes sc-spin-around {
       0%       { transform: translateZ(0) rotate(0deg); }
@@ -563,20 +559,16 @@
       .sc-tab-label { display: none; }
       .sc-tab { padding: 10px 4px; }
       .sc-explore-grid { grid-template-columns: 1fr; }
+      .sc-panels { padding: 16px 16px 12px; }
+      .sc-process-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero-h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
     }
 
-    /* ─── SHIMMER: portrait fix ─── */
-    /* When the card is taller than wide (mobile), use a width-based square
-       sliding vertically instead of a height-based square sliding horizontally
-       (the horizontal translation becomes negative on portrait, causing corner bugs) */
-    @container (aspect-ratio < 1) {
-      .sc-shimmer-track {
-        height: 100cqw; /* square based on width, not height */
-        animation: sc-shimmer-slide-v 3s ease-in-out infinite alternate;
-      }
+    /* ─── SHIMMER: disable on mobile to avoid portrait overflow and overlay bugs ─── */
+    @media (max-width: 768px) {
+      .sc-shimmer { display: none; }
     }
 
     /* ─── ENTRY ANIMATIONS ─── */
@@ -1138,15 +1130,19 @@
 
   <!-- ═══ SCRIPTS ═══ -->
   <script>
-    /* ── Fix: lock fade-up elements at their final state after animation
-          to prevent mobile browsers resetting opacity/transform on scroll ── */
-    document.querySelectorAll('.fade-up').forEach(function(el) {
-      el.addEventListener('animationend', function() {
-        this.style.opacity = '1';
-        this.style.transform = 'translateY(0)';
-        this.classList.remove('fade-up');
-      }, { once: true });
-    });
+    /* ── Fix: lock fade-up elements at their final visible state after all
+          animations complete. animationend is unreliable on mobile (browser
+          may skip animations for off-screen elements). setTimeout guarantees
+          the final state is applied after the longest animation (0.5s delay
+          + 0.7s duration + 100ms buffer = 1.3s). ── */
+    setTimeout(function() {
+      document.querySelectorAll('.fade-up').forEach(function(el) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+        el.classList.remove('fade-up');
+      });
+    }, 1300);
 
     /* ── Gradient bars generator ── */
     (function () {
