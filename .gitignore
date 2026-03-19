@@ -1,0 +1,6 @@
+.claude/
+node_modules/
+temporary screenshots/
+screenshot.mjs
+screenshot-mobile.mjs
+serve.mjs
