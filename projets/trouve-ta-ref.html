@@ -786,6 +786,143 @@
     .footer-links a { font-size: 0.8rem; color: #606060; text-decoration: none; transition: color 0.2s ease; }
     .footer-links a:hover { color: #b4b4b4; }
 
+    /* ─── HERO WRAPPERS: desktop vs mobile ─── */
+    #hero-mobile-wrapper { display: none; }
+    #hero-mobile-wrapper,
+    #hero-scroll { background: #0e0b02; }
+    @media (max-width: 767px) {
+      #hero-desktop-wrapper { display: none; }
+      #hero-mobile-wrapper  { display: block; }
+    }
+
+    /* ─── HERO SCROLL ─── */
+    #hero-scroll { width: 100%; }
+
+    #hero-headline-area {
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; background: #0e0b02; overflow: hidden;
+    }
+    .hero-bg-glow {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 65% at 50% 70%, rgba(201,168,76,0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 40% at 25% 20%, rgba(201,168,76,0.05) 0%, transparent 55%);
+    }
+    .hero-grain-new {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+    #hero-headline-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 0 clamp(16px, 4vw, 64px); gap: 14px;
+    }
+    .hero-kicker {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(201,168,76,0.5);
+    }
+    .hero-main-title {
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 0.9;
+      background: linear-gradient(155deg, #ece4d0 0%, #c9a84c 75%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-desc-main {
+      font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+      color: rgba(238,238,238,0.28); letter-spacing: -0.01em;
+      max-width: 46ch; line-height: 1.7;
+    }
+    .hero-scroll-hint {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      margin-top: 32px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(201,168,76,0.35);
+    }
+    .scroll-arrow {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);
+      animation: scrollArrowPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollArrowPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    #hero-scroll-zone {
+      height: 280vh; position: relative; background: #0e0b02;
+    }
+    #hero-sticky-inner {
+      position: sticky; top: 0; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #0e0b02; overflow: hidden;
+    }
+
+    #scroll-box {
+      position: relative;
+      border-radius: 18px; overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,0.12),
+        0 32px 80px rgba(0,0,0,0.8),
+        0 8px 24px rgba(0,0,0,0.5);
+      will-change: width, height, border-radius;
+    }
+    #scroll-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      display: block;
+    }
+
+    #scroll-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background: rgba(8,5,1,0.76);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      filter: blur(8px);
+      transform: scale(1.04);
+      pointer-events: none;
+      will-change: opacity, filter, transform;
+    }
+    .overlay-inner {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: clamp(16px, 4vw, 40px); max-width: min(100%, 660px);
+      opacity: 0; transform: translateY(20px); gap: 10px;
+    }
+    .overlay-kicker {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(201,168,76,0.65);
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+    .overlay-project-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 0.95;
+      color: #fff; margin: 2px 0;
+    }
+    .overlay-location {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(201,168,76,0.5);
+    }
+    .overlay-line {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.45), transparent);
+      margin: 4px auto;
+    }
+    .overlay-description {
+      font-size: clamp(0.8rem, 1.3vw, 0.92rem);
+      line-height: 1.7; color: rgba(235,228,210,0.65); max-width: 52ch;
+    }
+    .overlay-btn-wrap { margin-top: 6px; }
+    .overlay-btn { border-radius: 100px !important; }
+
+    @media (max-width: 767px) {
+      #hero-headline-area { height: 100svh; }
+      #hero-scroll-zone { height: 260vh; }
+      .overlay-description { font-size: 0.8rem; max-width: 36ch; }
+      .overlay-project-title { font-size: clamp(1.6rem, 8vw, 2.5rem); }
+    }
+
   </style>
 </head>
 <body>
@@ -864,7 +1001,8 @@
 
 
 
-  <!-- ═══ HERO ═══ -->
+  <!-- ═══ HERO DESKTOP (≥768px) ═══ -->
+  <div id="hero-desktop-wrapper">
   <section id="hero">
     <canvas id="warp-canvas" aria-hidden="true"></canvas>
     <div class="grain" aria-hidden="true"></div>
@@ -909,6 +1047,64 @@
       </p>
     </div>
   </section>
+  </div><!-- /#hero-desktop-wrapper -->
+
+  <!-- ═══ HERO MOBILE (<768px) ═══ -->
+  <div id="hero-mobile-wrapper">
+  <section id="hero-scroll">
+
+    <!-- Headline area (100vh, scrolls normally) -->
+    <div id="hero-headline-area">
+      <div class="hero-grain-new" aria-hidden="true"></div>
+      <div class="hero-bg-glow" aria-hidden="true"></div>
+      <div id="hero-headline-content">
+        <div class="hero-kicker">REF!? &nbsp;·&nbsp; MODE &nbsp;·&nbsp; 2025</div>
+        <h1 class="hero-main-title">Design<br>&amp; WordPress</h1>
+        <p class="hero-desc-main">Site web sur mesure pour un influenceur mode — galerie communautaire, cadres vidéos &amp; catalogue produits.</p>
+        <div class="hero-scroll-hint" aria-hidden="true">
+          <span>Scroll</span>
+          <div class="scroll-arrow"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky scroll zone (280vh) -->
+    <div id="hero-scroll-zone">
+      <div id="hero-sticky-inner">
+        <!-- Expanding media box -->
+        <div id="scroll-box" role="img" aria-label="Aperçu du site trouvetaref.fr">
+
+          <!-- Scroll canvas (frames driven by scroll) -->
+          <canvas id="scroll-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+
+          <!-- Overlay revealed at end of scroll -->
+          <div id="scroll-overlay" aria-hidden="true">
+            <div class="overlay-inner">
+              <span class="overlay-kicker">PROJET &nbsp;·&nbsp; DESIGN &amp; DÉVELOPPEMENT</span>
+              <h2 class="overlay-project-title">Trouve Ta Ref !?</h2>
+              <p class="overlay-location">Mode &nbsp;·&nbsp; 189k TikTok &nbsp;·&nbsp; 123k Instagram</p>
+              <div class="overlay-line"></div>
+              <p class="overlay-description">Site WordPress sur mesure pour un influenceur mode de 300 000 abonnés. Galerie de tenues communautaires, cadres vidéos, catalogue produits et recherche en temps réel.</p>
+              <div class="overlay-btn-wrap">
+                <a href="https://trouvetaref.fr/" target="_blank" rel="noopener noreferrer"
+                   class="btn-primary overlay-btn" aria-label="Visiter trouvetaref.fr">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                  Voir le site
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+  </div><!-- /#hero-mobile-wrapper -->
 
 
   <!-- ═══ À L'ŒIL ═══ -->
@@ -1181,6 +1377,7 @@
   <script>
     (function () {
       const canvas = document.getElementById('warp-canvas');
+      if (!canvas) return;
       const gl = canvas.getContext('webgl');
       if (!gl) { canvas.style.background = 'radial-gradient(ellipse at 40% 50%, #2a1800 0%, #080600 80%)'; return; }
 
@@ -1240,6 +1437,156 @@
         gl.uniform1f(timeLoc,t); gl.uniform2f(resLoc,canvas.width,canvas.height);
         gl.drawArrays(gl.TRIANGLES,0,6); requestAnimationFrame(raf);
       })(0);
+    })();
+  </script>
+
+  <!-- ═══ HERO SCROLL ANIMATION ═══ -->
+  <script>
+    (function () {
+      const scrollZone   = document.getElementById('hero-scroll-zone');
+      const scrollBox    = document.getElementById('scroll-box');
+      const canvas       = document.getElementById('scroll-canvas');
+      const overlay      = document.getElementById('scroll-overlay');
+      const overlayInner = overlay ? overlay.querySelector('.overlay-inner') : null;
+      const headlineArea = document.getElementById('hero-headline-area');
+      if (!scrollZone || !scrollBox || !canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const TOTAL_FRAMES = 120;
+      const FRAMES_BASE  = '../Projets-content/Trouve%20ta%20Ref/frames/frame-';
+
+      function easeOutCubic(t)     { return 1 - Math.pow(1 - t, 3); }
+      function clamp(v, mn, mx)    { return Math.max(mn, Math.min(mx, v)); }
+      function lerp(a, b, t)       { return a + (b - a) * t; }
+      function mapRange(v,a,b,c,d) { return lerp(c, d, clamp((v-a)/(b-a), 0, 1)); }
+
+      function getInitialSize() {
+        const vw = window.innerWidth;
+        if (vw < 480) return { w: vw - 40, h: Math.round((vw - 40) * 9/16), r: 14 };
+        return { w: vw - 48, h: Math.round((vw - 48) * 9/16), r: 16 };
+      }
+
+      let initSize = getInitialSize();
+      function applyInitialSize() {
+        scrollBox.style.width        = initSize.w + 'px';
+        scrollBox.style.height       = initSize.h + 'px';
+        scrollBox.style.borderRadius = initSize.r + 'px';
+      }
+      applyInitialSize();
+
+      const frames = new Array(TOTAL_FRAMES).fill(null);
+
+      function frameUrl(i) {
+        return FRAMES_BASE + String(i + 1).padStart(3, '0') + '.webp';
+      }
+
+      function drawFrame(img, cw, ch) {
+        if (!img || !img.complete || !img.naturalWidth) return;
+        canvas.width  = cw;
+        canvas.height = ch;
+        const iw = img.naturalWidth, ih = img.naturalHeight;
+        const scale = Math.max(cw / iw, ch / ih);
+        const sw = cw / scale, sh = ch / scale;
+        const sx = (iw - sw) / 2, sy = (ih - sh) / 2;
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+      }
+
+      function showFrame(idx, cw, ch) {
+        idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(idx)));
+        for (let delta = 0; delta < TOTAL_FRAMES; delta++) {
+          const candidate = frames[Math.max(0, idx - delta)];
+          if (candidate && candidate.complete && candidate.naturalWidth) {
+            drawFrame(candidate, cw, ch);
+            return;
+          }
+        }
+      }
+
+      function loadFrame(i, onLoad) {
+        if (frames[i]) return;
+        const img = new Image();
+        img.onload = function() {
+          if (i === 0) { const sz = getInitialSize(); drawFrame(img, sz.w, sz.h); }
+          if (onLoad) onLoad();
+        };
+        img.src = frameUrl(i);
+        frames[i] = img;
+      }
+
+      function loadBatch(indices, concurrency, onAllDone) {
+        let cursor = 0, active = 0, done = 0;
+        function next() {
+          while (active < concurrency && cursor < indices.length) {
+            const i = indices[cursor++];
+            active++;
+            loadFrame(i, function() {
+              active--; done++;
+              if (done === indices.length && onAllDone) onAllDone();
+              else next();
+            });
+          }
+        }
+        next();
+      }
+
+      loadFrame(0);
+      const phase2 = Array.from({ length: 35 }, (_, i) => i + 1);
+      loadBatch(phase2, 8, function() {
+        const phase3 = Array.from({ length: TOTAL_FRAMES - 36 }, (_, i) => i + 36);
+        loadBatch(phase3, 6);
+      });
+
+      let ticking = false;
+
+      function update() {
+        ticking = false;
+        const scrollY = window.scrollY;
+        const vw = window.innerWidth, vh = window.innerHeight;
+
+        if (headlineArea) {
+          const hP  = clamp(scrollY / (headlineArea.offsetHeight * 0.8), 0, 1);
+          const hPE = easeOutCubic(hP);
+          headlineArea.style.opacity   = (1 - hPE).toFixed(3);
+          headlineArea.style.transform = `translateY(-${(hPE * 48).toFixed(1)}px)`;
+        }
+
+        const zoneTop = scrollZone.offsetTop;
+        const raw = clamp((scrollY - zoneTop) / (scrollZone.offsetHeight - vh), 0, 1);
+
+        const expandP = easeOutCubic(mapRange(raw, 0, 0.60, 0, 1));
+        const curW = lerp(initSize.w, vw * 0.96, expandP);
+        const curH = lerp(initSize.h, vh * 0.92, expandP);
+        const curR = lerp(initSize.r, 0, expandP);
+        scrollBox.style.width        = curW.toFixed(1) + 'px';
+        scrollBox.style.height       = curH.toFixed(1) + 'px';
+        scrollBox.style.borderRadius = curR.toFixed(1) + 'px';
+
+        const frameIdx = mapRange(raw, 0, 0.75, 0, TOTAL_FRAMES - 1);
+        showFrame(frameIdx, Math.round(curW), Math.round(curH));
+
+        const overlayP = easeOutCubic(mapRange(raw, 0.65, 1.0, 0, 1));
+        overlay.style.opacity       = overlayP.toFixed(3);
+        overlay.style.filter        = `blur(${lerp(8, 0, overlayP).toFixed(2)}px)`;
+        overlay.style.transform     = `scale(${lerp(1.04, 1, overlayP).toFixed(4)})`;
+        overlay.style.pointerEvents = overlayP > 0.9 ? 'auto' : 'none';
+        overlay.setAttribute('aria-hidden', overlayP < 0.8 ? 'true' : 'false');
+
+        if (overlayInner) {
+          const contentP = easeOutCubic(mapRange(raw, 0.74, 1.0, 0, 1));
+          overlayInner.style.opacity   = contentP.toFixed(3);
+          overlayInner.style.transform = `translateY(${lerp(20, 0, contentP).toFixed(2)}px)`;
+        }
+      }
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+      }, { passive: true });
+
+      window.addEventListener('resize', function() {
+        initSize = getInitialSize(); applyInitialSize(); update();
+      }, { passive: true });
+
+      update();
     })();
   </script>
 
