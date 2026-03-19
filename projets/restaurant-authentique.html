@@ -439,9 +439,11 @@
       background: rgba(8,5,1,0.76);
       backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       display: flex; align-items: center; justify-content: center;
-      transform: translateY(100%);
+      opacity: 0;
+      filter: blur(8px);
+      transform: scale(1.04);
       pointer-events: none;
-      will-change: transform;
+      will-change: opacity, filter, transform;
     }
     .overlay-inner {
       display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -2147,7 +2149,9 @@
 
         /* OVERLAY REVEAL (raw 0.65 → 1.0) */
         const overlayP = easeOutCubic(mapRange(raw, 0.65, 1.0, 0, 1));
-        overlay.style.transform     = `translateY(${lerp(100, 0, overlayP).toFixed(2)}%)`;
+        overlay.style.opacity       = overlayP.toFixed(3);
+        overlay.style.filter        = `blur(${lerp(8, 0, overlayP).toFixed(2)}px)`;
+        overlay.style.transform     = `scale(${lerp(1.04, 1, overlayP).toFixed(4)})`;
         overlay.style.pointerEvents = overlayP > 0.9 ? 'auto' : 'none';
         overlay.setAttribute('aria-hidden', overlayP < 0.8 ? 'true' : 'false');
 
