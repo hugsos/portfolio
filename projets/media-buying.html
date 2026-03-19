@@ -218,9 +218,13 @@
 
     /* ─── SHOWCASE CARD ─── */
 
-    /* Shimmer sweep animation */
+    /* Shimmer sweep animation — landscape (horizontal slide) */
     @keyframes sc-shimmer-slide {
       to { transform: translate(calc(100cqw - 100%), 0); }
+    }
+    /* Shimmer sweep animation — portrait (vertical slide) */
+    @keyframes sc-shimmer-slide-v {
+      to { transform: translate(0, calc(100cqh - 100cqw)); }
     }
     @keyframes sc-spin-around {
       0%       { transform: translateZ(0) rotate(0deg); }
@@ -448,8 +452,9 @@
       display: flex; align-items: center; justify-content: center;
       padding: 2px 4px 4px;
       border-top: 1px solid rgba(255,255,255,0.045);
-      background: rgba(10,8,0,0.55);
+      background: #0a0800;
       border-radius: 0 0 20px 20px;
+      position: relative; z-index: 3;
     }
     .sc-tab {
       position: relative; flex: 1;
@@ -557,15 +562,28 @@
       .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
       .sc-tab-label { display: none; }
       .sc-tab { padding: 10px 4px; }
+      .sc-explore-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero-h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
     }
 
+    /* ─── SHIMMER: portrait fix ─── */
+    /* When the card is taller than wide (mobile), use a width-based square
+       sliding vertically instead of a height-based square sliding horizontally
+       (the horizontal translation becomes negative on portrait, causing corner bugs) */
+    @container (aspect-ratio < 1) {
+      .sc-shimmer-track {
+        height: 100cqw; /* square based on width, not height */
+        animation: sc-shimmer-slide-v 3s ease-in-out infinite alternate;
+      }
+    }
+
     /* ─── ENTRY ANIMATIONS ─── */
     .fade-up {
       opacity: 0; transform: translateY(24px);
-      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+      will-change: opacity, transform;
     }
     .d1 { animation-delay: 0.05s; }
     .d2 { animation-delay: 0.2s; }
@@ -1120,6 +1138,16 @@
 
   <!-- ═══ SCRIPTS ═══ -->
   <script>
+    /* ── Fix: lock fade-up elements at their final state after animation
+          to prevent mobile browsers resetting opacity/transform on scroll ── */
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+      el.addEventListener('animationend', function() {
+        this.style.opacity = '1';
+        this.style.transform = 'translateY(0)';
+        this.classList.remove('fade-up');
+      }, { once: true });
+    });
+
     /* ── Gradient bars generator ── */
     (function () {
       const container = document.getElementById('gradientBars');
