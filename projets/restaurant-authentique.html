@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>L'Authentique · Projet · Hugo Bourgeois</title>
   <link rel="icon" type="image/x-icon" href="../Brand/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
 
@@ -838,6 +839,325 @@
     .footer-links a { font-size: 0.8rem; color: #606060; text-decoration: none; transition: color 0.2s ease; }
     .footer-links a:hover { color: #b4b4b4; }
 
+    /* ══════════════════════════════════════════
+       SECTION: SYSTÈME DE RÉSERVATION SHOWCASE
+    ══════════════════════════════════════════ */
+    .resa-showcase {
+      position: relative;
+      overflow: hidden;
+      background: #060501;
+      padding: clamp(72px, 9vw, 112px) var(--h-pad);
+    }
+    #resaShaderCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .resa-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--page-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 80px;
+      align-items: start;
+    }
+    /* Pitch column */
+    .resa-pitch {
+      background: rgba(6,5,1,0.55);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(201,168,76,0.14);
+      border-radius: 20px;
+      padding: 40px 36px;
+    }
+    .resa-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-9);
+      margin-bottom: 20px;
+    }
+    .resa-eyebrow::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--brand-9);
+      flex-shrink: 0;
+    }
+    .resa-h2 {
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      color: #eee;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 22px;
+    }
+    .resa-desc {
+      font-size: 0.97rem;
+      color: #6e6e6e;
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+    .resa-desc strong { color: var(--brand-9); font-weight: 600; }
+    .resa-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 44px;
+    }
+    .resa-features > li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .resa-feat-icon {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-9);
+      font-size: 13px;
+      margin-top: 1px;
+    }
+    .resa-feat-text strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #eee;
+      margin-bottom: 2px;
+      letter-spacing: -0.01em;
+    }
+    .resa-feat-text span {
+      font-size: 0.8rem;
+      color: #6e6e6e;
+      line-height: 1.5;
+    }
+    /* Form side */
+    .resa-demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand-9);
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 100px;
+      padding: 5px 12px;
+      margin-bottom: 14px;
+    }
+    /* Form box — gold-tinted, stands out from dark bg */
+    .resa-form-box {
+      background: linear-gradient(160deg, #1e1900 0%, #131000 100%);
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,168,76,0.06);
+    }
+    /* Form header — fully gold like original's dark brown header */
+    .resa-form-hdr {
+      background: linear-gradient(135deg, #c9a84c 0%, #dbb96a 100%);
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid rgba(201,168,76,0.4);
+    }
+    .resa-form-hdr h3 { font-size: 1.05rem; font-weight: 700; color: #0a0800; letter-spacing: -0.02em; margin-bottom: 3px; }
+    .resa-form-hdr h3 i { margin-right: 7px; }
+    .resa-form-hdr p { font-size: 0.75rem; color: rgba(10,8,0,0.55); }
+    /* Form inner — padding wrapper like original's form-content */
+    .resa-form-inner { padding: 18px; }
+    /* Accordion steps — individual rounded cards like the original */
+    .resa-step {
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(0,0,0,0.2);
+    }
+    .resa-step:last-of-type { margin-bottom: 16px; }
+    .resa-step-hd {
+      background: rgba(201,168,76,0.13);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #b4b4b4;
+      transition: background 0.2s, color 0.2s;
+      user-select: none;
+      gap: 8px;
+    }
+    .resa-step-hd:hover { background: rgba(201,168,76,0.2); color: #eee; }
+    .resa-step-hd i.fa-chevron-down { font-size: 11px; transition: transform 0.3s; flex-shrink: 0; color: rgba(201,168,76,0.6); }
+    .resa-step--active .resa-step-hd { background: rgba(201,168,76,0.2); color: #eee; }
+    .resa-step--active .resa-step-hd i.fa-chevron-down { transform: rotate(180deg); color: var(--brand-9); }
+    .resa-step-bd {
+      overflow: hidden;
+      height: 0;
+      transition: height 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .resa-step-bd-in { padding: 15px; }
+    /* Guests */
+    .resa-guest-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .resa-g-btn {
+      flex: 1; min-width: 42px; padding: 11px 4px;
+      border: 2px solid rgba(201,168,76,0.2);
+      background: rgba(0,0,0,0.35);
+      color: #7b7b7b; border-radius: 10px; cursor: pointer;
+      font-size: 14px; font-weight: 600; font-family: inherit; transition: all 0.2s;
+    }
+    .resa-g-btn:hover { border-color: rgba(201,168,76,0.45); color: #b4b4b4; }
+    .resa-g-btn.on { background: rgba(0,0,0,0.6); border-color: var(--brand-9); color: var(--brand-9); }
+    /* Calendar */
+    .resa-cal-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .resa-cal-title { font-size: 0.85rem; font-weight: 700; color: #eee; letter-spacing: -0.02em; }
+    .resa-cal-nav-btn {
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 6px; width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #7b7b7b; font-size: 10px; transition: all 0.2s;
+    }
+    .resa-cal-nav-btn:hover:not(:disabled) { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.4); color: var(--brand-9); }
+    .resa-cal-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+    .resa-cal-wk { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; margin-bottom: 4px; }
+    .resa-cal-wk span { text-align: center; font-size: 0.62rem; font-weight: 600; color: #6e6e6e; letter-spacing: 0.04em; padding: 4px 0; }
+    .resa-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+    .resa-d {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; border-radius: 5px; cursor: pointer;
+      color: #b4b4b4; border: 1px solid transparent; background: transparent; transition: all 0.15s;
+    }
+    .resa-d:not(.resa-d-off):not(.resa-d-past):hover { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3); color: var(--brand-9); }
+    .resa-d.resa-d-today { border-color: rgba(201,168,76,0.4); color: var(--brand-9); }
+    .resa-d.resa-d-sel { background: rgba(0,0,0,0.55) !important; border-color: var(--brand-9) !important; color: var(--brand-9) !important; }
+    .resa-d-past { color: #2a2a2a; cursor: not-allowed; }
+    .resa-d-off { color: #2a2a2a; opacity: 0.5; cursor: default; }
+    /* Slots */
+    .resa-svc-lbl { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #606060; margin-bottom: 7px; margin-top: 12px; }
+    .resa-svc-lbl:first-child { margin-top: 0; }
+    .resa-slots-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
+    .resa-t {
+      padding: 10px 4px; border: 2px solid rgba(201,168,76,0.18);
+      background: rgba(0,0,0,0.35); border-radius: 10px;
+      text-align: center; font-size: 12px; font-weight: 600;
+      cursor: pointer; color: #7b7b7b; font-family: inherit; transition: all 0.15s;
+    }
+    .resa-t:hover:not(.resa-t-off) { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.45); color: var(--brand-9); }
+    .resa-t.on { background: rgba(0,0,0,0.6) !important; border-color: var(--brand-9) !important; color: var(--brand-9) !important; }
+    .resa-t-off { color: #2a2a2a; cursor: not-allowed; opacity: 0.4; }
+    /* Fields */
+    .resa-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .resa-field { margin-top: 10px; }
+    .resa-step-bd-in > .resa-row:first-child, .resa-step-bd-in > .resa-field:first-child { margin-top: 0; }
+    .resa-field label { display: block; font-size: 0.72rem; font-weight: 600; color: #7b7b7b; margin-bottom: 5px; letter-spacing: 0.02em; }
+    .resa-req { color: #ef4444; }
+    .resa-field input, .resa-field textarea {
+      width: 100%; padding: 10px 12px;
+      background: rgba(0,0,0,0.4); border: 2px solid rgba(201,168,76,0.18);
+      border-radius: 10px; font-size: 0.83rem; font-family: inherit; color: #eee;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .resa-field input::placeholder, .resa-field textarea::placeholder { color: #484848; }
+    .resa-field input:focus, .resa-field textarea:focus { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 0 3px rgba(201,168,76,0.07); }
+    .resa-field textarea { resize: vertical; min-height: 68px; }
+    /* Submit — gold background with dark text */
+    .resa-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #c9a84c 0%, #dbb96a 100%);
+      color: #0a0800; border: none; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 700; font-family: inherit; cursor: pointer;
+      letter-spacing: -0.01em; transition: transform 0.15s, filter 0.15s, box-shadow 0.15s;
+    }
+    .resa-submit:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 8px 24px rgba(201,168,76,0.4); }
+    .resa-submit:active { transform: none; }
+    .resa-submit i { margin-right: 7px; }
+    /* Privacy notice */
+    .resa-privacy {
+      text-align: center; font-size: 0.72rem; color: #484848;
+      margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+    .resa-privacy i { color: rgba(201,168,76,0.5); font-size: 11px; }
+    .resa-open {
+      font-size: 0.82rem; color: #5a5a5a; line-height: 1.65;
+      margin-bottom: 28px; font-style: italic;
+    }
+    /* Demo Modal */
+    .resa-modal-ov {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+      z-index: 9999; justify-content: center; align-items: center;
+      backdrop-filter: blur(6px); padding: 20px;
+    }
+    .resa-modal-ov.open { display: flex; }
+    .resa-modal-box {
+      background: linear-gradient(160deg, #1e1900 0%, #131000 100%);
+      border: 1px solid rgba(201,168,76,0.3); border-radius: 20px; padding: 36px;
+      max-width: 470px; width: 100%; position: relative;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.75), 0 0 40px rgba(201,168,76,0.08);
+      animation: resaIn 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    @keyframes resaIn { from { opacity:0; transform: translateY(-20px) scale(0.98); } to { opacity:1; transform: none; } }
+    .resa-modal-x {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 8px; width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--brand-9); font-size: 15px; transition: all 0.2s;
+    }
+    .resa-modal-x:hover { background: rgba(201,168,76,0.28); color: #eee; }
+    .resa-modal-ic {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, #c9a84c, #dbb96a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: #0a0800; margin: 0 auto 18px;
+      box-shadow: 0 8px 28px rgba(201,168,76,0.5);
+    }
+    .resa-modal-title { font-size: 1.3rem; font-weight: 700; color: #eee; letter-spacing: -0.03em; text-align: center; margin-bottom: 18px; }
+    .resa-modal-recap { background: rgba(0,0,0,0.35); border: 1px solid rgba(201,168,76,0.15); border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+    .resa-modal-row { display: flex; gap: 10px; padding: 9px 14px; font-size: 0.83rem; border-bottom: 1px solid rgba(201,168,76,0.07); align-items: center; }
+    .resa-modal-row:last-child { border-bottom: none; }
+    .resa-modal-row strong { color: #7b7b7b; font-weight: 500; min-width: 85px; font-size: 0.78rem; }
+    .resa-modal-row span { color: #eee; font-weight: 600; }
+    .resa-modal-notice {
+      display: flex; gap: 11px; background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.22); border-radius: 10px;
+      padding: 13px 15px; margin-bottom: 22px;
+    }
+    .resa-modal-notice > i { color: var(--brand-9); font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+    .resa-modal-notice p { font-size: 0.8rem; color: #6e6e6e; line-height: 1.6; }
+    .resa-modal-notice p strong { color: var(--brand-9); display: block; margin-bottom: 3px; font-size: 0.82rem; }
+    .resa-modal-close-btn {
+      display: block; width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #c9a84c, #dbb96a);
+      border: none; border-radius: 10px; color: #0a0800;
+      font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      transition: filter 0.2s, transform 0.15s;
+    }
+    .resa-modal-close-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    /* Responsive */
+    @media (max-width: 1150px) { .resa-inner { grid-template-columns: 1fr 440px; gap: 56px; } }
+    @media (max-width: 980px) { .resa-inner { grid-template-columns: 1fr; gap: 48px; } .resa-desc { max-width: none; } }
+    @media (max-width: 520px) { .resa-slots-grid { grid-template-columns: repeat(3,1fr); } .resa-row { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 <body>
@@ -970,6 +1290,167 @@
     <p class="hero-mobile-intro">Refonte complète de l'identité visuelle et des supports de communication pour un restaurant semi-gastronomique du Jura. Cartes de visite, carte des plats, affiches grand format, panneaux routiers et site web avec formulaire de réservation multi-étapes.</p>
   </div>
 
+
+  <!-- ═══ SYSTÈME DE RÉSERVATION SHOWCASE ═══ -->
+  <section class="resa-showcase">
+    <canvas id="resaShaderCanvas"></canvas>
+    <div class="resa-inner">
+
+      <!-- Pitch -->
+      <div class="resa-pitch">
+        <span class="resa-eyebrow">Système de réservation</span>
+        <h2 class="resa-h2">Pourquoi pas chez&nbsp;vous&nbsp;?</h2>
+        <p class="resa-desc">En février 2026, <strong>25&nbsp;% des réservations</strong> du restaurant L'Authentique ont été prises en ligne grâce à ce système. Connecté directement au CRM, il envoie chaque réservation automatiquement et confirme par email au client en temps réel.</p>
+        <ul class="resa-features">
+          <li>
+            <span class="resa-feat-icon"><i class="fa-solid fa-database"></i></span>
+            <div class="resa-feat-text">
+              <strong>Intégration CRM directe</strong>
+              <span>Envoi automatique dans votre système de gestion (Thais, Google Calendar, Notion…)</span>
+            </div>
+          </li>
+          <li>
+            <span class="resa-feat-icon"><i class="fa-solid fa-envelope"></i></span>
+            <div class="resa-feat-text">
+              <strong>Email de confirmation automatique</strong>
+              <span>Le client reçoit sa confirmation et le restaurant son récapitulatif, instantanément</span>
+            </div>
+          </li>
+          <li>
+            <span class="resa-feat-icon"><i class="fa-solid fa-chart-simple"></i></span>
+            <div class="resa-feat-text">
+              <strong>Gestion des capacités en temps réel</strong>
+              <span>Les créneaux "Complet" s'affichent automatiquement selon les réservations existantes</span>
+            </div>
+          </li>
+          <li>
+            <span class="resa-feat-icon"><i class="fa-solid fa-moon"></i></span>
+            <div class="resa-feat-text">
+              <strong>Fermeture par service</strong>
+              <span>Bloquez le midi ou le soir indépendamment, directement depuis votre CRM</span>
+            </div>
+          </li>
+          <li>
+            <span class="resa-feat-icon"><i class="fa-solid fa-star"></i></span>
+            <div class="resa-feat-text">
+              <strong>Événements spéciaux</strong>
+              <span>Saint-Valentin, fêtes de fin d'année… chaque événement avec ses couleurs et horaires dédiés</span>
+            </div>
+          </li>
+          <li>
+            <span class="resa-feat-icon"><i class="fa-solid fa-palette"></i></span>
+            <div class="resa-feat-text">
+              <strong>Couleurs sur mesure</strong>
+              <span>Entièrement adaptable à votre charte graphique comme démontré ci-contre</span>
+            </div>
+          </li>
+        </ul>
+        <p class="resa-open">Ce sont les fonctionnalités développées pour L'Authentique. Chaque projet est différent et je suis toujours disposé à adapter, ajouter ou retirer des fonctionnalités selon vos besoins.</p>
+        <a href="https://restaurantauthentique.fr/reservation/form.html" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Voir le système en production
+        </a>
+      </div>
+
+      <!-- Form demo -->
+      <div>
+        <div class="resa-demo-badge"><i class="fa-solid fa-eye"></i>&nbsp; Démonstration interactive</div>
+        <div class="resa-form-box">
+          <div class="resa-form-hdr">
+            <h3>Réservation</h3>
+            <p>Toutes les interactions sont fonctionnelles</p>
+          </div>
+          <div class="resa-form-inner">
+          <form id="resaDemoForm" onsubmit="return false;">
+            <!-- Personnes -->
+            <div class="resa-step resa-step--active">
+              <div class="resa-step-hd">
+                <span><i class="fa-solid fa-user-group" style="color:#d7b664; font-size:15px; margin-right:6px;"></i>Nombre de personnes</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="resa-step-bd">
+                <div class="resa-step-bd-in">
+                  <div class="resa-guest-row" id="resaGuestRow">
+                    <button type="button" class="resa-g-btn" data-g="1">1</button>
+                    <button type="button" class="resa-g-btn on" data-g="2">2</button>
+                    <button type="button" class="resa-g-btn" data-g="3">3</button>
+                    <button type="button" class="resa-g-btn" data-g="4">4</button>
+                    <button type="button" class="resa-g-btn" data-g="5">5</button>
+                    <button type="button" class="resa-g-btn" data-g="6">6</button>
+                    <button type="button" class="resa-g-btn" data-g="7">7</button>
+                    <button type="button" class="resa-g-btn" data-g="8">8+</button>
+                  </div>
+                  <input type="hidden" id="resaGuests" value="2">
+                </div>
+              </div>
+            </div>
+            <!-- Date -->
+            <div class="resa-step">
+              <div class="resa-step-hd">
+                <span><i class="fa-solid fa-calendar-days" style="color:#d7b664; font-size:15px; margin-right:6px;"></i>Date</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="resa-step-bd">
+                <div class="resa-step-bd-in">
+                  <div class="resa-cal-hd">
+                    <button type="button" class="resa-cal-nav-btn" id="resaPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span class="resa-cal-title" id="resaCalTitle"></span>
+                    <button type="button" class="resa-cal-nav-btn" id="resaNext"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div class="resa-cal-wk"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+                  <div class="resa-cal-grid" id="resaCalGrid"></div>
+                  <input type="hidden" id="resaDate">
+                </div>
+              </div>
+            </div>
+            <!-- Horaire -->
+            <div class="resa-step">
+              <div class="resa-step-hd">
+                <span><i class="fa-solid fa-clock" style="color:#d7b664; font-size:15px; margin-right:6px;"></i>Horaire</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="resa-step-bd">
+                <div class="resa-step-bd-in">
+                  <div class="resa-svc-lbl">Midi</div>
+                  <div class="resa-slots-grid" id="resaLunch"></div>
+                  <div class="resa-svc-lbl">Soir</div>
+                  <div class="resa-slots-grid" id="resaDinner"></div>
+                  <input type="hidden" id="resaTime">
+                </div>
+              </div>
+            </div>
+            <!-- Infos client -->
+            <div class="resa-step">
+              <div class="resa-step-hd">
+                <span><i class="fa-solid fa-circle-info" style="color:#d7b664; font-size:15px; margin-right:6px;"></i>Vos informations</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="resa-step-bd">
+                <div class="resa-step-bd-in">
+                  <div class="resa-row">
+                    <div class="resa-field"><label>Prénom <span class="resa-req">*</span></label><input type="text" id="resaFN" placeholder="Jean" required></div>
+                    <div class="resa-field"><label>Nom <span class="resa-req">*</span></label><input type="text" id="resaLN" placeholder="Dupont" required></div>
+                  </div>
+                  <div class="resa-field"><label>Email</label><input type="email" id="resaEmail" placeholder="jean@exemple.com"></div>
+                  <div class="resa-field"><label>Téléphone</label><input type="tel" id="resaPhone" placeholder="0612345678"></div>
+                  <div class="resa-field"><label>Commentaires</label><textarea id="resaComment" placeholder="Allergies, occasion spéciale…"></textarea></div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="resa-submit"><i class="fa-solid fa-check"></i> Confirmer la réservation</button>
+            <p class="resa-privacy"><i class="fa-solid fa-shield-halved"></i> Ce formulaire ne récolte aucune donnée</p>
+          </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal démo -->
+  <div class="resa-modal-ov" id="resaModalOv">
+    <div class="resa-modal-box" id="resaModalBox"></div>
+  </div>
 
   <!-- ═══ À L'ŒIL ═══ -->
   <div class="glance-bar">
@@ -1405,6 +1886,262 @@
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) toggleMenu(false); });
     })();
+  </script>
+
+  <!-- ═══ RESA DEMO: Shader + Form Logic ═══ -->
+  <script>
+  /* --- Shader animation (Three.js loaded dynamically) --- */
+  (function() {
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+    s.onload = function() {
+      var canvas = document.getElementById('resaShaderCanvas');
+      if (!canvas) return;
+      var section = canvas.parentElement;
+
+      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, alpha: false });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+      var camera = new THREE.Camera();
+      camera.position.z = 1;
+      var scene = new THREE.Scene();
+      var geometry = new THREE.PlaneGeometry(2, 2);
+
+      var uniforms = {
+        time: { value: 1.0 },
+        resolution: { value: new THREE.Vector2() }
+      };
+
+      var material = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: 'void main() { gl_Position = vec4(position, 1.0); }',
+        fragmentShader: [
+          '#define TWO_PI 6.2831853072',
+          'precision highp float;',
+          'uniform vec2 resolution;',
+          'uniform float time;',
+          'void main(void) {',
+          '  vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);',
+          '  float t = time * 0.05;',
+          '  float lineWidth = 0.002;',
+          '  vec3 color = vec3(0.0);',
+          '  for(int j = 0; j < 3; j++){',
+          '    for(int i = 0; i < 5; i++){',
+          '      color[j] += lineWidth * float(i*i) / abs(fract(t - 0.01*float(j) + float(i)*0.01)*5.0 - length(uv) + mod(uv.x+uv.y, 0.2));',
+          '    }',
+          '  }',
+          '  float lum = (color[0] + color[1] + color[2]) / 3.0;',
+          '  vec3 gold = vec3(0.88, 0.70, 0.22);',
+          '  vec3 final = lum * gold * 0.9;',
+          '  gl_FragColor = vec4(final, 1.0);',
+          '}'
+        ].join('\n')
+      });
+
+      scene.add(new THREE.Mesh(geometry, material));
+
+      function resize() {
+        var w = section.offsetWidth;
+        var h = section.offsetHeight;
+        renderer.setSize(w, h, false);
+        uniforms.resolution.value.set(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      var animId;
+      function animate() {
+        animId = requestAnimationFrame(animate);
+        uniforms.time.value += 0.08;
+        renderer.render(scene, camera);
+      }
+      animate();
+    };
+    document.head.appendChild(s);
+  })();
+
+  /* --- Form Logic --- */
+  (function() {
+    'use strict';
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var todayStr = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate());
+    var selDate = todayStr;
+    var calMonth = now.getMonth();
+    var calYear  = now.getFullYear();
+    var MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    var JOURS  = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+    var MOIS   = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+    function pad(n) { return String(n).padStart(2,'0'); }
+
+    /* Accordion */
+    var steps = document.querySelectorAll('#resaDemoForm .resa-step');
+    var curStep = 0;
+    function openStep(idx) {
+      steps.forEach(function(s, i) {
+        var bd = s.querySelector('.resa-step-bd');
+        if (i === idx) {
+          s.classList.add('resa-step--active');
+          bd.style.height = bd.scrollHeight + 'px';
+        } else {
+          s.classList.remove('resa-step--active');
+          bd.style.height = '0';
+        }
+      });
+    }
+    openStep(0);
+    steps.forEach(function(s, i) {
+      s.querySelector('.resa-step-hd').addEventListener('click', function() {
+        curStep = i; openStep(i);
+      });
+    });
+
+    /* Guests */
+    document.querySelectorAll('.resa-g-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.resa-g-btn').forEach(function(b) { b.classList.remove('on'); });
+        btn.classList.add('on');
+        document.getElementById('resaGuests').value = btn.dataset.g;
+        curStep = 1; openStep(1);
+      });
+    });
+
+    /* Calendar */
+    function renderCal() {
+      document.getElementById('resaCalTitle').textContent = MONTHS[calMonth] + ' ' + calYear;
+      var first = new Date(calYear, calMonth, 1);
+      var last  = new Date(calYear, calMonth + 1, 0);
+      var prev  = new Date(calYear, calMonth, 0);
+      var fi = (first.getDay() + 6) % 7;
+      var html = '';
+      for (var i = fi; i > 0; i--) html += '<div class="resa-d resa-d-off">' + (prev.getDate() - i + 1) + '</div>';
+      for (var d = 1; d <= last.getDate(); d++) {
+        var dt = new Date(calYear, calMonth, d);
+        var ds = calYear + '-' + pad(calMonth+1) + '-' + pad(d);
+        var past = dt < today;
+        var cls = 'resa-d' + (past ? ' resa-d-past' : '') + (ds === todayStr ? ' resa-d-today' : '') + (ds === selDate ? ' resa-d-sel' : '');
+        html += '<div class="' + cls + '" data-ds="' + ds + '">' + d + '</div>';
+      }
+      var rem = 42 - (fi + last.getDate());
+      for (var j = 1; j <= rem; j++) html += '<div class="resa-d resa-d-off">' + j + '</div>';
+      var grid = document.getElementById('resaCalGrid');
+      grid.innerHTML = html;
+      grid.querySelectorAll('.resa-d:not(.resa-d-past):not(.resa-d-off)').forEach(function(el) {
+        el.addEventListener('click', function() {
+          selDate = el.dataset.ds;
+          document.getElementById('resaDate').value = selDate;
+          document.getElementById('resaTime').value = '';
+          renderCal(); renderSlots();
+          curStep = 2; openStep(2);
+        });
+      });
+      document.getElementById('resaPrev').disabled = (calYear === now.getFullYear() && calMonth === now.getMonth());
+    }
+    document.getElementById('resaPrev').addEventListener('click', function() {
+      calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCal();
+    });
+    document.getElementById('resaNext').addEventListener('click', function() {
+      calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCal();
+    });
+
+    /* Slots */
+    function genSlots(startMin, endMin) {
+      var arr = [];
+      for (var m = startMin; m <= endMin; m += 15) arr.push(pad(Math.floor(m/60)) + ':' + pad(m%60));
+      return arr;
+    }
+    function renderSlots() {
+      var ds = document.getElementById('resaDate').value || todayStr;
+      var isToday = ds === todayStr;
+      var minMin  = now.getHours()*60 + now.getMinutes() + 15;
+      var selTime = document.getElementById('resaTime').value;
+
+      function build(slots) {
+        return slots.map(function(t) {
+          var hm = t.split(':'); var sm = parseInt(hm[0])*60 + parseInt(hm[1]);
+          var off = isToday && sm <= minMin;
+          var cls = 'resa-t' + (off ? ' resa-t-off' : '') + (t === selTime ? ' on' : '');
+          return '<button type="button" class="' + cls + '" data-t="' + t + '">' + t + '</button>';
+        }).join('');
+      }
+
+      document.getElementById('resaLunch').innerHTML   = build(genSlots(12*60, 14*60));
+      document.getElementById('resaDinner').innerHTML  = build(genSlots(19*60, 21*60));
+
+      document.querySelectorAll('.resa-t:not(.resa-t-off)').forEach(function(el) {
+        el.addEventListener('click', function() {
+          document.getElementById('resaTime').value = el.dataset.t;
+          renderSlots();
+          curStep = 3; openStep(3);
+        });
+      });
+    }
+
+    /* Init */
+    document.getElementById('resaDate').value = todayStr;
+    renderCal(); renderSlots();
+
+    /* Submit */
+    document.getElementById('resaDemoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var guests = document.getElementById('resaGuests').value;
+      var date   = document.getElementById('resaDate').value;
+      var time   = document.getElementById('resaTime').value;
+      var fn     = document.getElementById('resaFN').value.trim();
+      var ln     = document.getElementById('resaLN').value.trim();
+      var email  = document.getElementById('resaEmail').value.trim();
+      var phone  = document.getElementById('resaPhone').value.trim();
+
+      if (!date) { alert('Veuillez sélectionner une date.'); return; }
+      if (!time) { alert('Veuillez sélectionner un horaire.'); return; }
+      if (!fn || !ln) { alert('Veuillez renseigner votre prénom et nom.'); return; }
+
+      var parts   = date.split('-');
+      var dateObj = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+      var dateFmt = JOURS[dateObj.getDay()] + ' ' + parts[2] + ' ' + MOIS[dateObj.getMonth()] + ' ' + parts[0];
+
+      var rows = '';
+      rows += '<div class="resa-modal-row"><strong>Date</strong><span>' + dateFmt + '</span></div>';
+      rows += '<div class="resa-modal-row"><strong>Heure</strong><span>' + time + '</span></div>';
+      rows += '<div class="resa-modal-row"><strong>Personnes</strong><span>' + guests + '</span></div>';
+      rows += '<div class="resa-modal-row"><strong>Nom</strong><span>' + fn + ' ' + ln + '</span></div>';
+      if (email) rows += '<div class="resa-modal-row"><strong>Email</strong><span>' + email + '</span></div>';
+      if (phone) rows += '<div class="resa-modal-row"><strong>Téléphone</strong><span>' + phone + '</span></div>';
+
+      document.getElementById('resaModalBox').innerHTML =
+        '<button class="resa-modal-x" id="resaMX"><i class="fa-solid fa-xmark"></i></button>' +
+        '<div class="resa-modal-ic"><i class="fa-solid fa-check"></i></div>' +
+        '<div class="resa-modal-title">Réservation enregistrée&nbsp;!</div>' +
+        '<div class="resa-modal-recap">' + rows + '</div>' +
+        '<div class="resa-modal-notice"><i class="fa-solid fa-circle-info"></i><p><strong>Ceci est une démonstration.</strong>En production, cette réservation serait automatiquement envoyée dans le CRM du restaurant, et un email de confirmation serait transmis au client en temps réel.</p></div>' +
+        '<button class="resa-modal-close-btn" id="resaMCB">Fermer la démo</button>';
+
+      document.getElementById('resaModalOv').classList.add('open');
+      document.getElementById('resaMX').addEventListener('click', closeModal);
+      document.getElementById('resaMCB').addEventListener('click', closeModal);
+    });
+
+    document.getElementById('resaModalOv').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function closeModal() {
+      document.getElementById('resaModalOv').classList.remove('open');
+    }
+
+  })();
+  </script>
+  <script>
+  (function() {
+    var resaSec = document.querySelector('.resa-showcase');
+    var resaMod = document.getElementById('resaModalOv');
+    var glanceBar = document.querySelector('.glance-bar');
+    if (resaSec && resaMod && glanceBar) {
+      glanceBar.insertAdjacentElement('afterend', resaMod);
+      glanceBar.insertAdjacentElement('afterend', resaSec);
+    }
+  })();
   </script>
 </body>
 </html>
