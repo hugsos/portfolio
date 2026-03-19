@@ -218,9 +218,13 @@
 
     /* ─── SHOWCASE CARD ─── */
 
-    /* Shimmer sweep animation */
+    /* Shimmer sweep animation — landscape */
     @keyframes sc-shimmer-slide {
       to { transform: translate(calc(100cqw - 100%), 0); }
+    }
+    /* Shimmer sweep animation — portrait (mobile) */
+    @keyframes sc-shimmer-slide-v {
+      to { transform: translate(0, calc(100cqh - 100cqw)); }
     }
     @keyframes sc-spin-around {
       0%       { transform: translateZ(0) rotate(0deg); }
@@ -277,14 +281,14 @@
 
     /* Backdrop: solid cover leaving only 1px border gap where shimmer shows */
     .sc-backdrop {
-      position: absolute; z-index: 1; inset: 1px;
+      position: absolute; z-index: 2; inset: 1px;
       background: linear-gradient(145deg, #0d0b02, #0a0800);
       border-radius: 21px; pointer-events: none;
     }
 
     /* Showcase content above shimmer layers */
     .hero-showcase {
-      position: relative; z-index: 2;
+      position: relative; z-index: 3;
       display: flex; flex-direction: column;
     }
 
@@ -566,9 +570,20 @@
       .hero-h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
     }
 
-    /* ─── SHIMMER: disable on mobile to avoid portrait overflow and overlay bugs ─── */
+    /* ─── SHIMMER: mobile portrait adjustments ─── */
+    /* On portrait mobile, slide vertically + reduce conic opacity so the
+       backdrop (z-index:2) properly blocks any bleed-through from filter:blur */
     @media (max-width: 768px) {
-      .sc-shimmer { display: none; }
+      .sc-shimmer-track {
+        height: 100cqw; /* square based on width, not height */
+        animation: sc-shimmer-slide-v 3s ease-in-out infinite alternate;
+      }
+      .sc-shimmer-conic {
+        background: conic-gradient(
+          from calc(270deg - 45deg),
+          transparent 0, rgba(201,168,76,0.35) 90deg, transparent 90deg
+        );
+      }
     }
 
     /* ─── ENTRY ANIMATIONS ─── */
