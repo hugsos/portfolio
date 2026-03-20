@@ -603,11 +603,6 @@
       .sc-panels { order: 0; }
       /* Disable iconBounce on mobile: transform animation triggers GPU layer squashing */
       .sc-tab.active .sc-tab-icon svg { animation: none; }
-      /* Pause shimmer animations on mobile: sc-spin-around + sc-shimmer-slide-v keep the
-         shimmer on its own GPU layer. When the main layer fails to repaint on scroll,
-         the shimmer stays visible showing the rotating ray. Pausing collapses it into
-         the main layer so failures are consistent (no visible ray). */
-      .sc-shimmer-track, .sc-shimmer-conic { animation-play-state: paused; }
       .sc-process-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
@@ -618,17 +613,9 @@
     /* On portrait mobile, slide vertically + reduce conic opacity so the
        backdrop (z-index:2) properly blocks any bleed-through from filter:blur */
     @media (max-width: 768px) {
-      .sc-shimmer { filter: none; } /* remove GPU sublayer — potential scroll repaint fix */
-      .sc-shimmer-track {
-        height: 100cqw;
-        animation: sc-shimmer-slide-v 3s ease-in-out infinite alternate;
-      }
-      .sc-shimmer-conic {
-        background: conic-gradient(
-          from calc(270deg - 45deg),
-          transparent 0, rgba(201,168,76,0.35) 90deg, transparent 90deg
-        );
-      }
+      /* Shimmer hidden on mobile: its GPU-composited animations create a separate
+         layer that stays visible when the main layer fails to repaint on scroll */
+      .sc-shimmer { display: none; }
     }
 
     /* ─── ENTRY ANIMATIONS ─── */
