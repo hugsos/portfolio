@@ -601,9 +601,13 @@
       .sc-tabs { order: 0; border-top: none; border-bottom: 1px solid rgba(255,255,255,0.045); border-radius: 20px 20px 0 0; }
       .sc-dots { order: 0; display: flex; border-top: none; border-bottom: 1px solid rgba(255,255,255,0.04); padding: 8px 0 10px; }
       .sc-panels { order: 0; }
-      /* Disable iconBounce on mobile: transform animation triggers GPU layer squashing,
-         causing active tab + all tabs to its right to disappear on scroll repaint */
+      /* Disable iconBounce on mobile: transform animation triggers GPU layer squashing */
       .sc-tab.active .sc-tab-icon svg { animation: none; }
+      /* Pause shimmer animations on mobile: sc-spin-around + sc-shimmer-slide-v keep the
+         shimmer on its own GPU layer. When the main layer fails to repaint on scroll,
+         the shimmer stays visible showing the rotating ray. Pausing collapses it into
+         the main layer so failures are consistent (no visible ray). */
+      .sc-shimmer-track, .sc-shimmer-conic { animation-play-state: paused; }
       .sc-process-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
