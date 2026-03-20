@@ -582,7 +582,21 @@
       .sc-tab { padding: 8px 4px 10px; }
       .sc-explore-grid { grid-template-columns: 1fr; }
       .sc-panels { padding: 16px 16px 12px; }
-      .sc-dots { display: flex; }
+      /* Move dots + tabs to TOP of card on mobile */
+      .sc-dots {
+        display: flex;
+        order: -1;
+        border-top: none;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        padding: 8px 0 10px;
+      }
+      .sc-tabs {
+        order: -2;
+        border-top: none;
+        border-bottom: 1px solid rgba(255,255,255,0.045);
+        border-radius: 20px 20px 0 0;
+      }
+      .sc-panels { order: 0; }
       .sc-process-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
