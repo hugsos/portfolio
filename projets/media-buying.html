@@ -606,8 +606,9 @@
     /* On portrait mobile, slide vertically + reduce conic opacity so the
        backdrop (z-index:2) properly blocks any bleed-through from filter:blur */
     @media (max-width: 768px) {
+      .sc-shimmer { filter: none; } /* remove GPU sublayer — potential scroll repaint fix */
       .sc-shimmer-track {
-        height: 100cqw; /* square based on width, not height */
+        height: 100cqw;
         animation: sc-shimmer-slide-v 3s ease-in-out infinite alternate;
       }
       .sc-shimmer-conic {
