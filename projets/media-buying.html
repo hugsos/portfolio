@@ -473,15 +473,33 @@
       font-size: 0.57rem; font-weight: 600; letter-spacing: 0.05em;
       text-transform: uppercase; white-space: nowrap; line-height: 1;
     }
-    /* Gold underline whose width matches the label text */
+    /* Gold underline pill under active tab */
     .sc-tab::after {
       content: ''; position: absolute; bottom: 4px; left: 50%;
       transform: translateX(-50%);
-      width: var(--lineWidth, 0px); height: 2px;
-      background: var(--brand-9); border-radius: 1px;
+      width: 0px; height: 2px;
+      background: var(--brand-9); border-radius: 2px;
       transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
     }
-    .sc-tab:not(.active)::after { width: 0px !important; }
+    .sc-tab.active::after { width: 28px; }
+
+    /* ─── NAVIGATION DOTS (mobile only) ─── */
+    .sc-dots {
+      display: none;
+      align-items: center; justify-content: center;
+      gap: 5px; padding: 10px 0 8px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .sc-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      transition: width 0.3s cubic-bezier(0.34,1.56,0.64,1),
+                  background 0.3s ease, border-radius 0.3s ease;
+    }
+    .sc-dot.active {
+      width: 18px; border-radius: 3px;
+      background: var(--brand-9);
+    }
 
     /* ─── GRADIENT BUTTONS ─── */
     .btn-primary {
@@ -560,10 +578,11 @@
     @media (max-width: 640px) {
       .sc-skills-grid { grid-template-columns: 1fr 1fr; }
       .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
-      .sc-tab-label { display: none; }
-      .sc-tab { padding: 10px 4px; }
+      .sc-tab-label { font-size: 0.44rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 52px; }
+      .sc-tab { padding: 8px 4px 10px; }
       .sc-explore-grid { grid-template-columns: 1fr; }
       .sc-panels { padding: 16px 16px 12px; }
+      .sc-dots { display: flex; }
       .sc-process-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
@@ -1032,6 +1051,15 @@
 
           </div><!-- /sc-panels -->
 
+          <!-- ── PAGINATION DOTS (mobile) ── -->
+          <div class="sc-dots" aria-hidden="true">
+            <span class="sc-dot active"></span>
+            <span class="sc-dot"></span>
+            <span class="sc-dot"></span>
+            <span class="sc-dot"></span>
+            <span class="sc-dot"></span>
+          </div>
+
           <!-- ── TAB NAVIGATION ── -->
           <div class="sc-tabs" role="tablist" aria-label="Sections">
 
@@ -1179,55 +1207,40 @@
 
     /* ── Showcase tab navigation ── */
     (function () {
-      const tabs   = document.querySelectorAll('.sc-tab');
+      const tabs   = Array.from(document.querySelectorAll('.sc-tab'));
       const panels = document.querySelectorAll('.sc-panel');
+      const dots   = Array.from(document.querySelectorAll('.sc-dot'));
       if (!tabs.length) return;
 
-      /* Measure label text width and apply to --lineWidth */
-      function setLineWidth(tab) {
-        const label = tab.querySelector('.sc-tab-label');
-        if (label) tab.style.setProperty('--lineWidth', label.offsetWidth + 'px');
-      }
-
       function activateTab(tab) {
+        const idx = tabs.indexOf(tab);
+
         /* Deactivate all */
-        tabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-          t.style.setProperty('--lineWidth', '0px');
-        });
+        tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
         panels.forEach(p => p.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
 
         /* Activate chosen */
         tab.classList.add('active');
         tab.setAttribute('aria-selected', 'true');
-        setLineWidth(tab);
+        if (dots[idx]) dots[idx].classList.add('active');
 
         const panel = document.getElementById(tab.dataset.target);
         if (panel) panel.classList.add('active');
 
         /* Re-trigger icon bounce animation */
         const svg = tab.querySelector('.sc-tab-icon svg');
-        if (svg) {
-          svg.style.animation = 'none';
-          void svg.offsetWidth; /* force reflow */
-          svg.style.animation = '';
-        }
+        if (svg) { svg.style.animation = 'none'; void svg.offsetWidth; svg.style.animation = ''; }
       }
 
       tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab)));
 
-      /* Set initial underline width */
-      function initLineWidths() {
-        const active = document.querySelector('.sc-tab.active');
-        if (active) setLineWidth(active);
+      /* Sync dots on load with initially active tab */
+      const initialActive = tabs.find(t => t.classList.contains('active'));
+      if (initialActive) {
+        const idx = tabs.indexOf(initialActive);
+        if (dots[idx]) dots[idx].classList.add('active');
       }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLineWidths);
-      } else {
-        initLineWidths();
-      }
-      window.addEventListener('resize', initLineWidths);
     })();
   </script>
 
