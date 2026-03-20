@@ -576,12 +576,18 @@
       .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
-      /* ── Kill fade-up on mobile: Chrome skips off-screen animations,
-         leaving elements permanently at opacity:0 when scrolled back in ── */
+      /* ── Kill ALL opacity:0-start animations on mobile: Chrome skips
+         off-screen CSS animations, leaving elements permanently invisible ── */
       .fade-up {
         opacity: 1 !important;
         transform: translateY(0) !important;
         animation: none !important;
+      }
+      .sc-panel.active {
+        animation: none !important;
+      }
+      .sc-panels {
+        min-height: 0 !important;
       }
       .sc-skills-grid { grid-template-columns: 1fr 1fr; }
       .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
