@@ -1194,19 +1194,26 @@
 
   <!-- ═══ SCRIPTS ═══ -->
   <script>
-    /* ── Fix: lock fade-up elements at their final visible state after all
-          animations complete. animationend is unreliable on mobile (browser
-          may skip animations for off-screen elements). setTimeout guarantees
-          the final state is applied after the longest animation (0.5s delay
-          + 0.7s duration + 100ms buffer = 1.3s). ── */
-    setTimeout(function() {
+    /* ── Mobile: synchronously strip fade-up BEFORE first paint.
+          On Android Chrome, GPU layers are sometimes discarded on scroll and
+          recreated from the element's CSS class state — which is opacity:0
+          for .fade-up. The only reliable fix is to ensure the class never
+          exists when any GPU layer is built.
+          This runs synchronously (blocking), so the browser sees no .fade-up
+          class during its very first layout/paint pass. ── */
+    if (window.matchMedia('(max-width: 640px)').matches) {
       document.querySelectorAll('.fade-up').forEach(function(el) {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-        el.style.animation = 'none';
         el.classList.remove('fade-up');
       });
-    }, 1300);
+    } else {
+      /* Desktop fallback: lock final state after longest animation */
+      setTimeout(function() {
+        document.querySelectorAll('.fade-up').forEach(function(el) {
+          el.style.opacity = '1'; el.style.transform = 'none';
+          el.style.animation = 'none'; el.classList.remove('fade-up');
+        });
+      }, 1300);
+    }
 
     /* ── Gradient bars generator ── */
     (function () {
