@@ -576,6 +576,13 @@
       .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
+      /* ── Kill fade-up on mobile: Chrome skips off-screen animations,
+         leaving elements permanently at opacity:0 when scrolled back in ── */
+      .fade-up {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        animation: none !important;
+      }
       .sc-skills-grid { grid-template-columns: 1fr 1fr; }
       .sc-metrics-grid { grid-template-columns: 1fr 1fr; }
       .sc-tab-label { font-size: 0.44rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 52px; }
@@ -1118,7 +1125,7 @@
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
               </span>
-              <strong class="sc-tab-label">Compétences</strong>
+              <strong class="sc-tab-label">Skills</strong>
             </button>
 
             <!-- Tab 5: Exploration, compass -->
