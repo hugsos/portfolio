@@ -448,10 +448,6 @@
     .sc-process-step-desc { font-size: 0.62rem; color: var(--neutral-9); line-height: 1.5; }
 
     /* ─── TAB NAVIGATION BAR ─── */
-    /* Desktop: sc-tabs and sc-dots are first in HTML but visually at bottom via order */
-    .sc-tabs { order: 2; }
-    .sc-dots { order: 1; }
-    .sc-panels { order: 0; }
     .sc-tabs {
       display: flex; align-items: center; justify-content: center;
       padding: 2px 4px 4px;
@@ -599,11 +595,7 @@
       .sc-tab { padding: 8px 4px 10px; }
       .sc-explore-grid { grid-template-columns: 1fr; }
       .sc-panels { padding: 16px 16px 12px; }
-      /* On mobile: HTML order is sc-tabs → sc-dots → sc-panels (natural, no CSS order needed)
-         Override desktop order values so HTML order takes effect */
-      .sc-tabs { order: 0; border-top: none; border-bottom: 1px solid rgba(255,255,255,0.045); border-radius: 20px 20px 0 0; }
-      .sc-dots { order: 0; display: flex; border-top: none; border-bottom: 1px solid rgba(255,255,255,0.04); padding: 8px 0 10px; }
-      .sc-panels { order: 0; }
+      .sc-dots { display: flex; }
       .sc-process-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
@@ -829,75 +821,6 @@
         <div class="sc-backdrop" aria-hidden="true"></div>
 
         <div class="hero-showcase">
-
-          <!-- ── TAB NAVIGATION (first in HTML → top on mobile, pushed to bottom on desktop via CSS order) ── -->
-          <div class="sc-tabs" role="tablist" aria-label="Sections">
-
-            <!-- Tab 1: Écosystème -->
-            <button class="sc-tab active" data-target="sc-ecosystem" role="tab" aria-selected="true" style="--lineWidth:0px">
-              <span class="sc-tab-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                  <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                  <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                  <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                </svg>
-              </span>
-              <strong class="sc-tab-label">Écosystème</strong>
-            </button>
-
-            <!-- Tab 2: Campagnes, mégaphone -->
-            <button class="sc-tab" data-target="sc-campaigns" role="tab" aria-selected="false" style="--lineWidth:0px">
-              <span class="sc-tab-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                  <path d="M15.54 8.46a5 5 0 010 7.07"/>
-                </svg>
-              </span>
-              <strong class="sc-tab-label">Campagnes</strong>
-            </button>
-
-            <!-- Tab 3: Métriques, courbe -->
-            <button class="sc-tab" data-target="sc-metrics" role="tab" aria-selected="false" style="--lineWidth:0px">
-              <span class="sc-tab-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                </svg>
-              </span>
-              <strong class="sc-tab-label">Métriques</strong>
-            </button>
-
-            <!-- Tab 4: Skills, étoile -->
-            <button class="sc-tab" data-target="sc-skills" role="tab" aria-selected="false" style="--lineWidth:0px">
-              <span class="sc-tab-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-              </span>
-              <strong class="sc-tab-label">Skills</strong>
-            </button>
-
-            <!-- Tab 5: Exploration, compass -->
-            <button class="sc-tab" data-target="sc-explore" role="tab" aria-selected="false" style="--lineWidth:0px">
-              <span class="sc-tab-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-                </svg>
-              </span>
-              <strong class="sc-tab-label">Exploration</strong>
-            </button>
-
-          </div><!-- /sc-tabs -->
-
-          <!-- ── PAGINATION DOTS (mobile) ── -->
-          <div class="sc-dots" aria-hidden="true">
-            <span class="sc-dot active"></span>
-            <span class="sc-dot"></span>
-            <span class="sc-dot"></span>
-            <span class="sc-dot"></span>
-            <span class="sc-dot"></span>
-          </div>
 
           <!-- ── CONTENT PANELS ── -->
           <div class="sc-panels">
@@ -1140,6 +1063,75 @@
             </div>
 
           </div><!-- /sc-panels -->
+
+          <!-- ── PAGINATION DOTS (mobile) ── -->
+          <div class="sc-dots" aria-hidden="true">
+            <span class="sc-dot active"></span>
+            <span class="sc-dot"></span>
+            <span class="sc-dot"></span>
+            <span class="sc-dot"></span>
+            <span class="sc-dot"></span>
+          </div>
+
+          <!-- ── TAB NAVIGATION ── -->
+          <div class="sc-tabs" role="tablist" aria-label="Sections">
+
+            <!-- Tab 1: Écosystème -->
+            <button class="sc-tab active" data-target="sc-ecosystem" role="tab" aria-selected="true" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                  <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Écosystème</strong>
+            </button>
+
+            <!-- Tab 2: Campagnes -->
+            <button class="sc-tab" data-target="sc-campaigns" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M15.54 8.46a5 5 0 010 7.07"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Campagnes</strong>
+            </button>
+
+            <!-- Tab 3: Métriques -->
+            <button class="sc-tab" data-target="sc-metrics" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Métriques</strong>
+            </button>
+
+            <!-- Tab 4: Skills -->
+            <button class="sc-tab" data-target="sc-skills" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Skills</strong>
+            </button>
+
+            <!-- Tab 5: Exploration -->
+            <button class="sc-tab" data-target="sc-explore" role="tab" aria-selected="false" style="--lineWidth:0px">
+              <span class="sc-tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                </svg>
+              </span>
+              <strong class="sc-tab-label">Exploration</strong>
+            </button>
+
+          </div><!-- /sc-tabs -->
 
         </div><!-- /hero-showcase -->
       </div><!-- /hero-showcase-wrap -->
