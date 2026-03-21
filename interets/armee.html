@@ -35,6 +35,9 @@
       --gold: #c9a84c;
       --gold-dim: rgba(201,168,76,0.12);
       --gold-glow: rgba(201,168,76,0.2);
+      --green: #5a9e6f;
+      --green-dim: rgba(90,158,111,0.12);
+      --green-glow: rgba(90,158,111,0.2);
       --bg: #111;
       --surface: #191919;
       --border: rgba(255,255,255,0.07);
@@ -362,7 +365,7 @@
     .bio-stat-value {
       font-family: var(--font-display);
       font-size: 2.2rem;
-      color: var(--gold);
+      color: var(--green);
       letter-spacing: 0.04em;
       line-height: 1;
     }
@@ -387,14 +390,14 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--green);
       margin-bottom: 16px;
     }
     .bio-col-label::before {
       content: '';
       width: 16px;
       height: 1px;
-      background: var(--gold);
+      background: var(--green);
       opacity: 0.6;
     }
     .bio-col p {
@@ -429,10 +432,10 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--green);
       margin-bottom: 14px;
     }
-    .gallery-tag-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+    .gallery-tag-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
     .gallery-title {
       font-family: var(--font-display);
       font-size: clamp(2.5rem, 6vw, 5rem);
@@ -465,7 +468,7 @@
     }
     .bento-item:hover {
       transform: scale(1.015);
-      border-color: rgba(201,168,76,0.25);
+      border-color: rgba(90,158,111,0.25);
       z-index: 2;
     }
     .bento-item:hover .bento-overlay { opacity: 1; }
@@ -509,13 +512,13 @@
       top: 9px; right: 9px;
       padding: 3px 7px;
       border-radius: 4px;
-      background: rgba(201,168,76,0.15);
-      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(90,158,111,0.15);
+      border: 1px solid rgba(90,158,111,0.3);
       font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--green);
     }
 
     /* ── MODAL ── */
@@ -595,7 +598,7 @@
       padding: 10px 12px;
       border-radius: 16px;
       background: rgba(20,20,20,0.85);
-      border: 1px solid rgba(201,168,76,0.18);
+      border: 1px solid rgba(90,158,111,0.18);
       backdrop-filter: blur(20px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.6);
       gap: 0;
@@ -613,7 +616,7 @@
       z-index: 1;
     }
     .dock-thumb.active {
-      border-color: var(--gold);
+      border-color: var(--green);
       transform: scale(1.25) translateY(-8px);
       z-index: 2;
     }
@@ -654,8 +657,8 @@
     }
     .back-btn.visible { opacity: 1; transform: translateY(0); }
     .back-btn:hover {
-      color: var(--gold);
-      border-color: rgba(201,168,76,0.35);
+      color: var(--green);
+      border-color: rgba(90,158,111,0.35);
       background: rgba(17,17,17,0.96);
       transform: translateY(-2px);
     }
@@ -680,7 +683,7 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-link:hover { color: var(--gold); }
+    .footer-link:hover { color: var(--green); }
 
     @media (max-width: 900px) {
       .bento-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 100px; }
