@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trouve Ta Ref !? · Projet · Hugo Bourgeois</title>
   <link rel="icon" type="image/x-icon" href="../Brand/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
 
     /* ─── @property for gradient button transitions ─── */
     @property --pos-x        { syntax: '<percentage>'; initial-value: 11.14%;   inherits: false; }
@@ -923,9 +925,28 @@
       .overlay-project-title { font-size: clamp(1.6rem, 8vw, 2.5rem); }
     }
 
+    /* ─── PAGE LOADER ─── */
+    #page-loader { position: fixed; inset: 0; z-index: 99999; background: #0e0d0c; display: flex; align-items: center; justify-content: center; }
+    #page-loader.loader-out { opacity: 0; pointer-events: none; transition: opacity 0.45s ease; }
+    .loader-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); opacity: 0.35; pointer-events: none; }
+    .loader-content { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+    .loader-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; color: #eee; text-align: center; letter-spacing: -0.04em; line-height: 1.05; }
+    .loader-name span { color: #c9a84c; }
+    .loader-bar-wrap { width: min(200px, 50vw); height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .loader-bar { height: 100%; width: 0%; background: #c9a84c; border-radius: 2px; transition: width 0.25s ease; }
+
   </style>
 </head>
 <body>
+
+  <!-- ── PAGE LOADER ── -->
+  <div id="page-loader" aria-hidden="true">
+    <div class="loader-grain"></div>
+    <div class="loader-content">
+      <div class="loader-name">BOURGEOIS<br><span>Hugo</span></div>
+      <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    </div>
+  </div>
 
   <!-- ═══ NAV ═══ -->
     <nav>
@@ -1012,7 +1033,7 @@
         <a class="masked-img-link" href="https://trouvetaref.fr/" target="_blank" rel="noopener noreferrer" aria-label="Visiter trouvetaref.fr"></a>
         <picture>
           <source media="(max-width: 767px)" srcset="../Projets-content/Trouve%20ta%20Ref/trouve-mobile.jpeg">
-          <img src="../Projets-content/Trouve%20ta%20Ref/hero.png"
+          <img src="../Projets-content/Trouve%20ta%20Ref/hero.webp"
                alt="Site Trouve Ta Ref !? · réalisé par Hugo Bourgeois"
                loading="eager" />
         </picture>
@@ -1153,9 +1174,9 @@
       <div class="csa-outer">
         <div class="csa-card" id="csaCard">
           <div class="csa-card-inner">
-            <img src="../Projets-content/Trouve%20ta%20Ref/hero.png"
+            <img src="../Projets-content/Trouve%20ta%20Ref/hero.webp"
                  alt="Page d'accueil · REF!? barre de recherche et cadres vidéos"
-                 draggable="false" />
+                 draggable="false" loading="lazy" />
           </div>
         </div>
       </div>
@@ -1178,12 +1199,12 @@
       </div>
       <div class="accordion" id="acc-galerie">
         <div class="acc-panel active">
-          <img src="../Projets-content/Trouve%20ta%20Ref/Galerie%20desktop.png" alt="Galerie des tenues · desktop" />
+          <img src="../Projets-content/Trouve%20ta%20Ref/Galerie%20desktop.webp" alt="Galerie des tenues · desktop" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Vue desktop</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Trouve%20ta%20Ref/Galerie%20mobile.jpeg" alt="Galerie des tenues · mobile" />
+          <img src="../Projets-content/Trouve%20ta%20Ref/Galerie%20mobile.jpeg" alt="Galerie des tenues · mobile" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Vue mobile</span>
         </div>
@@ -1206,7 +1227,7 @@
         </div>
       </div>
       <div class="single-img-wrap">
-        <img src="../Projets-content/Trouve%20ta%20Ref/Filtres.png" alt="Barre de recherche et chips de filtre" />
+        <img src="../Projets-content/Trouve%20ta%20Ref/Filtres.webp" alt="Barre de recherche et chips de filtre" loading="lazy" />
       </div>
     </div>
   </section>
@@ -1228,12 +1249,12 @@
       </div>
       <div class="accordion" id="acc-drawer">
         <div class="acc-panel active">
-          <img src="../Projets-content/Trouve%20ta%20Ref/Drawer%20desktop.png" alt="Drawer produit · desktop" />
+          <img src="../Projets-content/Trouve%20ta%20Ref/Drawer%20desktop.webp" alt="Drawer produit · desktop" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Desktop</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Trouve%20ta%20Ref/Drawer%20mobile.jpeg" alt="Drawer produit · mobile" />
+          <img src="../Projets-content/Trouve%20ta%20Ref/Drawer%20mobile.jpeg" alt="Drawer produit · mobile" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Mobile</span>
         </div>
@@ -1263,7 +1284,7 @@
         ">
           <img src="../Projets-content/Trouve%20ta%20Ref/stat.jpeg"
                alt="Story Instagram · stats Analytics du site en moins de 2 semaines"
-               style="width: 100%; display: block;" />
+               style="width: 100%; display: block;" loading="lazy" />
         </div>
         <div style="flex: 1; min-width: 260px; padding-top: 8px;">
           <p style="
@@ -1506,7 +1527,7 @@
         if (frames[i]) return;
         const img = new Image();
         img.onload = function() {
-          if (i === 0) { const sz = getInitialSize(); drawFrame(img, sz.w, sz.h); }
+          if (i === 0) { const sz = getInitialSize(); drawFrame(img, sz.w, sz.h); window.dispatchEvent(new Event('frame0ready')); }
           if (onLoad) onLoad();
         };
         img.src = frameUrl(i);
@@ -1701,6 +1722,38 @@
       });
       menu.addEventListener('click', function (e) { if (e.target === menu) toggleMenu(false); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) toggleMenu(false); });
+    })();
+  </script>
+
+  <script>
+    /* ─── PAGE LOADER ─── */
+    (function () {
+      var loader = document.getElementById('page-loader');
+      var bar    = document.getElementById('loader-bar');
+      if (!loader || !bar) return;
+      var START = Date.now(), MIN_MS = 400, fired = false;
+
+      var prog = 0;
+      var tick = setInterval(function () {
+        prog = Math.min(prog + Math.random() * 5, 88);
+        bar.style.width = prog + '%';
+      }, 180);
+
+      var fallback = setTimeout(finish, 6000);
+
+      function finish() {
+        if (fired) return; fired = true;
+        clearInterval(tick); clearTimeout(fallback);
+        bar.style.width = '100%';
+        var delay = Math.max(0, MIN_MS - (Date.now() - START));
+        setTimeout(function () {
+          loader.classList.add('loader-out');
+          loader.addEventListener('transitionend', function () { loader.style.display = 'none'; }, { once: true });
+        }, delay);
+      }
+
+      /* Condition : premier frame WebP dessiné sur le canvas */
+      window.addEventListener('frame0ready', finish, { once: true });
     })();
   </script>
 </body>

@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Media Buying & Google Ads · Projet · Hugo Bourgeois</title>
   <link rel="icon" type="image/x-icon" href="../Brand/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
 
     /* ─── @property: gradient buttons ─── */
     @property --pos-x        { syntax: '<percentage>'; initial-value: 11.14%;   inherits: false; }
@@ -697,9 +699,28 @@
     .footer-links a { font-size: 0.8rem; color: #606060; text-decoration: none; transition: color 0.2s ease; }
     .footer-links a:hover { color: #b4b4b4; }
 
+    /* ─── PAGE LOADER ─── */
+    #page-loader { position: fixed; inset: 0; z-index: 99999; background: #0e0d0c; display: flex; align-items: center; justify-content: center; }
+    #page-loader.loader-out { opacity: 0; pointer-events: none; transition: opacity 0.45s ease; }
+    .loader-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); opacity: 0.35; pointer-events: none; }
+    .loader-content { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+    .loader-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; color: #eee; text-align: center; letter-spacing: -0.04em; line-height: 1.05; }
+    .loader-name span { color: #c9a84c; }
+    .loader-bar-wrap { width: min(200px, 50vw); height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .loader-bar { height: 100%; width: 0%; background: #c9a84c; border-radius: 2px; transition: width 0.25s ease; }
+
   </style>
 </head>
 <body>
+
+  <!-- ── PAGE LOADER ── -->
+  <div id="page-loader" aria-hidden="true">
+    <div class="loader-grain"></div>
+    <div class="loader-content">
+      <div class="loader-name">BOURGEOIS<br><span>Hugo</span></div>
+      <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    </div>
+  </div>
 
   <!-- ═══ NAV ═══ -->
     <nav>
@@ -1292,6 +1313,37 @@
       });
       menu.addEventListener('click', function (e) { if (e.target === menu) toggleMenu(false); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) toggleMenu(false); });
+    })();
+  </script>
+
+  <script>
+    /* ─── PAGE LOADER ─── */
+    (function () {
+      var loader = document.getElementById('page-loader');
+      var bar    = document.getElementById('loader-bar');
+      if (!loader || !bar) return;
+      var START = Date.now(), MIN_MS = 300, fired = false;
+
+      var prog = 0;
+      var tick = setInterval(function () {
+        prog = Math.min(prog + Math.random() * 10, 88);
+        bar.style.width = prog + '%';
+      }, 120);
+
+      var fallback = setTimeout(finish, 4000);
+
+      function finish() {
+        if (fired) return; fired = true;
+        clearInterval(tick); clearTimeout(fallback);
+        bar.style.width = '100%';
+        var delay = Math.max(0, MIN_MS - (Date.now() - START));
+        setTimeout(function () {
+          loader.classList.add('loader-out');
+          loader.addEventListener('transitionend', function () { loader.style.display = 'none'; }, { once: true });
+        }, delay);
+      }
+
+      window.addEventListener('load', finish, { once: true });
     })();
   </script>
 </body>

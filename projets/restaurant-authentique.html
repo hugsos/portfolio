@@ -6,8 +6,10 @@
   <title>L'Authentique · Projet · Hugo Bourgeois</title>
   <link rel="icon" type="image/x-icon" href="../Brand/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
 
     /* ─── @property for gradient button transitions ─── */
     @property --pos-x        { syntax: '<percentage>'; initial-value: 11.14%;   inherits: false; }
@@ -1301,9 +1303,28 @@
     @media (max-width: 980px) { .resa-inner { grid-template-columns: 1fr; gap: 48px; } .resa-desc { max-width: none; } }
     @media (max-width: 520px) { .resa-slots-grid { grid-template-columns: repeat(3,1fr); } .resa-row { grid-template-columns: 1fr; } }
 
+    /* ─── PAGE LOADER ─── */
+    #page-loader { position: fixed; inset: 0; z-index: 99999; background: #0e0d0c; display: flex; align-items: center; justify-content: center; }
+    #page-loader.loader-out { opacity: 0; pointer-events: none; transition: opacity 0.45s ease; }
+    .loader-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); opacity: 0.35; pointer-events: none; }
+    .loader-content { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+    .loader-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; color: #eee; text-align: center; letter-spacing: -0.04em; line-height: 1.05; }
+    .loader-name span { color: #c9a84c; }
+    .loader-bar-wrap { width: min(200px, 50vw); height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .loader-bar { height: 100%; width: 0%; background: #c9a84c; border-radius: 2px; transition: width 0.25s ease; }
+
   </style>
 </head>
 <body>
+
+  <!-- ── PAGE LOADER ── -->
+  <div id="page-loader" aria-hidden="true">
+    <div class="loader-grain"></div>
+    <div class="loader-content">
+      <div class="loader-name">BOURGEOIS<br><span>Hugo</span></div>
+      <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    </div>
+  </div>
 
   <!-- ═══ NAV (same as index.html) ═══ -->
     <nav>
@@ -1389,7 +1410,7 @@
       <div class="masked-img-wrap">
         <a class="masked-img-link" href="https://restaurantauthentique.fr/" target="_blank" rel="noopener noreferrer" aria-label="Visiter restaurantauthentique.fr"></a>
         <picture>
-          <img src="../Projets-content/Restaurant%20Authentique/Site.png"
+          <img src="../Projets-content/Restaurant%20Authentique/Site.webp"
                alt="Site web de L'Authentique · réalisé par Hugo Bourgeois"
                loading="eager" />
         </picture>
@@ -1689,12 +1710,12 @@
       </div>
       <div class="accordion" id="acc-cartes">
         <div class="acc-panel active">
-          <img src="../Projets-content/Restaurant%20Authentique/Carte%20de%20visite%201.png" alt="Carte de visite · recto" />
+          <img src="../Projets-content/Restaurant%20Authentique/Carte%20de%20visite%201.webp" alt="Carte de visite · recto" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Recto</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Restaurant%20Authentique/Carte%20de%20visite%202.png" alt="Carte de visite · verso" />
+          <img src="../Projets-content/Restaurant%20Authentique/Carte%20de%20visite%202.webp" alt="Carte de visite · verso" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Verso</span>
         </div>
@@ -1716,7 +1737,7 @@
         </div>
       </div>
       <div class="single-img-wrap">
-        <img src="../Projets-content/Restaurant%20Authentique/Carte%201.png" alt="Carte du restaurant" />
+        <img src="../Projets-content/Restaurant%20Authentique/Carte%201.webp" alt="Carte du restaurant" loading="lazy" />
       </div>
     </div>
   </section>
@@ -1737,12 +1758,12 @@
       </div>
       <div class="accordion" id="acc-qr">
         <div class="acc-panel active">
-          <img src="../Projets-content/Restaurant%20Authentique/Carte%20QR%201.png" alt="Carte QR Google Avis 1" />
+          <img src="../Projets-content/Restaurant%20Authentique/Carte%20QR%201.webp" alt="Carte QR Google Avis 1" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Carte QR recto</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Restaurant%20Authentique/Carte%20QR%202.png" alt="Carte QR Google Avis 2" />
+          <img src="../Projets-content/Restaurant%20Authentique/Carte%20QR%202.webp" alt="Carte QR Google Avis 2" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Carte QR verso</span>
         </div>
@@ -1766,17 +1787,17 @@
       </div>
       <div class="accordion" id="acc-affiches">
         <div class="acc-panel active">
-          <img src="../Projets-content/Restaurant%20Authentique/Affiche%201.png" alt="Affiche 1" />
+          <img src="../Projets-content/Restaurant%20Authentique/Affiche%201.webp" alt="Affiche 1" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Affiche 1</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Restaurant%20Authentique/Affiche%202.png" alt="Affiche 2" />
+          <img src="../Projets-content/Restaurant%20Authentique/Affiche%202.webp" alt="Affiche 2" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Affiche 2</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Restaurant%20Authentique/Affiche%203.png" alt="Affiche 3" />
+          <img src="../Projets-content/Restaurant%20Authentique/Affiche%203.webp" alt="Affiche 3" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Affiche 3</span>
         </div>
@@ -1798,7 +1819,7 @@
         </div>
       </div>
       <div class="single-img-wrap">
-        <img src="../Projets-content/Restaurant%20Authentique/Affiche%20menu%20du%20jour.png" alt="Affiche menu du jour" />
+        <img src="../Projets-content/Restaurant%20Authentique/Affiche%20menu%20du%20jour.webp" alt="Affiche menu du jour" loading="lazy" />
       </div>
     </div>
   </section>
@@ -1820,12 +1841,12 @@
       </div>
       <div class="accordion" id="acc-signa">
         <div class="acc-panel active">
-          <img src="../Projets-content/Restaurant%20Authentique/Affiche%20midi.png" alt="Affiche midi" />
+          <img src="../Projets-content/Restaurant%20Authentique/Affiche%20midi.webp" alt="Affiche midi" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Formule midi</span>
         </div>
         <div class="acc-panel">
-          <img src="../Projets-content/Restaurant%20Authentique/Affiche%20Restaurant.png" alt="Affiche Restaurant" />
+          <img src="../Projets-content/Restaurant%20Authentique/Affiche%20Restaurant.webp" alt="Affiche Restaurant" loading="lazy" />
           <div class="acc-overlay"></div>
           <span class="acc-title">Panneau restaurant</span>
         </div>
@@ -2080,6 +2101,7 @@
           if (i === 0) {
             const sz = getInitialSize();
             drawFrame(img, sz.w, sz.h);
+            window.dispatchEvent(new Event('frame0ready'));
           }
           if (onLoad) onLoad();
         };
@@ -2504,6 +2526,37 @@
     }
 
   })();
+  </script>
+  <script>
+    /* ─── PAGE LOADER ─── */
+    (function () {
+      var loader = document.getElementById('page-loader');
+      var bar    = document.getElementById('loader-bar');
+      if (!loader || !bar) return;
+      var START = Date.now(), MIN_MS = 400, fired = false;
+
+      var prog = 0;
+      var tick = setInterval(function () {
+        prog = Math.min(prog + Math.random() * 5, 88);
+        bar.style.width = prog + '%';
+      }, 180);
+
+      var fallback = setTimeout(finish, 6000);
+
+      function finish() {
+        if (fired) return; fired = true;
+        clearInterval(tick); clearTimeout(fallback);
+        bar.style.width = '100%';
+        var delay = Math.max(0, MIN_MS - (Date.now() - START));
+        setTimeout(function () {
+          loader.classList.add('loader-out');
+          loader.addEventListener('transitionend', function () { loader.style.display = 'none'; }, { once: true });
+        }, delay);
+      }
+
+      /* Condition : premier frame WebP dessiné sur le canvas */
+      window.addEventListener('frame0ready', finish, { once: true });
+    })();
   </script>
   <script>
   (function() {
