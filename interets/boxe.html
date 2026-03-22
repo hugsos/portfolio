@@ -1052,6 +1052,7 @@
         title: 'Sac de frappe',
         desc: 'Combinaisons et rythme au sac',
         url: '../Content/Boxe/sac.mp4',
+        poster: '../Content/Boxe/sac.jpg',
         span: 's-c1r4'
       },
       {
@@ -1059,6 +1060,7 @@
         title: 'Entraînement sac',
         desc: 'Enchaînements et puissance',
         url: '../Content/Boxe/sac%201.mp4',
+        poster: '../Content/Boxe/sac%201.jpg',
         span: 's-c1r4'
       },
       {
@@ -1066,6 +1068,7 @@
         title: 'Sparring boxe française',
         desc: 'Combat en conditions réelles',
         url: '../Content/Boxe/sparring%20boxe%20francaise.mp4',
+        poster: '../Content/Boxe/sparring%20boxe%20francaise.jpg',
         span: 's-c1r4'
       },
       {
@@ -1073,6 +1076,7 @@
         title: 'Assaut complet',
         desc: 'Vitesse et réactivité en sparring',
         url: '../Content/Boxe/sparring%20boxe%20francaise%201.mp4',
+        poster: '../Content/Boxe/sparring%20boxe%20francaise%201.jpg',
         span: 's-c1r4'
       }
     ];
@@ -1139,6 +1143,7 @@
       if (item.type === 'video') {
         const v = document.createElement('video');
         v.muted = v.loop = v.playsInline = true; v.preload = 'none'; v.dataset.src = item.url;
+        if (item.poster) v.poster = item.poster;
         thumb.appendChild(v);
       } else {
         const img = document.createElement('img');
@@ -1190,7 +1195,7 @@
         const isActive = Number(t.dataset.id) === id;
         t.classList.toggle('active', isActive);
         const v = t.querySelector('video');
-        if (v) { isActive ? v.play().catch(() => {}) : (v.pause(), v.currentTime = 0); }
+        if (v) { if (isActive) { if (v.dataset.src && !v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else { v.pause(); v.currentTime = 0; } }
       });
 
       backdrop.classList.add('open');

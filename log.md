@@ -2,6 +2,9 @@
 
 ---
 
+[MODIF] 2026-03-22 — interets/musculation.html, interets/boxe.html, interets/armee.html
+Fix miniatures manquantes dans le dock modal vidéo + autoplay dock. Fix miniatures : ajout de `poster` sur chaque item vidéo dans `mediaItems` (musculation/boxe ont des `.jpg` correspondants) ; armée sans poster → `preload='metadata'` + `src` direct. Fix autoplay dock : assigne `v.src` depuis `v.dataset.src` avant `v.play()` pour musculation et boxe (le src n'était jamais initialisé). Ajout de `poster` sur chaque item vidéo dans `mediaItems` (musculation et boxe ont des `.jpg` correspondants). Pour armée (pas d'images poster disponibles) : `preload='metadata'` + `src` direct pour que le navigateur affiche le premier frame.
+
 [MODIF] 2026-03-22 — Content/**/*.mp4, Projets-content/**/*.mp4
 Compression vidéo via FFmpeg (libx264 CRF 28, preset slow, faststart). 143 MB → 31 MB (-78%). Aucune perte visible à l'œil. scroll_ttr.mp4 ajouté au .gitignore (non utilisé dans le projet).
 

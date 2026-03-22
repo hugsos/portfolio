@@ -1314,6 +1314,7 @@
         title: 'Tirage vertical',
         desc: 'Dorsaux, amplitude complète',
         url: '../Content/Musculation/Tirage%20vertical%20.mp4',
+        poster: '../Content/Musculation/Tirage%20vertical.jpg',
         span: 's-c1r4'
       },
       {
@@ -1321,6 +1322,7 @@
         title: 'Développé couché',
         desc: 'Pectoraux, exercice fondamental',
         url: '../Content/Musculation/Developpe%20couche%20.mp4',
+        poster: '../Content/Musculation/Developpe%20couche.jpg',
         span: 's-c2r2'
       },
       {
@@ -1328,6 +1330,7 @@
         title: 'Squat',
         desc: 'Jambes, mouvement roi',
         url: '../Content/Musculation/Squat.mp4',
+        poster: '../Content/Musculation/Squat.jpg',
         span: 's-c1r2'
       },
       {
@@ -1342,6 +1345,7 @@
         title: 'Curl Larry Scott',
         desc: 'Biceps, isolation maximale',
         url: '../Content/Musculation/Curl%20larry%20scott.mp4',
+        poster: '../Content/Musculation/Curl%20larry%20scott.jpg',
         span: 's-c2r2'
       },
       {
@@ -1349,6 +1353,7 @@
         title: 'Curl marteau',
         desc: 'Biceps brachial & brachio-radial',
         url: '../Content/Musculation/curl%20marteau.mp4',
+        poster: '../Content/Musculation/curl%20marteau.jpg',
         span: 's-c1r2'
       },
       {
@@ -1356,6 +1361,7 @@
         title: 'Curl poulie',
         desc: 'Tension constante sur biceps',
         url: '../Content/Musculation/curl%20poulie.mp4',
+        poster: '../Content/Musculation/curl%20poulie.jpg',
         span: 's-c2r3'
       }
     ];
@@ -1423,6 +1429,7 @@
       if (item.type === 'video') {
         const v = document.createElement('video');
         v.muted = v.loop = v.playsInline = true; v.preload = 'none'; v.dataset.src = item.url;
+        if (item.poster) v.poster = item.poster;
         thumb.appendChild(v);
       } else {
         const img = document.createElement('img');
@@ -1472,7 +1479,7 @@
         const isActive = Number(t.dataset.id) === id;
         t.classList.toggle('active', isActive);
         const v = t.querySelector('video');
-        if (v) { isActive ? v.play().catch(() => {}) : (v.pause(), v.currentTime = 0); }
+        if (v) { if (isActive) { if (v.dataset.src && !v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else { v.pause(); v.currentTime = 0; } }
       });
 
       backdrop.classList.add('open');

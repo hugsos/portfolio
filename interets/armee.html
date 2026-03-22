@@ -1172,7 +1172,12 @@
       thumb.dataset.id = item.id;
       if (item.type === 'video') {
         const v = document.createElement('video');
-        v.muted = v.loop = v.playsInline = true; v.preload = 'none'; v.dataset.src = item.url;
+        v.muted = v.loop = v.playsInline = true;
+        if (item.poster) {
+          v.preload = 'none'; v.dataset.src = item.url; v.poster = item.poster;
+        } else {
+          v.preload = 'metadata'; v.src = item.url;
+        }
         thumb.appendChild(v);
       } else {
         const img = document.createElement('img');
