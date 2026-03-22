@@ -2,6 +2,9 @@
 
 ---
 
+[MODIF] 2026-03-22 — Content/**/*.mp4, Projets-content/**/*.mp4
+Compression vidéo via FFmpeg (libx264 CRF 28, preset slow, faststart). 143 MB → 31 MB (-78%). Aucune perte visible à l'œil. scroll_ttr.mp4 ajouté au .gitignore (non utilisé dans le projet).
+
 [AJOUT] 2026-03-22 — index.html, projets/*.html, interets/*.html
 Loading screen universel sur toutes les pages (overlay #0e0d0c, barre de progression, "BOURGEOIS Hugo"). Condition de déclenchement adaptée par type de page (canplay / frame0ready / load). Min 400ms, timeout 6s.
 
