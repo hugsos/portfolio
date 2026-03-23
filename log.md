@@ -3,6 +3,9 @@
 ---
 
 [MODIF] 2026-03-23 — index.html
+Perf mobile hero (critiques) : suppression background-attachment:fixed sur aurora::after (repaint à chaque pixel de scroll, ignoré par iOS de toute façon) ; heroBlurContainer réduit de 8 à 2 compositor layers GPU sur mobile (intensité ajustée pour conserver le même rendu visuel). Aucun impact esthétique visible.
+
+[MODIF] 2026-03-23 — index.html
 Aurora hero : throttle 30 FPS sur mobile. Sur device 120fps la CSS animation tentait ~120 repaints/s sur l'aurora (charge GPU max). Fix : media query `(hover:none) and (pointer:coarse)` coupe l'animation CSS et branche `background-position` sur `var(--aurora-x)` ; boucle JS RAF throttlée à 30fps met à jour la variable. Desktop inchangé. Réduction estimée : -75% de charge GPU sur écran 120fps mobile.
 
 ---

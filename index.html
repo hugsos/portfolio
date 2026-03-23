@@ -1076,12 +1076,17 @@
       animation: auroraMove 120s linear infinite;
     }
 
-    /* ─── Aurora 30 FPS sur mobile : JS prend le relais ─── */
+    /* ─── Aurora mobile : 30 FPS throttle + suppression background-attachment:fixed ─── */
     @media (hover: none) and (pointer: coarse) {
       .aurora-canvas,
       .aurora-canvas::after {
         animation: none !important;
         background-position: var(--aurora-x, 50%) 50%, var(--aurora-x, 50%) 50%;
+      }
+      /* background-attachment:fixed force un repaint complet à chaque pixel de scroll
+         sur mobile — supprimé ici, aucun impact visuel sur iOS (déjà ignoré par Safari) */
+      .aurora-canvas::after {
+        background-attachment: scroll;
       }
     }
 
@@ -2972,7 +2977,9 @@
     (function () {
       const container = document.getElementById('heroBlurContainer');
       if (!container) return;
-      const layers = 8, intensity = 1.6;
+      // Sur mobile : 2 layers suffisent (8 layers = 8 compositor layers GPU = lag)
+      const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      const layers = isMobile ? 2 : 8, intensity = isMobile ? 5.5 : 1.6;
       const seg = 1 / (layers + 1);
       for (let i = 0; i < layers; i++) {
         const stops = [
