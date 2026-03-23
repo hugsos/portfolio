@@ -1076,6 +1076,15 @@
       animation: auroraMove 120s linear infinite;
     }
 
+    /* ─── Aurora 30 FPS sur mobile : JS prend le relais ─── */
+    @media (hover: none) and (pointer: coarse) {
+      .aurora-canvas,
+      .aurora-canvas::after {
+        animation: none !important;
+        background-position: var(--aurora-x, 50%) 50%, var(--aurora-x, 50%) 50%;
+      }
+    }
+
     /* ─── SECTION BASE ─── */
     section {
       padding: clamp(64px, 8vw, 120px) var(--h-pad);
@@ -3183,6 +3192,37 @@
       new IntersectionObserver(function (entries) {
         aurora.classList.toggle('aurora-paused', !entries[0].isIntersecting);
       }, { threshold: 0 }).observe(aurora);
+    })();
+
+    /* ─── Aurora : throttle 30 FPS sur mobile (touch device) ─── */
+    (function () {
+      if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+      var aurora = document.querySelector('.aurora-canvas');
+      if (!aurora) return;
+
+      var DURATION  = 120000;      // même durée que l'animation CSS (120s)
+      var INTERVAL  = 1000 / 30;   // 30 FPS → ~33ms entre chaque frame
+      var startTime = null;
+      var lastFrame = 0;
+      var isPaused  = false;
+
+      // Se synchroniser avec le système aurora-paused (IntersectionObserver ci-dessus)
+      new MutationObserver(function () {
+        isPaused = aurora.classList.contains('aurora-paused');
+      }).observe(aurora, { attributes: true, attributeFilter: ['class'] });
+
+      function tick(now) {
+        requestAnimationFrame(tick);
+        if (isPaused) return;
+        if (now - lastFrame < INTERVAL) return; // throttle à 30 FPS
+        lastFrame = now;
+        if (!startTime) startTime = now;
+        var progress = ((now - startTime) % DURATION) / DURATION;
+        var pos = 50 + progress * 300; // 50% → 350% (identique au keyframe CSS)
+        aurora.style.setProperty('--aurora-x', pos + '%');
+      }
+
+      requestAnimationFrame(tick);
     })();
   </script>
 </body>
