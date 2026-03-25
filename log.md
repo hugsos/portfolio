@@ -2,6 +2,16 @@
 
 ---
 
+[MODIF] 2026-03-25 — projets/trouve-ta-ref.html, Projets-content/Trouve ta Ref/frames/
+Refonte hero-scroll-zone : remplacement des 120 frames WebP (supprimées) par de nouvelles frames extraites depuis scroll_ttr.mp4 (ffmpeg 12fps, 750px, sharp WebP 82%). Ajout de 3 phases d'animation texte sur la zone sticky : Phase 1 kicker vertical (DESIGN/DÉVELOPPEMENT/WORDPRESS) entrant via stagger GSAP ; Phase 2 stats d'audience (189k/123k/+300k) glissant depuis la gauche ; Phase 3 marquee TROUVETAREF.FR défilant avec le scroll. Intégration GSAP + ScrollTrigger CDN. hero-headline-area inchangé. Fond #0e0b02 conservé.
+
+---
+
+[MODIF] 2026-03-25 — projets/restaurant-authentique.html, projets/trouve-ta-ref.html
+Fix scroll jump iOS Safari sur sections hero sticky. Cause : window.innerHeight recalculé à chaque event scroll — iOS change cette valeur quand la barre d'adresse se cache/montre, faisant sauter la taille de la box et la progression raw de l'animation en plein scroll. Fix CSS : height:100vh → height:100svh (small viewport = stable). Fix JS : mise en cache de cachedVW/cachedVH au niveau module, mis à jour uniquement sur resize (orientation change), jamais sur scroll. Aucun impact visuel sur desktop/mac.
+
+---
+
 [MODIF] 2026-03-23 — index.html
 Perf mobile hero (critiques) : suppression background-attachment:fixed sur aurora::after (repaint à chaque pixel de scroll, ignoré par iOS de toute façon) ; heroBlurContainer réduit de 8 à 2 compositor layers GPU sur mobile (intensité ajustée pour conserver le même rendu visuel). Aucun impact esthétique visible.
 

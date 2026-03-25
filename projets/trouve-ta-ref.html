@@ -801,7 +801,7 @@
     #hero-scroll { width: 100%; }
 
     #hero-headline-area {
-      height: 100vh;
+      height: 100vh; height: 100svh;
       display: flex; align-items: center; justify-content: center;
       position: relative; background: #0e0b02; overflow: hidden;
     }
@@ -856,7 +856,7 @@
       height: 280vh; position: relative; background: #0e0b02;
     }
     #hero-sticky-inner {
-      position: sticky; top: 0; height: 100vh;
+      position: sticky; top: 0; height: 100vh; height: 100svh;
       display: flex; align-items: center; justify-content: center;
       background: #0e0b02; overflow: hidden;
     }
@@ -874,6 +874,7 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       display: block;
+      z-index: 1;
     }
 
     #scroll-overlay {
@@ -917,6 +918,90 @@
     }
     .overlay-btn-wrap { margin-top: 6px; }
     .overlay-btn { border-radius: 100px !important; }
+
+    /* ─── HERO SCROLL ZONE — Phases texte ─── */
+    #hsz-kicker {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      z-index: 5;
+      pointer-events: none;
+    }
+    #hsz-kicker span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brand-9);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      opacity: 0;
+    }
+
+    #hsz-stats {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      will-change: opacity, transform;
+    }
+    .hsz-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .hsz-stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.35rem, 4.5vw, 1.9rem);
+      font-weight: 700;
+      color: #eee;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+    .hsz-stat-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brand-9);
+    }
+
+    #hsz-marquee {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      will-change: opacity;
+    }
+    .hsz-marquee-track {
+      display: flex;
+      white-space: nowrap;
+      will-change: transform;
+    }
+    .hsz-marquee-track span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(0.75rem, 2.8vw, 0.95rem);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.45);
+      padding-right: 0;
+    }
 
     @media (max-width: 767px) {
       #hero-headline-area { height: 100svh; }
@@ -1092,13 +1177,45 @@
     <!-- Sticky scroll zone (280vh) -->
     <div id="hero-scroll-zone">
       <div id="hero-sticky-inner">
+
+        <!-- Phase 1 — kicker vertical gauche -->
+        <div id="hsz-kicker" aria-hidden="true">
+          <span>DESIGN</span>
+          <span>DÉVELOPPEMENT</span>
+          <span>WORDPRESS</span>
+        </div>
+
         <!-- Expanding media box -->
         <div id="scroll-box" role="img" aria-label="Aperçu du site trouvetaref.fr">
 
-          <!-- Scroll canvas (frames driven by scroll) -->
-          <canvas id="scroll-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+          <!-- Canvas frames driven by scroll -->
+          <canvas id="scroll-canvas"></canvas>
 
-          <!-- Overlay revealed at end of scroll -->
+          <!-- Phase 2 — stats overlay gauche -->
+          <div id="hsz-stats" aria-hidden="true">
+            <div class="hsz-stat">
+              <span class="hsz-stat-num">189k</span>
+              <span class="hsz-stat-label">TikTok</span>
+            </div>
+            <div class="hsz-stat">
+              <span class="hsz-stat-num">123k</span>
+              <span class="hsz-stat-label">Instagram</span>
+            </div>
+            <div class="hsz-stat">
+              <span class="hsz-stat-num">+300k</span>
+              <span class="hsz-stat-label">Abonnés</span>
+            </div>
+          </div>
+
+          <!-- Phase 3 — marquee horizontal -->
+          <div id="hsz-marquee" aria-hidden="true">
+            <div class="hsz-marquee-track">
+              <span>TROUVETAREF.FR &nbsp;·&nbsp; MODE &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; </span>
+              <span aria-hidden="true">TROUVETAREF.FR &nbsp;·&nbsp; MODE &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; </span>
+            </div>
+          </div>
+
+          <!-- Phase 4 — overlay final -->
           <div id="scroll-overlay" aria-hidden="true">
             <div class="overlay-inner">
               <span class="overlay-kicker">PROJET &nbsp;·&nbsp; DESIGN &amp; DÉVELOPPEMENT</span>
@@ -1461,6 +1578,10 @@
     })();
   </script>
 
+  <!-- ═══ GSAP + ScrollTrigger ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
   <!-- ═══ HERO SCROLL ANIMATION ═══ -->
   <script>
     (function () {
@@ -1470,6 +1591,10 @@
       const overlay      = document.getElementById('scroll-overlay');
       const overlayInner = overlay ? overlay.querySelector('.overlay-inner') : null;
       const headlineArea = document.getElementById('hero-headline-area');
+      const hszKicker    = document.getElementById('hsz-kicker');
+      const hszStats     = document.getElementById('hsz-stats');
+      const hszMarquee   = document.getElementById('hsz-marquee');
+      const marqueeTrack = hszMarquee ? hszMarquee.querySelector('.hsz-marquee-track') : null;
       if (!scrollZone || !scrollBox || !canvas) return;
 
       const ctx = canvas.getContext('2d');
@@ -1488,6 +1613,7 @@
       }
 
       let initSize = getInitialSize();
+      let cachedVW = window.innerWidth, cachedVH = window.innerHeight;
       function applyInitialSize() {
         scrollBox.style.width        = initSize.w + 'px';
         scrollBox.style.height       = initSize.h + 'px';
@@ -1557,54 +1683,113 @@
         loadBatch(phase3, 6);
       });
 
-      let ticking = false;
+      /* ── Headline fade (indépendant, déclenché par son propre scroll) ── */
+      if (headlineArea) {
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              ticking = false;
+              var scrollY = window.scrollY;
+              var hP  = clamp(scrollY / (headlineArea.offsetHeight * 0.8), 0, 1);
+              var hPE = easeOutCubic(hP);
+              headlineArea.style.opacity   = (1 - hPE).toFixed(3);
+              headlineArea.style.transform = 'translateY(-' + (hPE * 48).toFixed(1) + 'px)';
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+
+      /* ── Kicker entrance — stagger GSAP au premier scroll dans la zone ── */
+      if (hszKicker && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        var kickerSpans = hszKicker.querySelectorAll('span');
+        gsap.set(kickerSpans, { opacity: 0, y: 14 });
+        ScrollTrigger.create({
+          trigger: scrollZone,
+          start: 'top 85%',
+          onEnter: function() {
+            gsap.to(kickerSpans, { opacity: 1, y: 0, stagger: 0.14, duration: 0.85, ease: 'power3.out' });
+          },
+          onLeaveBack: function() {
+            gsap.to(kickerSpans, { opacity: 0, y: 14, duration: 0.4, ease: 'power2.in' });
+          }
+        });
+      }
+
+      /* ── Animation principale pilotée par le scroll ── */
+      var rafPending = false;
 
       function update() {
-        ticking = false;
-        const scrollY = window.scrollY;
-        const vw = window.innerWidth, vh = window.innerHeight;
+        rafPending = false;
+        var scrollY = window.scrollY;
+        var vw = cachedVW, vh = cachedVH;
 
-        if (headlineArea) {
-          const hP  = clamp(scrollY / (headlineArea.offsetHeight * 0.8), 0, 1);
-          const hPE = easeOutCubic(hP);
-          headlineArea.style.opacity   = (1 - hPE).toFixed(3);
-          headlineArea.style.transform = `translateY(-${(hPE * 48).toFixed(1)}px)`;
-        }
+        var zoneTop = scrollZone.offsetTop;
+        var raw = clamp((scrollY - zoneTop) / (scrollZone.offsetHeight - vh), 0, 1);
 
-        const zoneTop = scrollZone.offsetTop;
-        const raw = clamp((scrollY - zoneTop) / (scrollZone.offsetHeight - vh), 0, 1);
-
-        const expandP = easeOutCubic(mapRange(raw, 0, 0.60, 0, 1));
-        const curW = lerp(initSize.w, vw * 0.96, expandP);
-        const curH = lerp(initSize.h, vh * 0.92, expandP);
-        const curR = lerp(initSize.r, 0, expandP);
+        /* Box expand */
+        var expandP = easeOutCubic(mapRange(raw, 0, 0.60, 0, 1));
+        var curW = lerp(initSize.w, vw * 0.96, expandP);
+        var curH = lerp(initSize.h, vh * 0.92, expandP);
+        var curR = lerp(initSize.r, 0, expandP);
         scrollBox.style.width        = curW.toFixed(1) + 'px';
         scrollBox.style.height       = curH.toFixed(1) + 'px';
         scrollBox.style.borderRadius = curR.toFixed(1) + 'px';
 
-        const frameIdx = mapRange(raw, 0, 0.75, 0, TOTAL_FRAMES - 1);
+        /* Frame playback */
+        var frameIdx = mapRange(raw, 0, 0.75, 0, TOTAL_FRAMES - 1);
         showFrame(frameIdx, Math.round(curW), Math.round(curH));
 
-        const overlayP = easeOutCubic(mapRange(raw, 0.65, 1.0, 0, 1));
-        overlay.style.opacity       = overlayP.toFixed(3);
-        overlay.style.filter        = `blur(${lerp(8, 0, overlayP).toFixed(2)}px)`;
-        overlay.style.transform     = `scale(${lerp(1.04, 1, overlayP).toFixed(4)})`;
-        overlay.style.pointerEvents = overlayP > 0.9 ? 'auto' : 'none';
-        overlay.setAttribute('aria-hidden', overlayP < 0.8 ? 'true' : 'false');
+        /* Phase 1 — kicker fade-out quand la box grandit */
+        if (hszKicker) {
+          var kOut = easeOutCubic(mapRange(raw, 0.28, 0.44, 1, 0));
+          hszKicker.style.opacity = kOut.toFixed(3);
+        }
 
+        /* Phase 2 — stats : slide depuis la gauche (22%→42%), out (60%→72%) */
+        if (hszStats) {
+          var sIn  = easeOutCubic(mapRange(raw, 0.22, 0.42, 0, 1));
+          var sOut = mapRange(raw, 0.60, 0.72, 1, 0);
+          var sP   = Math.min(sIn, sOut);
+          hszStats.style.opacity   = sP.toFixed(3);
+          hszStats.style.transform = 'translateX(' + lerp(-32, 0, sIn).toFixed(1) + 'px)';
+        }
+
+        /* Phase 3 — marquee : fade-in (48%→64%), défile avec le scroll, out (72%→82%) */
+        if (hszMarquee && marqueeTrack) {
+          var mIn  = mapRange(raw, 0.48, 0.64, 0, 1);
+          var mOut = mapRange(raw, 0.72, 0.82, 1, 0);
+          hszMarquee.style.opacity       = Math.min(mIn, mOut).toFixed(3);
+          marqueeTrack.style.transform   = 'translateX(' + (raw * -220).toFixed(1) + 'px)';
+        }
+
+        /* Phase 4 — overlay final (68%→100%) */
+        if (overlay) {
+          var oP = easeOutCubic(mapRange(raw, 0.68, 1.0, 0, 1));
+          overlay.style.opacity       = oP.toFixed(3);
+          overlay.style.filter        = 'blur(' + lerp(8, 0, oP).toFixed(2) + 'px)';
+          overlay.style.transform     = 'scale(' + lerp(1.04, 1, oP).toFixed(4) + ')';
+          overlay.style.pointerEvents = oP > 0.9 ? 'auto' : 'none';
+          overlay.setAttribute('aria-hidden', oP < 0.8 ? 'true' : 'false');
+        }
         if (overlayInner) {
-          const contentP = easeOutCubic(mapRange(raw, 0.74, 1.0, 0, 1));
-          overlayInner.style.opacity   = contentP.toFixed(3);
-          overlayInner.style.transform = `translateY(${lerp(20, 0, contentP).toFixed(2)}px)`;
+          var cP = easeOutCubic(mapRange(raw, 0.74, 1.0, 0, 1));
+          overlayInner.style.opacity   = cP.toFixed(3);
+          overlayInner.style.transform = 'translateY(' + lerp(20, 0, cP).toFixed(2) + 'px)';
         }
       }
 
       window.addEventListener('scroll', function() {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+        if (!rafPending) { requestAnimationFrame(update); rafPending = true; }
       }, { passive: true });
 
       window.addEventListener('resize', function() {
-        initSize = getInitialSize(); applyInitialSize(); update();
+        cachedVW = window.innerWidth; cachedVH = window.innerHeight;
+        initSize = getInitialSize(); applyInitialSize();
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        update();
       }, { passive: true });
 
       update();
