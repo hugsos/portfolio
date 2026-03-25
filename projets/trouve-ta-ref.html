@@ -1598,7 +1598,7 @@
       if (!scrollZone || !scrollBox || !canvas) return;
 
       const ctx = canvas.getContext('2d');
-      const TOTAL_FRAMES = 120;
+      const TOTAL_FRAMES = 200;
       const FRAMES_BASE  = '../Projets-content/Trouve%20ta%20Ref/frames/frame-';
 
       function easeOutCubic(t)     { return 1 - Math.pow(1 - t, 3); }
@@ -1677,9 +1677,9 @@
       }
 
       loadFrame(0);
-      const phase2 = Array.from({ length: 35 }, (_, i) => i + 1);
+      const phase2 = Array.from({ length: 50 }, (_, i) => i + 1);
       loadBatch(phase2, 8, function() {
-        const phase3 = Array.from({ length: TOTAL_FRAMES - 36 }, (_, i) => i + 36);
+        const phase3 = Array.from({ length: TOTAL_FRAMES - 51 }, (_, i) => i + 51);
         loadBatch(phase3, 6);
       });
 
