@@ -2,6 +2,11 @@
 
 ---
 
+[MODIF] 2026-03-25 — projets/restaurant-authentique.html, Projets-content/Restaurant Authentique/frames/
+Même refonte que TTR sur le hero-scroll-zone : 199 frames WebP extraites depuis video_scroll_restau.mp4 (ffmpeg 26fps, 750px, sharp 82%). 4 phases : kicker vertical IDENTITÉ/VISUELLE/WEB (stagger GSAP), stats Semi-Gastro/Jura/2024, marquee L'AUTHENTIQUE défilant, overlay final inchangé. GSAP + ScrollTrigger CDN. hero-headline-area inchangé.
+
+---
+
 [MODIF] 2026-03-25 — projets/trouve-ta-ref.html, Projets-content/Trouve ta Ref/frames/
 Refonte hero-scroll-zone : remplacement des 120 frames WebP (supprimées) par de nouvelles frames extraites depuis scroll_ttr.mp4 (ffmpeg 12fps, 750px, sharp WebP 82%). Ajout de 3 phases d'animation texte sur la zone sticky : Phase 1 kicker vertical (DESIGN/DÉVELOPPEMENT/WORDPRESS) entrant via stagger GSAP ; Phase 2 stats d'audience (189k/123k/+300k) glissant depuis la gauche ; Phase 3 marquee TROUVETAREF.FR défilant avec le scroll. Intégration GSAP + ScrollTrigger CDN. hero-headline-area inchangé. Fond #0e0b02 conservé.
 

@@ -358,7 +358,7 @@
 
     /* Headline area */
     #hero-headline-area {
-      height: 100vh;
+      height: 100vh; height: 100svh;
       display: flex; align-items: center; justify-content: center;
       position: relative; background: #0e0b02; overflow: hidden;
     }
@@ -414,7 +414,7 @@
       height: 280vh; position: relative; background: #0e0b02;
     }
     #hero-sticky-inner {
-      position: sticky; top: 0; height: 100vh;
+      position: sticky; top: 0; height: 100vh; height: 100svh;
       display: flex; align-items: center; justify-content: center;
       background: #0e0b02; overflow: hidden;
     }
@@ -432,7 +432,7 @@
     #scroll-canvas {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      display: block;
+      display: block; z-index: 1;
     }
 
     /* Overlay */
@@ -477,6 +477,51 @@
     }
     .overlay-btn-wrap { margin-top: 6px; }
     .overlay-btn { border-radius: 100px !important; }
+
+    /* ─── HERO SCROLL ZONE — Phases texte ─── */
+    #hsz-kicker {
+      position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 0.55rem;
+      z-index: 5; pointer-events: none;
+    }
+    #hsz-kicker span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--brand-9);
+      writing-mode: vertical-rl; text-orientation: mixed; opacity: 0;
+    }
+    #hsz-stats {
+      position: absolute; bottom: 1.5rem; left: 1.2rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      z-index: 5; pointer-events: none; opacity: 0;
+      will-change: opacity, transform;
+    }
+    .hsz-stat { display: flex; flex-direction: column; gap: 0.1rem; }
+    .hsz-stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1rem, 3.5vw, 1.5rem);
+      font-weight: 700; color: #eee; line-height: 1;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+    .hsz-stat-label {
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--brand-9);
+    }
+    #hsz-marquee {
+      position: absolute; bottom: 1.2rem; left: 0; right: 0;
+      overflow: hidden; z-index: 5; pointer-events: none;
+      opacity: 0; will-change: opacity;
+    }
+    .hsz-marquee-track {
+      display: flex; white-space: nowrap; will-change: transform;
+    }
+    .hsz-marquee-track span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(0.75rem, 2.8vw, 0.95rem); font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(201,168,76,0.45);
+    }
 
     @media (max-width: 767px) {
       #hero-headline-area { height: 100svh; }
@@ -1468,16 +1513,48 @@
       </div>
     </div>
 
-    <!-- Sticky scroll zone (220vh) -->
+    <!-- Sticky scroll zone (280vh) -->
     <div id="hero-scroll-zone">
       <div id="hero-sticky-inner">
+
+        <!-- Phase 1 — kicker vertical gauche -->
+        <div id="hsz-kicker" aria-hidden="true">
+          <span>IDENTITÉ</span>
+          <span>VISUELLE</span>
+          <span>WEB</span>
+        </div>
+
         <!-- Expanding media box -->
         <div id="scroll-box" role="img" aria-label="Aperçu du site restaurantauthentique.fr">
 
-          <!-- Scroll canvas (frames driven by scroll, works on all mobile browsers) -->
-          <canvas id="scroll-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+          <!-- Canvas frames driven by scroll -->
+          <canvas id="scroll-canvas"></canvas>
 
-          <!-- Overlay revealed at end of scroll -->
+          <!-- Phase 2 — stats overlay gauche -->
+          <div id="hsz-stats" aria-hidden="true">
+            <div class="hsz-stat">
+              <span class="hsz-stat-num">Semi-Gastro</span>
+              <span class="hsz-stat-label">Cuisine</span>
+            </div>
+            <div class="hsz-stat">
+              <span class="hsz-stat-num">Jura</span>
+              <span class="hsz-stat-label">Localisation</span>
+            </div>
+            <div class="hsz-stat">
+              <span class="hsz-stat-num">2024</span>
+              <span class="hsz-stat-label">Réalisation</span>
+            </div>
+          </div>
+
+          <!-- Phase 3 — marquee horizontal -->
+          <div id="hsz-marquee" aria-hidden="true">
+            <div class="hsz-marquee-track">
+              <span>L'AUTHENTIQUE &nbsp;·&nbsp; JURA &nbsp;·&nbsp; IDENTITÉ &amp; WEB &nbsp;·&nbsp; </span>
+              <span aria-hidden="true">L'AUTHENTIQUE &nbsp;·&nbsp; JURA &nbsp;·&nbsp; IDENTITÉ &amp; WEB &nbsp;·&nbsp; </span>
+            </div>
+          </div>
+
+          <!-- Phase 4 — overlay final -->
           <div id="scroll-overlay" aria-hidden="true">
             <div class="overlay-inner">
               <span class="overlay-kicker">PROJET &nbsp;·&nbsp; IDENTITÉ VISUELLE</span>
@@ -2021,6 +2098,10 @@
     })();
   </script>
 
+  <!-- ═══ GSAP + ScrollTrigger ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
   <!-- ═══ HERO SCROLL ANIMATION ═══ -->
   <script>
     (function () {
@@ -2030,19 +2111,21 @@
       const overlay      = document.getElementById('scroll-overlay');
       const overlayInner = overlay ? overlay.querySelector('.overlay-inner') : null;
       const headlineArea = document.getElementById('hero-headline-area');
+      const hszKicker    = document.getElementById('hsz-kicker');
+      const hszStats     = document.getElementById('hsz-stats');
+      const hszMarquee   = document.getElementById('hsz-marquee');
+      const marqueeTrack = hszMarquee ? hszMarquee.querySelector('.hsz-marquee-track') : null;
       if (!scrollZone || !scrollBox || !canvas) return;
 
       const ctx = canvas.getContext('2d');
-      const TOTAL_FRAMES = 120;
+      const TOTAL_FRAMES = 199;
       const FRAMES_BASE  = '../Projets-content/Restaurant%20Authentique/frames/frame-';
 
-      /* ── helpers ── */
       function easeOutCubic(t)     { return 1 - Math.pow(1 - t, 3); }
       function clamp(v, mn, mx)    { return Math.max(mn, Math.min(mx, v)); }
       function lerp(a, b, t)       { return a + (b - a) * t; }
       function mapRange(v,a,b,c,d) { return lerp(c, d, clamp((v-a)/(b-a), 0, 1)); }
 
-      /* ── initial box size ── */
       function getInitialSize() {
         const vw = window.innerWidth;
         if (vw < 480) return { w: vw - 40, h: Math.round((vw - 40) * 9/16), r: 14 };
@@ -2050,6 +2133,7 @@
       }
 
       let initSize = getInitialSize();
+      let cachedVW = window.innerWidth, cachedVH = window.innerHeight;
       function applyInitialSize() {
         scrollBox.style.width        = initSize.w + 'px';
         scrollBox.style.height       = initSize.h + 'px';
@@ -2057,7 +2141,6 @@
       }
       applyInitialSize();
 
-      /* ── frame store ── */
       const frames = new Array(TOTAL_FRAMES).fill(null);
 
       function frameUrl(i) {
@@ -2075,12 +2158,8 @@
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
       }
 
-      let currentFrameIdx = 0;
-
       function showFrame(idx, cw, ch) {
         idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(idx)));
-        currentFrameIdx = idx;
-        /* Fall back to nearest loaded frame if target not ready */
         for (let delta = 0; delta < TOTAL_FRAMES; delta++) {
           const candidate = frames[Math.max(0, idx - delta)];
           if (candidate && candidate.complete && candidate.naturalWidth) {
@@ -2090,10 +2169,6 @@
         }
       }
 
-      /* ── Progressive loading ──
-         Phase 1: frame 0          (immediate display)
-         Phase 2: frames 1–35      (first scroll quarter, ~8 concurrent)
-         Phase 3: frames 36–119    (rest, 6 concurrent)  */
       function loadFrame(i, onLoad) {
         if (frames[i]) return;
         const img = new Image();
@@ -2116,8 +2191,7 @@
             const i = indices[cursor++];
             active++;
             loadFrame(i, function() {
-              active--;
-              done++;
+              active--; done++;
               if (done === indices.length && onAllDone) onAllDone();
               else next();
             });
@@ -2126,71 +2200,118 @@
         next();
       }
 
-      /* Phase 1: frame 0 immediately */
       loadFrame(0);
-
-      /* Phase 2: frames 1–35 with 8 parallel requests */
-      const phase2 = Array.from({ length: 35 }, (_, i) => i + 1);
+      const phase2 = Array.from({ length: 50 }, (_, i) => i + 1);
       loadBatch(phase2, 8, function() {
-        /* Phase 3: remaining frames with 6 parallel requests */
-        const phase3 = Array.from({ length: TOTAL_FRAMES - 36 }, (_, i) => i + 36);
+        const phase3 = Array.from({ length: TOTAL_FRAMES - 51 }, (_, i) => i + 51);
         loadBatch(phase3, 6);
-      });;
+      });
 
-      /* ── scroll update ── */
-      let ticking = false;
+      /* ── Headline fade ── */
+      if (headlineArea) {
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              ticking = false;
+              var scrollY = window.scrollY;
+              var hP  = clamp(scrollY / (headlineArea.offsetHeight * 0.8), 0, 1);
+              var hPE = easeOutCubic(hP);
+              headlineArea.style.opacity   = (1 - hPE).toFixed(3);
+              headlineArea.style.transform = 'translateY(-' + (hPE * 48).toFixed(1) + 'px)';
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+
+      /* ── Kicker entrance — stagger GSAP ── */
+      if (hszKicker && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        var kickerSpans = hszKicker.querySelectorAll('span');
+        gsap.set(kickerSpans, { opacity: 0, y: 14 });
+        ScrollTrigger.create({
+          trigger: scrollZone,
+          start: 'top 85%',
+          onEnter: function() {
+            gsap.to(kickerSpans, { opacity: 1, y: 0, stagger: 0.14, duration: 0.85, ease: 'power3.out' });
+          },
+          onLeaveBack: function() {
+            gsap.to(kickerSpans, { opacity: 0, y: 14, duration: 0.4, ease: 'power2.in' });
+          }
+        });
+      }
+
+      /* ── Animation principale ── */
+      var rafPending = false;
 
       function update() {
-        ticking = false;
-        const scrollY = window.scrollY;
-        const vw = window.innerWidth, vh = window.innerHeight;
+        rafPending = false;
+        var scrollY = window.scrollY;
+        var vw = cachedVW, vh = cachedVH;
 
-        /* HEADLINE FADE */
-        if (headlineArea) {
-          const hP  = clamp(scrollY / (headlineArea.offsetHeight * 0.8), 0, 1);
-          const hPE = easeOutCubic(hP);
-          headlineArea.style.opacity   = (1 - hPE).toFixed(3);
-          headlineArea.style.transform = `translateY(-${(hPE * 48).toFixed(1)}px)`;
-        }
+        var zoneTop = scrollZone.offsetTop;
+        var raw = clamp((scrollY - zoneTop) / (scrollZone.offsetHeight - vh), 0, 1);
 
-        const zoneTop = scrollZone.offsetTop;
-        const raw = clamp((scrollY - zoneTop) / (scrollZone.offsetHeight - vh), 0, 1);
-
-        /* BOX EXPANSION (raw 0 → 0.60) */
-        const expandP = easeOutCubic(mapRange(raw, 0, 0.60, 0, 1));
-        const curW = lerp(initSize.w, vw * 0.96, expandP);
-        const curH = lerp(initSize.h, vh * 0.92, expandP);
-        const curR = lerp(initSize.r, 0, expandP);
+        /* Box expand */
+        var expandP = easeOutCubic(mapRange(raw, 0, 0.60, 0, 1));
+        var curW = lerp(initSize.w, vw * 0.96, expandP);
+        var curH = lerp(initSize.h, vh * 0.92, expandP);
+        var curR = lerp(initSize.r, 0, expandP);
         scrollBox.style.width        = curW.toFixed(1) + 'px';
         scrollBox.style.height       = curH.toFixed(1) + 'px';
         scrollBox.style.borderRadius = curR.toFixed(1) + 'px';
 
-        /* FRAME SELECTION (raw 0 → 0.75 = frames 0 → 79) */
-        const frameIdx = mapRange(raw, 0, 0.75, 0, TOTAL_FRAMES - 1);
+        /* Frame playback */
+        var frameIdx = mapRange(raw, 0, 0.75, 0, TOTAL_FRAMES - 1);
         showFrame(frameIdx, Math.round(curW), Math.round(curH));
 
-        /* OVERLAY REVEAL (raw 0.65 → 1.0) */
-        const overlayP = easeOutCubic(mapRange(raw, 0.65, 1.0, 0, 1));
-        overlay.style.opacity       = overlayP.toFixed(3);
-        overlay.style.filter        = `blur(${lerp(8, 0, overlayP).toFixed(2)}px)`;
-        overlay.style.transform     = `scale(${lerp(1.04, 1, overlayP).toFixed(4)})`;
-        overlay.style.pointerEvents = overlayP > 0.9 ? 'auto' : 'none';
-        overlay.setAttribute('aria-hidden', overlayP < 0.8 ? 'true' : 'false');
+        /* Phase 1 — kicker fade-out */
+        if (hszKicker) {
+          var kOut = easeOutCubic(mapRange(raw, 0.28, 0.44, 1, 0));
+          hszKicker.style.opacity = kOut.toFixed(3);
+        }
 
+        /* Phase 2 — stats (22%→42%, out 60%→72%) */
+        if (hszStats) {
+          var sIn  = easeOutCubic(mapRange(raw, 0.22, 0.42, 0, 1));
+          var sOut = mapRange(raw, 0.60, 0.72, 1, 0);
+          hszStats.style.opacity   = Math.min(sIn, sOut).toFixed(3);
+          hszStats.style.transform = 'translateX(' + lerp(-32, 0, sIn).toFixed(1) + 'px)';
+        }
+
+        /* Phase 3 — marquee (48%→64%, out 72%→82%) */
+        if (hszMarquee && marqueeTrack) {
+          var mIn  = mapRange(raw, 0.48, 0.64, 0, 1);
+          var mOut = mapRange(raw, 0.72, 0.82, 1, 0);
+          hszMarquee.style.opacity     = Math.min(mIn, mOut).toFixed(3);
+          marqueeTrack.style.transform = 'translateX(' + (raw * -220).toFixed(1) + 'px)';
+        }
+
+        /* Phase 4 — overlay final (68%→100%) */
+        if (overlay) {
+          var oP = easeOutCubic(mapRange(raw, 0.68, 1.0, 0, 1));
+          overlay.style.opacity       = oP.toFixed(3);
+          overlay.style.filter        = 'blur(' + lerp(8, 0, oP).toFixed(2) + 'px)';
+          overlay.style.transform     = 'scale(' + lerp(1.04, 1, oP).toFixed(4) + ')';
+          overlay.style.pointerEvents = oP > 0.9 ? 'auto' : 'none';
+          overlay.setAttribute('aria-hidden', oP < 0.8 ? 'true' : 'false');
+        }
         if (overlayInner) {
-          const contentP = easeOutCubic(mapRange(raw, 0.74, 1.0, 0, 1));
-          overlayInner.style.opacity   = contentP.toFixed(3);
-          overlayInner.style.transform = `translateY(${lerp(20, 0, contentP).toFixed(2)}px)`;
+          var cP = easeOutCubic(mapRange(raw, 0.74, 1.0, 0, 1));
+          overlayInner.style.opacity   = cP.toFixed(3);
+          overlayInner.style.transform = 'translateY(' + lerp(20, 0, cP).toFixed(2) + 'px)';
         }
       }
 
       window.addEventListener('scroll', function() {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+        if (!rafPending) { requestAnimationFrame(update); rafPending = true; }
       }, { passive: true });
 
       window.addEventListener('resize', function() {
-        initSize = getInitialSize();
-        applyInitialSize();
+        cachedVW = window.innerWidth; cachedVH = window.innerHeight;
+        initSize = getInitialSize(); applyInitialSize();
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         update();
       }, { passive: true });
 
