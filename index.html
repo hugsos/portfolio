@@ -340,27 +340,33 @@
     #hero {
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       position: relative;
       overflow: hidden;
-      padding: 120px var(--h-pad) 80px;
+      padding: 80px var(--h-pad) 48px;
+      background: #121212;
     }
 
-    .hero-bg {
+    /* ─── HERO VIDEO BACKGROUND ─── */
+    .hero-video-bg {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
       pointer-events: none;
     }
 
-    /* Radial glow */
-    .hero-bg::after {
-      content: '';
+    .hero-video-fade {
       position: absolute;
-      top: -15%;
-      right: -5%;
-      width: 55%;
-      height: 75%;
-      background: radial-gradient(ellipse at 65% 25%, rgba(201,168,76,0.09) 0%, rgba(201,168,76,0.03) 45%, transparent 70%);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(to bottom, transparent 0%, #121212 100%);
+      z-index: 1;
+      pointer-events: none;
     }
 
     /* ─── FLOATING PARTICLES ─── */
@@ -377,22 +383,26 @@
       pointer-events: none;
       will-change: transform, opacity;
       animation: particleFloat ease-in-out infinite;
+      z-index: 1;
     }
 
     .hero-inner {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       max-width: var(--page-width);
       margin: 0 auto;
       width: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 80px;
+      text-align: center;
     }
 
     .hero-text {
-      flex: 1;
-      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 720px;
     }
 
     /* ─── HERO PHOTO ─── */
@@ -465,8 +475,7 @@
     }
 
     @media (max-width: 900px) {
-      .hero-inner { flex-direction: column; gap: 48px; }
-      .hero-photo-wrap { width: 320px; }
+      .hero-inner { gap: 0; }
     }
 
     /* ─── STICKY PROJECT TABS ─── */
@@ -637,9 +646,20 @@
     .tl-wrapper {
       background: var(--neutral-1);
       padding: 120px 0 140px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      border-top: none;
       position: relative;
       overflow: hidden;
+    }
+    .tl-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to bottom, #121212 0%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
     }
     .tl-tiles-bg {
       position: absolute;
@@ -863,10 +883,24 @@
       gap: 6px;
       font-size: 0.78rem;
       font-weight: 500;
-      color: var(--neutral-10);
+      color: var(--neutral-11);
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-tag-top {
+      position: absolute;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      white-space: nowrap;
     }
 
     .hero-tag-dot {
@@ -883,14 +917,17 @@
       line-height: 1.05;
       letter-spacing: -0.04em;
       max-width: 680px;
-      margin-bottom: 36px;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.6);
     }
 
     .hero-buttons {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 16px;
       flex-wrap: wrap;
+      margin-top: 16px;
     }
 
     /* ─── GRADIENT BUTTONS ─── */
@@ -911,14 +948,18 @@
       color: #fff;
       position: relative;
       appearance: none;
-      background: radial-gradient(
-        var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
-        var(--color-1) var(--stop-1),
-        var(--color-2) var(--stop-2),
-        var(--color-3) var(--stop-3),
-        var(--color-4) var(--stop-4),
-        var(--color-5) var(--stop-5)
-      );
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      background:
+        radial-gradient(
+          var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
+          var(--color-1) var(--stop-1),
+          var(--color-2) var(--stop-2),
+          var(--color-3) var(--stop-3),
+          var(--color-4) var(--stop-4),
+          var(--color-5) var(--stop-5)
+        ),
+        rgba(255,255,255,0.07);
       transition:
         --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s,
         --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s,
@@ -942,15 +983,15 @@
       pointer-events: none;
     }
 
-    /* Primary, dark to gold */
+    /* Primary — liquid glass + golden glow */
     .btn-primary {
-      --color-1: #0a0700;
-      --color-2: #1a1000;
-      --color-3: #3d2700;
-      --color-4: #7a5200;
-      --color-5: #c9a84c;
-      --border-color-1: hsla(42, 75%, 60%, 0.2);
-      --border-color-2: hsla(42, 75%, 40%, 0.75);
+      --color-1: rgba(10,7,0,0.0);
+      --color-2: rgba(26,16,0,0.06);
+      --color-3: rgba(61,39,0,0.14);
+      --color-4: rgba(122,82,0,0.22);
+      --color-5: rgba(201,168,76,0.38);
+      --border-color-1: hsla(42, 75%, 60%, 0.25);
+      --border-color-2: hsla(42, 75%, 40%, 0.8);
     }
 
     .btn-primary:hover {
@@ -958,14 +999,14 @@
       --pos-y: 91.51%;
       --spread-x: 120.24%;
       --spread-y: 103.18%;
-      --color-1: #dbb96a;
-      --color-2: #c9a84c;
-      --color-3: #8b6400;
-      --color-4: #2a1800;
-      --color-5: #000;
+      --color-1: rgba(219,185,106,0.55);
+      --color-2: rgba(201,168,76,0.45);
+      --color-3: rgba(139,100,0,0.28);
+      --color-4: rgba(42,24,0,0.12);
+      --color-5: rgba(0,0,0,0);
       --border-angle: 190deg;
-      --border-color-1: hsla(42, 78%, 90%, 0.1);
-      --border-color-2: hsla(42, 75%, 90%, 0.6);
+      --border-color-1: hsla(42, 78%, 90%, 0.15);
+      --border-color-2: hsla(42, 75%, 90%, 0.65);
       --stop-1: 0%;
       --stop-2: 8.8%;
       --stop-3: 21.44%;
@@ -974,16 +1015,16 @@
       transform: translateY(-2px);
     }
 
-    /* Secondary, dark glass with gold shimmer border */
+    /* Secondary — liquid glass, border doré */
     .btn-secondary {
-      --color-1: #0d0d0d;
-      --color-2: #141000;
-      --color-3: #1e1800;
-      --color-4: #2e2400;
-      --color-5: #3d3000;
+      --color-1: rgba(13,13,13,0.0);
+      --color-2: rgba(20,16,0,0.04);
+      --color-3: rgba(30,24,0,0.08);
+      --color-4: rgba(46,36,0,0.1);
+      --color-5: rgba(61,48,0,0.14);
       --border-angle: 200deg;
-      --border-color-1: hsla(42, 70%, 60%, 0.55);
-      --border-color-2: hsla(42, 50%, 40%, 0.15);
+      --border-color-1: hsla(42, 70%, 60%, 0.6);
+      --border-color-2: hsla(42, 50%, 40%, 0.18);
     }
 
     .btn-secondary:hover {
@@ -991,11 +1032,11 @@
       --pos-y: 95.51%;
       --spread-x: 110.24%;
       --spread-y: 110.2%;
-      --color-1: #1a1400;
-      --color-2: #3d2a00;
-      --color-3: #7a5200;
-      --color-4: #c9a84c;
-      --color-5: #dbb96a;
+      --color-1: rgba(26,20,0,0.1);
+      --color-2: rgba(61,42,0,0.22);
+      --color-3: rgba(122,82,0,0.32);
+      --color-4: rgba(201,168,76,0.42);
+      --color-5: rgba(219,185,106,0.5);
       --stop-1: 0%;
       --stop-2: 25%;
       --stop-3: 50%;
@@ -1026,6 +1067,7 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
+      z-index: 2;
     }
 
     .scroll-line {
@@ -1967,11 +2009,12 @@
     /* ─── Morphing Text ─── */
     .morphing-text-wrap {
       position: relative;
-      height: 3rem;
-      margin-top: 0.75rem;
-      margin-bottom: 0.75rem;      
+      height: clamp(2.8rem, 5vw, 5rem);
+      margin-top: 0;
+      margin-bottom: 0.5rem;
       overflow: visible;
       filter: url(#morphing-threshold) blur(0.5px);
+      width: 100%;
     }
     .morphing-text-wrap span {
       position: absolute;
@@ -1979,12 +2022,23 @@
       top: 0;
       display: inline-block;
       width: 100%;
-      font-size: clamp(1.4rem, 2.8vw, 5rem);
+      text-align: center;
+      font-size: clamp(2.4rem, 5vw, 5rem);
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--brand-9);
       white-space: nowrap;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 768px) {
+      .morphing-text-wrap {
+        margin-bottom: 0.15rem;
+      }
+      .hero-buttons {
+        margin-top: 8px;
+      }
     }
 
     /* ─── Pause aurora when off-screen ─── */
@@ -2091,16 +2145,19 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-bg"></div>
-    <div class="aurora-canvas" aria-hidden="true"></div>
-    <div class="hero-inner">
+    <video id="heroVid" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="Brand/hero_vid.webm" type="video/webm">
+      <source src="Brand/hero_vid.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-fade" aria-hidden="true"></div>
 
-      <!-- Texte gauche -->
+    <div class="hero-tag hero-tag-top">
+      <span class="hero-tag-dot"></span>
+      Étudiant BUT Info Com · Développeur Web
+    </div>
+
+    <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-tag">
-          <span class="hero-tag-dot"></span>
-          Étudiant BUT Info Com · Développeur Web
-        </div>
         <h1 class="hero-h1">BOURGEOIS<br>Hugo</h1>
 
         <!-- Morphing text -->
@@ -2130,19 +2187,8 @@
           </a>
         </div>
       </div>
-
-      <!-- Photo droite, card avec blur progressif + légende intégrée -->
-      <div class="hero-photo-wrap">
-        <img src="Brand/Hugo.webp" alt="BOURGEOIS Hugo" class="hero-photo-img" />
-        <div class="hero-photo-blur-container" id="heroBlurContainer"></div>
-        <div class="hero-photo-caption">
-          <p class="hero-photo-name">BOURGEOIS Hugo</p>
-          <p class="hero-photo-sub">Né le 04 / 04 / 2005</p>
-          <p class="hero-photo-sub">Première année BUT Info-Com</p>
-        </div>
-      </div>
-
     </div>
+
     <div class="hero-scroll">
       <div class="scroll-line"></div>
     </div>
@@ -2973,32 +3019,6 @@
       window.addEventListener('resize', build, { passive: true });
     })();
 
-    /* ─── Progressive Blur, bottom of hero photo ─── */
-    (function () {
-      const container = document.getElementById('heroBlurContainer');
-      if (!container) return;
-      // Sur mobile : 2 layers suffisent (8 layers = 8 compositor layers GPU = lag)
-      const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      const layers = isMobile ? 2 : 8, intensity = isMobile ? 5.5 : 1.6;
-      const seg = 1 / (layers + 1);
-      for (let i = 0; i < layers; i++) {
-        const stops = [
-          i * seg, (i + 1) * seg, (i + 2) * seg, (i + 3) * seg
-        ].map((p, pi) =>
-          `rgba(255,255,255,${pi === 1 || pi === 2 ? 1 : 0}) ${(p * 100).toFixed(1)}%`
-        );
-        const gradient = `linear-gradient(180deg, ${stops.join(', ')})`;
-        const el = document.createElement('div');
-        el.className = 'hero-photo-blur-layer';
-        el.style.cssText = [
-          `mask-image:${gradient}`,
-          `-webkit-mask-image:${gradient}`,
-          `backdrop-filter:blur(${(i * intensity).toFixed(2)}px)`,
-          `-webkit-backdrop-filter:blur(${(i * intensity).toFixed(2)}px)`,
-        ].join(';');
-        container.appendChild(el);
-      }
-    })();
 
     /* ─── Lamp Background (tech section) ─── */
     (function () {
@@ -3188,49 +3208,15 @@
         }, delay);
       }
 
-      /* Condition : window.onload (images + fonts + scripts) */
-      window.addEventListener('load', finish, { once: true });
-    })();
-
-    /* ─── Pause aurora animation when hero is off-screen (mobile GPU) ─── */
-    (function () {
-      var aurora = document.querySelector('.aurora-canvas');
-      if (!aurora || !('IntersectionObserver' in window)) return;
-      new IntersectionObserver(function (entries) {
-        aurora.classList.toggle('aurora-paused', !entries[0].isIntersecting);
-      }, { threshold: 0 }).observe(aurora);
-    })();
-
-    /* ─── Aurora : throttle 30 FPS sur mobile (touch device) ─── */
-    (function () {
-      if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
-      var aurora = document.querySelector('.aurora-canvas');
-      if (!aurora) return;
-
-      var DURATION  = 120000;      // même durée que l'animation CSS (120s)
-      var INTERVAL  = 1000 / 30;   // 30 FPS → ~33ms entre chaque frame
-      var startTime = null;
-      var lastFrame = 0;
-      var isPaused  = false;
-
-      // Se synchroniser avec le système aurora-paused (IntersectionObserver ci-dessus)
-      new MutationObserver(function () {
-        isPaused = aurora.classList.contains('aurora-paused');
-      }).observe(aurora, { attributes: true, attributeFilter: ['class'] });
-
-      function tick(now) {
-        requestAnimationFrame(tick);
-        if (isPaused) return;
-        if (now - lastFrame < INTERVAL) return; // throttle à 30 FPS
-        lastFrame = now;
-        if (!startTime) startTime = now;
-        var progress = ((now - startTime) % DURATION) / DURATION;
-        var pos = 50 + progress * 300; // 50% → 350% (identique au keyframe CSS)
-        aurora.style.setProperty('--aurora-x', pos + '%');
+      /* Condition : vidéo hero canplay */
+      var heroVid = document.getElementById('heroVid');
+      if (heroVid) {
+        heroVid.addEventListener('canplay', finish, { once: true });
+      } else {
+        window.addEventListener('load', finish, { once: true });
       }
-
-      requestAnimationFrame(tick);
     })();
+
   </script>
 </body>
 </html>

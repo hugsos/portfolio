@@ -2,6 +2,17 @@
 
 ---
 
+[MODIF] 2026-05-20 — index.html (suite 2) — layout hero final
+Tag "Étudiant BUT Info Com" déplacé en absolu en haut centré (top:88px) pour libérer le visage. Boutons remontés au-dessus du h1 (ordre : tag haut → boutons → BOURGEOIS Hugo → morphing text). Padding-bottom hero réduit à 48px. Espace morphing text supprimé (margin-top:0). Contenu encore descendu pour maximiser la visibilité du visage dans la vidéo.
+
+[MODIF] 2026-05-20 — index.html (suite) — boutons + layout hero
+Boutons btn-primary/btn-secondary : refonte liquid glass. Fond opaque remplacé par rgba semi-transparent + backdrop-filter blur(16px) saturate(1.4). Les @property --color-* utilisent des rgba au lieu de hex, glow doré animé conservé sur hover. Contenu hero basculé en bas (align-items:flex-end) pour dégager le visage visible dans la vidéo. Transition dégradé hero/projets corrigée vers #121212 (couleur réelle du bas de la vidéo). Fondu #121212 ajouté en ::before sur .tl-wrapper. Morphing text centré (width:100% + text-align:center sur les spans).
+
+[MODIF] 2026-05-20 — index.html, Brand/hero_vid.webm (nouveau)
+Refonte hero section : suppression de la photo profil (hero-photo-wrap + blur progressif) et de l'aurora CSS animée. Remplacement par une vidéo fond plein écran (Brand/hero_vid.mp4 convertie en WebM VP9, 2.6MB → 362KB, -86%). Layout hero recentré (flex colonne, text-align:center). Hero-tag transformé en pill glassmorphism (backdrop-filter blur) pour rester lisible sur fond vidéo clair ou foncé. Dégradé de transition bas-de-hero → section Projets (transparent → #111). Loader page branché sur heroVid.canplay au lieu de window.load. Suppression des JS aurora pause/throttle (plus d'aurora).
+
+---
+
 [MODIF] 2026-03-25 — projets/restaurant-authentique.html, Projets-content/Restaurant Authentique/frames/
 Même refonte que TTR sur le hero-scroll-zone : 199 frames WebP extraites depuis video_scroll_restau.mp4 (ffmpeg 26fps, 750px, sharp 82%). 4 phases : kicker vertical IDENTITÉ/VISUELLE/WEB (stagger GSAP), stats Semi-Gastro/Jura/2024, marquee L'AUTHENTIQUE défilant, overlay final inchangé. GSAP + ScrollTrigger CDN. hero-headline-area inchangé.
 
