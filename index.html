@@ -339,7 +339,7 @@
 
     /* ─── HERO ─── */
     #hero {
-      min-height: 100vh;
+      min-height: 110vh;
       display: flex;
       align-items: flex-end;
       position: relative;
@@ -652,6 +652,12 @@
       position: relative;
       overflow: hidden;
     }
+
+    /* Desktop uniquement : décale le contenu sous le nuage de transition */
+    @media (min-width: 769px) {
+      .tl-wrapper { padding-top: 280px; }
+    }
+
     /* .tl-wrapper::before supprimé — transition assurée par .hero-cloud-transition */
     .tl-tiles-bg {
       position: absolute;
