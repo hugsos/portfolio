@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charte Graphique — BOURGEOIS Hugo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --gold: #c9a84d;
+      --gold-light: #dfc178;
+      --gold-dark: #8a7033;
+      --black: #000000;
+      --white: #ffffff;
+      --off-black: #0d0d0d;
+      --dark: #111111;
+      --mid: #1a1a1a;
+      --subtle: #2a2a2a;
+      --text-dim: #666666;
+      --text-mid: #999999;
+
+      --page-w: 210mm;
+      --page-h: 297mm;
+    }
+
+    html {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      font-size: 16px;
+    }
+
+    /* ─── Page shell ─── */
+    .page {
+      width: var(--page-w);
+      height: var(--page-h);
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* ─── Shared decoration ─── */
+    .gold-line {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE 1 — COUVERTURE
+    ═══════════════════════════════════════════ */
+    #cover {
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cover .cover-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    #cover .cover-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 168, 77, 0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+
+    #cover .cover-logo {
+      width: 140px;
+      height: auto;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    #cover .cover-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    #cover .cover-name {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    #cover .cover-name span {
+      color: var(--gold);
+    }
+
+    #cover .cover-divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      margin: 32px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    #cover .cover-doc-title {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    #cover .cover-date {
+      position: absolute;
+      bottom: 32px;
+      right: 36px;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      z-index: 1;
+    }
+
+    #cover .cover-corner-tl,
+    #cover .cover-corner-br {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      z-index: 1;
+    }
+    #cover .cover-corner-tl {
+      top: 28px; left: 28px;
+      border-top: 1px solid rgba(201,168,77,0.4);
+      border-left: 1px solid rgba(201,168,77,0.4);
+    }
+    #cover .cover-corner-br {
+      bottom: 28px; right: 28px;
+      border-bottom: 1px solid rgba(201,168,77,0.4);
+      border-right: 1px solid rgba(201,168,77,0.4);
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE 2 — LOGO
+    ═══════════════════════════════════════════ */
+    #logo-page {
+      background: var(--off-black);
+      padding: 52px 48px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .page-header .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .page-header .page-number {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      padding-top: 6px;
+    }
+
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .logo-item {
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px 18px;
+      gap: 14px;
+    }
+
+    .logo-item img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+
+    .logo-item .logo-caption {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .logo-item.dark-bg   { background: var(--black); }
+    .logo-item.light-bg  { background: var(--white); }
+    .logo-item.gold-bg   { background: var(--gold); }
+    .logo-item.dark-bg   .logo-caption { color: var(--text-dim); }
+    .logo-item.light-bg  .logo-caption { color: #aaa; }
+    .logo-item.gold-bg   .logo-caption { color: rgba(0,0,0,0.55); }
+
+    .logo-rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .logo-rule-card {
+      background: var(--subtle);
+      border-radius: 6px;
+      padding: 16px 18px;
+      border-left: 2px solid var(--gold);
+    }
+
+    .logo-rule-card .rule-title {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .logo-rule-card .rule-body {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE 3 — COULEURS
+    ═══════════════════════════════════════════ */
+    #colors-page {
+      background: var(--off-black);
+      padding: 52px 48px;
+    }
+
+    .colors-swatches {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .swatch-card {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .swatch-color {
+      height: 140px;
+    }
+
+    .swatch-info {
+      padding: 18px 20px;
+    }
+
+    .swatch-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .swatch-values {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .swatch-value {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .swatch-value .val-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .swatch-value .val-data {
+      font-size: 9px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Bricolage Grotesque', monospace;
+    }
+
+    .swatch-card.gold-card .swatch-info { background: #161408; }
+    .swatch-card.black-card .swatch-info { background: var(--subtle); }
+    .swatch-card.white-card .swatch-info { background: #e8e8e8; }
+    .swatch-card.white-card .swatch-name { color: var(--black); }
+    .swatch-card.white-card .swatch-value .val-label { color: #999; }
+    .swatch-card.white-card .swatch-value .val-data { color: #333; }
+
+    .color-usage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .color-usage-card {
+      background: var(--subtle);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+
+    .color-usage-card .usage-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .color-usage-card .usage-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .color-usage-card .usage-text {
+      font-size: 9px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE 4 — TYPOGRAPHIE
+    ═══════════════════════════════════════════ */
+    #typo-page {
+      background: var(--off-black);
+      padding: 52px 48px;
+    }
+
+    .typo-showcase {
+      margin-bottom: 32px;
+    }
+
+    .typo-big {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+
+    .typo-big span {
+      color: var(--gold);
+    }
+
+    .typo-sub {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      max-width: 360px;
+    }
+
+    .weights-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .weight-card {
+      background: var(--subtle);
+      border-radius: 6px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .weight-letter {
+      font-size: 38px;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .weight-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .weight-value {
+      font-size: 9px;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .typo-scale {
+      background: var(--subtle);
+      border-radius: 8px;
+      padding: 24px 24px;
+    }
+
+    .scale-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 100px;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .scale-row:last-child { border-bottom: none; }
+
+    .scale-role {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .scale-example {
+      color: var(--white);
+      padding: 0 12px;
+    }
+
+    .scale-spec {
+      font-size: 8px;
+      color: rgba(201,168,77,0.7);
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE 5 — CARTE DE VISITE
+    ═══════════════════════════════════════════ */
+    #card-page {
+      background: var(--off-black);
+      padding: 52px 48px;
+    }
+
+    .cards-display {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      justify-content: center;
+      margin: 28px 0 36px;
+    }
+
+    .card-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-image {
+      width: 230px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow:
+        0 4px 16px rgba(0,0,0,0.6),
+        0 1px 3px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .card-label {
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .card-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card-spec-item {
+      background: var(--subtle);
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .card-spec-item .spec-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .card-spec-item .spec-value {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE 6 — SITE WEB
+    ═══════════════════════════════════════════ */
+    #web-page {
+      background: var(--off-black);
+      padding: 52px 48px;
+    }
+
+    .ui-components {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .ui-block {
+      background: var(--subtle);
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+
+    .ui-block .ui-block-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    /* Button specimen */
+    .btn-specimen {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: default;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #c9a84d, #a8893e);
+      color: #000;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(201,168,77,0.4);
+      color: var(--gold);
+      margin-top: 8px;
+    }
+
+    /* Nav specimen */
+    .nav-specimen {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo-mark {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav-link {
+      font-size: 9px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-link.active {
+      color: var(--gold);
+    }
+
+    /* Color system specimen */
+    .color-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    /* Card specimen */
+    .project-card {
+      background: #161616;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .project-card-img {
+      height: 56px;
+      background: linear-gradient(135deg, #1a1200, #2a2000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-card-body {
+      padding: 12px;
+    }
+
+    .project-card-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .project-card-tag {
+      font-size: 7.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Tag pills */
+    .tag-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-pill {
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .tag-pill.gold-tag {
+      background: rgba(201,168,77,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,77,0.25);
+    }
+
+    .tag-pill.dim-tag {
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Footer strip */
+    .page-footer {
+      position: absolute;
+      bottom: 28px;
+      left: 48px;
+      right: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .page-footer .footer-brand {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,168,77,0.4);
+    }
+
+    .page-footer .footer-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 0 16px;
+    }
+
+    .page-footer .footer-page {
+      font-size: 8px;
+      font-weight: 500;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PAGE 1 — COUVERTURE
+═══════════════════════════════════════ -->
+<div class="page" id="cover">
+  <div class="cover-noise"></div>
+  <div class="cover-glow"></div>
+  <div class="cover-corner-tl"></div>
+  <div class="cover-corner-br"></div>
+
+  <img class="cover-logo" src="logo/6-removebg.png" alt="Logo BOURGEOIS Hugo" />
+  <div class="cover-title">Charte Graphique</div>
+  <div class="cover-name">BOURGEOIS <span>Hugo</span></div>
+  <div class="cover-divider"></div>
+  <div class="cover-doc-title">Identite Visuelle &amp; Systeme de Design</div>
+  <div class="cover-date">Avril 2026</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 2 — LOGO
+═══════════════════════════════════════ -->
+<div class="page" id="logo-page">
+
+  <div class="page-header">
+    <div>
+      <div class="section-label">01 — Identite</div>
+      <div class="page-title">Logo</div>
+    </div>
+    <div class="page-number">BOURGEOIS Hugo / Charte Graphique</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- Famille 1 : h classique -->
+  <div class="section-label" style="margin-bottom:10px">h — Version classique</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px">
+    <div class="logo-item dark-bg" style="padding:18px 12px 12px">
+      <img src="logo/2.png" style="width:54px;height:54px;object-fit:contain" alt="Blanc/noir" />
+      <div class="logo-caption" style="color:#555;font-size:7px">Blanc / Fond noir</div>
+    </div>
+    <div class="logo-item dark-bg" style="padding:18px 12px 12px;background:#0d0d0d">
+      <img src="logo/3-removebg.png" style="width:54px;height:54px;object-fit:contain" alt="Or/noir" />
+      <div class="logo-caption" style="color:#555;font-size:7px">Or / Fond noir</div>
+    </div>
+    <div class="logo-item gold-bg" style="padding:18px 12px 12px">
+      <img src="logo/5.png" style="width:54px;height:54px;object-fit:contain" alt="Noir/or" />
+      <div class="logo-caption" style="font-size:7px">Noir / Fond or</div>
+    </div>
+        <div class="logo-item light-bg" style="padding:18px 12px 12px">
+      <img src="logo/1.png" style="width:54px;height:54px;object-fit:contain" alt="Noir/blanc" />
+      <div class="logo-caption" style="color:#bbb;font-size:7px">Noir / Fond blanc</div>
+    </div>
+    <div class="logo-item light-bg" style="padding:18px 12px 12px">
+      <img src="logo/3-removebg.png" style="width:54px;height:54px;object-fit:contain" alt="Or/blanc" />
+      <div class="logo-caption" style="color:#555;font-size:7px">Or / Fond blanc</div>
+    </div>
+  </div>
+
+  <!-- Famille 2 : h. avec point -->
+  <div class="section-label" style="margin-bottom:10px">h. — Version avec point</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px">
+    <div class="logo-item dark-bg" style="padding:18px 12px 12px;background:#0e0e0e">
+      <img src="logo/6-removebg.png" style="width:54px;height:54px;object-fit:contain" alt="Or/noir" />
+      <div class="logo-caption" style="color:#555;font-size:7px">Or / Fond noir</div>
+    </div>
+    <div class="logo-item dark-bg" style="padding:18px 12px 12px;background:#0d0d0d">
+      <img src="logo/9-removebg.png" style="width:54px;height:54px;object-fit:contain" alt="Blanc/noir" />
+      <div class="logo-caption" style="color:#555;font-size:7px">Blanc / Fond noir</div>
+    </div>
+    <div class="logo-item light-bg" style="padding:18px 12px 12px">
+      <img src="logo/6.png" style="width:54px;height:54px;object-fit:contain" alt="Or/blanc" />
+      <div class="logo-caption" style="color:#bbb;font-size:7px">Or / Fond blanc</div>
+    </div>
+    <div class="logo-item light-bg" style="padding:18px 12px 12px">
+      <img src="logo/7.png" style="width:54px;height:54px;object-fit:contain" alt="Noir/blanc" />
+      <div class="logo-caption" style="color:#bbb;font-size:7px">Noir / Fond blanc</div>
+    </div>
+  </div>
+
+  <!-- Famille 3 : circulaire -->
+  <div class="section-label" style="margin-bottom:10px">h — Version circulaire</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px">
+    <div class="logo-item dark-bg" style="padding:18px 12px 12px;background:#0d0d0d">
+      <img src="logo/10.png" style="width:54px;height:54px;object-fit:contain" alt="Badge noir/or" />
+      <div class="logo-caption" style="color:#555;font-size:7px">Noir / Badge or</div>
+    </div>
+    <div class="logo-item light-bg" style="padding:18px 12px 12px">
+      <img src="logo/11.png" style="width:54px;height:54px;object-fit:contain" alt="Badge blanc/or" />
+      <div class="logo-caption" style="color:#bbb;font-size:7px">Blanc / Badge or</div>
+    </div>
+    <div class="logo-item dark-bg" style="padding:18px 12px 12px;background:#161610;border:1px solid rgba(201,168,77,0.12);grid-column:span 2">
+      <div style="display:flex;gap:10px;align-items:center">
+        <img src="logo/6-removebg.png" style="width:36px;height:36px;object-fit:contain" alt="Logo" />
+        <div style="font-size:14px;font-weight:700;letter-spacing:-0.02em;color:#fff;line-height:1">BOURGEOIS<br><span style="color:#c9a84d;font-size:12px;font-weight:400;letter-spacing:0.05em">Hugo</span></div>
+      </div>
+      <div class="logo-caption" style="color:#555;font-size:7px">Version horizontale</div>
+    </div>
+  </div>
+
+  <!-- Règles -->
+  <div class="logo-rules" style="gap:10px">
+    <div class="logo-rule-card" style="padding:12px 14px">
+      <div class="rule-title">Zone de protection</div>
+      <div class="rule-body">Maintenir un espace libre equivalent a la hauteur du logo autour de toutes les variantes. Ne jamais placer d'elements visuels dans cette zone.</div>
+    </div>
+    <div class="logo-rule-card" style="padding:12px 14px">
+      <div class="rule-title">Taille minimale</div>
+      <div class="rule-body">Ne pas utiliser le logo en dessous de 24px en version icone et 120px en version horizontale pour garantir la lisibilite.</div>
+    </div>
+    <div class="logo-rule-card" style="padding:12px 14px">
+      <div class="rule-title">Usages autorises</div>
+      <div class="rule-body">Or sur fond sombre (usage principal), noir sur fond blanc (impression), blanc sur fond sombre, version circulaire pour avatars et favicons.</div>
+    </div>
+    <div class="logo-rule-card" style="padding:12px 14px">
+      <div class="rule-title">Usages interdits</div>
+      <div class="rule-body">Ne pas deformer, pivoter, appliquer d'effets ou changer les couleurs du logo. Ne pas placer sur fond complexe sans overlay.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-brand">BOURGEOIS Hugo</span>
+    <div class="footer-line"></div>
+    <span class="footer-page">02</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 3 — PALETTE DE COULEURS
+═══════════════════════════════════════ -->
+<div class="page" id="colors-page">
+
+  <div class="page-header">
+    <div>
+      <div class="section-label">02 — Couleurs</div>
+      <div class="page-title">Palette de couleurs</div>
+    </div>
+    <div class="page-number">BOURGEOIS Hugo / Charte Graphique</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <div class="colors-swatches">
+
+    <div class="swatch-card gold-card">
+      <div class="swatch-color" style="background:#c9a84d"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Or — Accent principal</div>
+        <div class="swatch-values">
+          <div class="swatch-value">
+            <span class="val-label">HEX</span>
+            <span class="val-data">#C9A84D</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label">RGB</span>
+            <span class="val-data">201 / 168 / 77</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label">CMYK</span>
+            <span class="val-data">0 / 16 / 62 / 21</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label">HSL</span>
+            <span class="val-data">42 deg / 53% / 54%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatch-card black-card">
+      <div class="swatch-color" style="background:#000000; border-bottom:1px solid #1a1a1a"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Noir — Fond principal</div>
+        <div class="swatch-values">
+          <div class="swatch-value">
+            <span class="val-label">HEX</span>
+            <span class="val-data">#000000</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label">RGB</span>
+            <span class="val-data">0 / 0 / 0</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label">CMYK</span>
+            <span class="val-data">0 / 0 / 0 / 100</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label">HSL</span>
+            <span class="val-data">0 deg / 0% / 0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatch-card white-card">
+      <div class="swatch-color" style="background:#ffffff; border-bottom:1px solid #ddd"></div>
+      <div class="swatch-info">
+        <div class="swatch-name" style="color:#000">Blanc — Texte &amp; contraste</div>
+        <div class="swatch-values">
+          <div class="swatch-value">
+            <span class="val-label" style="color:#999">HEX</span>
+            <span class="val-data" style="color:#333">#FFFFFF</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label" style="color:#999">RGB</span>
+            <span class="val-data" style="color:#333">255 / 255 / 255</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label" style="color:#999">CMYK</span>
+            <span class="val-data" style="color:#333">0 / 0 / 0 / 0</span>
+          </div>
+          <div class="swatch-value">
+            <span class="val-label" style="color:#999">HSL</span>
+            <span class="val-data" style="color:#333">0 deg / 0% / 100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label" style="margin-bottom:14px">Utilisation des couleurs</div>
+
+  <div class="color-usage-grid">
+    <div class="color-usage-card">
+      <div class="usage-dot" style="background:#c9a84d"></div>
+      <div class="usage-label">Or — Accent</div>
+      <div class="usage-text">Elements interactifs, CTA, accents typographiques, bordures decoratives, icones, highlights. Usage spare pour preserver l'impact.</div>
+    </div>
+    <div class="color-usage-card">
+      <div class="usage-dot" style="background:#111; border: 1px solid #333"></div>
+      <div class="usage-label">Noir — Fond</div>
+      <div class="usage-text">Fond de page principal, cartes, overlays sombres, fonds de navigation. Peut varier entre #000 et #1a1a1a selon la profondeur souhaitee.</div>
+    </div>
+    <div class="color-usage-card">
+      <div class="usage-dot" style="background:#fff; border: 1px solid rgba(255,255,255,0.15)"></div>
+      <div class="usage-label">Blanc — Texte</div>
+      <div class="usage-text">Titres, corps de texte, elements UI sur fond sombre. Utilise a differentes opacites (100% / 55% / 35%) pour la hierarchie.</div>
+    </div>
+  </div>
+
+  <!-- Gradient spectrum -->
+  <div style="margin-top:28px">
+    <div class="section-label" style="margin-bottom:12px">Degrades autorises</div>
+    <div style="display:flex;gap:12px">
+      <div style="flex:1">
+        <div style="height:36px;border-radius:6px;background:linear-gradient(135deg, #c9a84d, #8a7033)"></div>
+        <div style="font-size:8px;color:var(--text-dim);margin-top:6px;letter-spacing:0.1em">Or chaud → Or sombre</div>
+      </div>
+      <div style="flex:1">
+        <div style="height:36px;border-radius:6px;background:linear-gradient(135deg, #1a1200, #c9a84d)"></div>
+        <div style="font-size:8px;color:var(--text-dim);margin-top:6px;letter-spacing:0.1em">Noir → Or (hero)</div>
+      </div>
+      <div style="flex:1">
+        <div style="height:36px;border-radius:6px;background:linear-gradient(135deg, #000, #1a1a1a, #2a2a2a)"></div>
+        <div style="font-size:8px;color:var(--text-dim);margin-top:6px;letter-spacing:0.1em">Fond multicouche</div>
+      </div>
+      <div style="flex:1">
+        <div style="height:36px;border-radius:6px;background:linear-gradient(to right, rgba(201,168,77,0), rgba(201,168,77,0.15), rgba(201,168,77,0))"></div>
+        <div style="font-size:8px;color:var(--text-dim);margin-top:6px;letter-spacing:0.1em">Or transparent (divider)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-brand">BOURGEOIS Hugo</span>
+    <div class="footer-line"></div>
+    <span class="footer-page">03</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 4 — TYPOGRAPHIE
+═══════════════════════════════════════ -->
+<div class="page" id="typo-page">
+
+  <div class="page-header">
+    <div>
+      <div class="section-label">03 — Typographie</div>
+      <div class="page-title">Bricolage Grotesque</div>
+    </div>
+    <div class="page-number">BOURGEOIS Hugo / Charte Graphique</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <div class="typo-showcase">
+    <div class="typo-big">Aa <span>Bb</span> Cc</div>
+    <div class="typo-sub">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz — 0123456789</div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:12px">Graisses disponibles</div>
+
+  <div class="weights-grid">
+    <div class="weight-card">
+      <div class="weight-letter" style="font-weight:300">Hh</div>
+      <div class="weight-label">Light</div>
+      <div class="weight-value">300</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-letter" style="font-weight:400">Hh</div>
+      <div class="weight-label">Regular</div>
+      <div class="weight-value">400</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-letter" style="font-weight:500">Hh</div>
+      <div class="weight-label">Medium</div>
+      <div class="weight-value">500</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-letter" style="font-weight:600">Hh</div>
+      <div class="weight-label">Semi-Bold</div>
+      <div class="weight-value">600</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-letter" style="font-weight:700">Hh</div>
+      <div class="weight-label">Bold</div>
+      <div class="weight-value">700</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:12px">Echelle typographique</div>
+
+  <div class="typo-scale">
+    <div class="scale-row">
+      <div class="scale-role">Hero</div>
+      <div class="scale-example" style="font-size:32px;font-weight:700;letter-spacing:-0.04em;line-height:1">BOURGEOIS</div>
+      <div class="scale-spec">700 / 32px / -0.04em</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-role">H1</div>
+      <div class="scale-example" style="font-size:22px;font-weight:700;letter-spacing:-0.03em">Titre principal</div>
+      <div class="scale-spec">700 / 22px / -0.03em</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-role">H2</div>
+      <div class="scale-example" style="font-size:16px;font-weight:600;letter-spacing:-0.02em">Sous-titre de section</div>
+      <div class="scale-spec">600 / 16px / -0.02em</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-role">Body</div>
+      <div class="scale-example" style="font-size:11px;font-weight:400;letter-spacing:0;line-height:1.7">Corps de texte courant, descriptions de projets.</div>
+      <div class="scale-spec">400 / 11px / 0</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-role">Label</div>
+      <div class="scale-example" style="font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#c9a84d">Label de categorie</div>
+      <div class="scale-spec">600 / 8px / 0.2em</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-role">Caption</div>
+      <div class="scale-example" style="font-size:8px;font-weight:400;color:#666;letter-spacing:0.05em">Note de bas de page, date, meta</div>
+      <div class="scale-spec">400 / 8px / 0.05em</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-brand">BOURGEOIS Hugo</span>
+    <div class="footer-line"></div>
+    <span class="footer-page">04</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 5 — CARTE DE VISITE
+═══════════════════════════════════════ -->
+<div class="page" id="card-page">
+
+  <div class="page-header">
+    <div>
+      <div class="section-label">04 — Supports</div>
+      <div class="page-title">Carte de visite</div>
+    </div>
+    <div class="page-number">BOURGEOIS Hugo / Charte Graphique</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <div class="cards-display">
+    <div class="card-wrap">
+      <img class="card-image" src="Carte de visite/1.png" alt="Carte de visite recto" />
+      <div class="card-label">Recto — Face principale</div>
+    </div>
+    <div class="card-wrap">
+      <img class="card-image" src="Carte de visite/2.png" alt="Carte de visite verso" />
+      <div class="card-label">Verso — Coordonnees</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:14px">Specifications techniques</div>
+
+  <div class="card-specs">
+    <div class="card-spec-item">
+      <div class="spec-label">Format</div>
+      <div class="spec-value">85 x 55 mm<br>Standard international</div>
+    </div>
+    <div class="card-spec-item">
+      <div class="spec-label">Finition</div>
+      <div class="spec-value">Pelliculage mat noir<br>Dorure a chaud or</div>
+    </div>
+    <div class="card-spec-item">
+      <div class="spec-label">Impression</div>
+      <div class="spec-value">CMYK + or HKS<br>Grammage 400g</div>
+    </div>
+    <div class="card-spec-item">
+      <div class="spec-label">Contacts</div>
+      <div class="spec-value">portfolio.hugo-bourgeois.fr<br>+33 6 95 92 35 20</div>
+    </div>
+    <div class="card-spec-item">
+      <div class="spec-label">Email</div>
+      <div class="spec-value">hugo.bourg.pro@gmail.com</div>
+    </div>
+    <div class="card-spec-item">
+      <div class="spec-label">QR Code</div>
+      <div class="spec-value">Lien direct vers le portfolio en ligne</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-brand">BOURGEOIS Hugo</span>
+    <div class="footer-line"></div>
+    <span class="footer-page">05</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 6 — SYSTEME UI / SITE WEB
+═══════════════════════════════════════ -->
+<div class="page" id="web-page">
+
+  <div class="page-header">
+    <div>
+      <div class="section-label">05 — Digital</div>
+      <div class="page-title">Systeme UI — Site web</div>
+    </div>
+    <div class="page-number">BOURGEOIS Hugo / Charte Graphique</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- Layout : composants gauche + screenshot droite -->
+  <div style="display:grid;grid-template-columns:1fr 148px;gap:16px;align-items:start">
+
+    <!-- Colonne gauche : composants UI -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <!-- Navigation -->
+        <div class="ui-block">
+          <div class="ui-block-label">Navigation</div>
+          <div class="nav-specimen">
+            <img class="nav-logo-mark" src="logo/2-removebg.png" alt="Logo" />
+            <div class="nav-links">
+              <span class="nav-link active">Portfolio</span>
+              <span class="nav-link">Projets</span>
+              <span class="nav-link">Interets</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="ui-block">
+          <div class="ui-block-label">Boutons</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="btn-specimen btn-primary">Voir le projet</div>
+            <div class="btn-specimen btn-outline">Telecharger le CV</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <!-- Carte projet -->
+        <div class="ui-block">
+          <div class="ui-block-label">Carte projet</div>
+          <div class="project-card">
+            <div class="project-card-img">
+              <img src="logo/6-removebg.png" alt="" style="width:24px;height:24px;opacity:0.4" />
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-title">Nom du projet</div>
+              <div class="project-card-tag">Design / Developpement</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="ui-block">
+          <div class="ui-block-label">Tags &amp; labels</div>
+          <div class="tag-row">
+            <div class="tag-pill gold-tag">Front-end</div>
+            <div class="tag-pill gold-tag">UI/UX</div>
+            <div class="tag-pill dim-tag">WordPress</div>
+            <div class="tag-pill dim-tag">JavaScript</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Palette neutrals -->
+      <div class="ui-block">
+        <div class="ui-block-label">Gris de surface</div>
+        <div style="display:flex;gap:6px;align-items:flex-end">
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#111;border:1px solid #222"></div><div style="font-size:6.5px;color:#555;margin-top:4px">#111</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#191919"></div><div style="font-size:6.5px;color:#555;margin-top:4px">#191919</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#222"></div><div style="font-size:6.5px;color:#555;margin-top:4px">#222</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#2a2a2a"></div><div style="font-size:6.5px;color:#555;margin-top:4px">#2a2a</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#313131"></div><div style="font-size:6.5px;color:#555;margin-top:4px">#313</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#484848"></div><div style="font-size:6.5px;color:#666;margin-top:4px">#484</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#606060"></div><div style="font-size:6.5px;color:#777;margin-top:4px">#606</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#b4b4b4"></div><div style="font-size:6.5px;color:#888;margin-top:4px">#b4b</div></div>
+          <div style="text-align:center"><div style="width:32px;height:32px;border-radius:5px;background:#eeeeee"></div><div style="font-size:6.5px;color:#aaa;margin-top:4px">#eee</div></div>
+        </div>
+      </div>
+
+      <!-- Info technique -->
+      <div style="background:var(--subtle);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Site web</div>
+          <div style="font-size:9.5px;font-weight:500;color:rgba(255,255,255,0.85)">portfolio.hugo-bourgeois.fr</div>
+          <div style="font-size:7.5px;color:var(--text-dim);margin-top:2px">Portfolio scroll-driven, animations WebP frame-by-frame</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:7.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:3px">Stack</div>
+          <div style="font-size:8px;color:rgba(255,255,255,0.5);line-height:1.6">HTML / CSS / JS<br>Three.js — GSAP</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Colonne droite : screenshot du site -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div style="font-size:7px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold)">Apercu</div>
+      <div style="border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.05);width:148px">
+        <img src="site-preview.png" alt="Apercu du site" style="width:148px;height:auto;display:block" />
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-brand">BOURGEOIS Hugo</span>
+    <div class="footer-line"></div>
+    <span class="footer-page">06</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 7 — CONTACTS & LIENS
+═══════════════════════════════════════ -->
+<div class="page" id="contacts-page" style="background:var(--off-black);padding:52px 48px">
+
+  <div class="page-header">
+    <div>
+      <div class="section-label">06 — Contact</div>
+      <div class="page-title">Contacts &amp; liens</div>
+    </div>
+    <div class="page-number">BOURGEOIS Hugo / Charte Graphique</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- Bloc principal identite -->
+  <div style="display:flex;align-items:center;gap:28px;margin-bottom:36px;padding:28px 32px;background:var(--subtle);border-radius:12px;border:1px solid rgba(201,168,77,0.1)">
+    <img src="logo/6-removebg.png" alt="Logo" style="width:80px;height:80px;object-fit:contain;flex-shrink:0" />
+    <div>
+      <div style="font-size:26px;font-weight:700;letter-spacing:-0.03em;color:var(--white);line-height:1;margin-bottom:6px">BOURGEOIS <span style="color:var(--gold)">Hugo</span></div>
+      <div style="font-size:10px;font-weight:400;letter-spacing:0.08em;color:rgba(255,255,255,0.45);text-transform:uppercase">Developpeur Front-end &amp; Designer</div>
+    </div>
+  </div>
+
+  <!-- Grille de contacts -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px">
+
+    <div style="background:var(--subtle);border-radius:8px;padding:20px 22px;display:flex;align-items:center;gap:16px">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(201,168,77,0.1);border:1px solid rgba(201,168,77,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a84d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+      </div>
+      <div>
+        <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Portfolio</div>
+        <div style="font-size:11px;font-weight:500;color:var(--white)">portfolio.hugo-bourgeois.fr</div>
+      </div>
+    </div>
+
+    <div style="background:var(--subtle);border-radius:8px;padding:20px 22px;display:flex;align-items:center;gap:16px">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(201,168,77,0.1);border:1px solid rgba(201,168,77,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a84d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div>
+        <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Email</div>
+        <div style="font-size:11px;font-weight:500;color:var(--white)">hugo.bourg.pro@gmail.com</div>
+      </div>
+    </div>
+
+    <div style="background:var(--subtle);border-radius:8px;padding:20px 22px;display:flex;align-items:center;gap:16px">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(201,168,77,0.1);border:1px solid rgba(201,168,77,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a84d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Telephone</div>
+        <div style="font-size:11px;font-weight:500;color:var(--white)">+33 6 95 92 35 20</div>
+      </div>
+    </div>
+
+    <div style="background:var(--subtle);border-radius:8px;padding:20px 22px;display:flex;align-items:center;gap:16px">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(201,168,77,0.1);border:1px solid rgba(201,168,77,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#c9a84d"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">LinkedIn</div>
+        <div style="font-size:11px;font-weight:500;color:var(--white)">linkedin.com/in/hugo-bourgeois-4002b1403</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- QR code + note finale -->
+  <div style="display:flex;gap:20px;align-items:stretch">
+
+    <div style="background:var(--subtle);border-radius:8px;padding:20px 24px;display:flex;align-items:center;gap:20px;flex:1">
+      <img src="Carte de visite/2.png" alt="QR Code portfolio" style="width:80px;height:auto;border-radius:6px;flex-shrink:0" />
+      <div>
+        <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">QR Code — Portfolio</div>
+        <div style="font-size:9px;font-weight:400;color:rgba(255,255,255,0.5);line-height:1.7">Scanner pour acceder directement au portfolio en ligne.<br>Le QR code est integre au dos de la carte de visite.</div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#0d0a00,#1a1200);border-radius:8px;padding:20px 24px;border:1px solid rgba(201,168,77,0.15);display:flex;flex-direction:column;justify-content:center;min-width:160px">
+      <div style="font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Disponibilite</div>
+      <div style="font-size:11px;font-weight:600;color:var(--white);margin-bottom:4px">Ouvert aux projets</div>
+      <div style="font-size:8.5px;font-weight:400;color:rgba(255,255,255,0.45);line-height:1.6">Freelance &amp; alternance<br>A partir de 2025</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-brand">BOURGEOIS Hugo</span>
+    <div class="footer-line"></div>
+    <span class="footer-page">07</span>
+  </div>
+</div>
+
+</body>
+</html>

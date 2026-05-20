@@ -3,6 +3,11 @@
 ---
 
 [MODIF] 2026-05-20 — index.html, interets/armee.html, interets/boxe.html, interets/musculation.html, projets/media-buying.html, projets/restaurant-authentique.html, projets/trouve-ta-ref.html
+Navbar intelligente : se fixe en haut (déjà `position:fixed`), se cache avec `transform:translateY(-100%)` après 80px de scroll vers le bas, réapparaît dès qu'on rescroll vers le haut. Script léger avec `requestAnimationFrame` + `{ passive: true }`. Transition `cubic-bezier(0.4,0,0.2,1)` ajoutée. Appliqué aux 7 pages.
+
+---
+
+[MODIF] 2026-05-20 — index.html, interets/armee.html, interets/boxe.html, interets/musculation.html, projets/media-buying.html, projets/restaurant-authentique.html, projets/trouve-ta-ref.html
 Favicon remplacé (10-removebg.png → 6-removebg.png) et nav-logo converti de texte CSS "HB." en image <img> (Brand/logo/6-removebg.png, height:34px) sur l'ensemble des 7 pages du site.
 
 ---

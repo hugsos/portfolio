@@ -1464,5 +1464,32 @@
       }
     })();
   </script>
+
+  <!-- ── NAV : cache au scroll bas, réapparaît au scroll haut ── -->
+  <script>
+    (function () {
+      var nav = document.querySelector('nav');
+      if (!nav) return;
+      var lastY = window.scrollY;
+      var ticking = false;
+      var THRESHOLD = 80;
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          var y = window.scrollY;
+          if (y < THRESHOLD) {
+            nav.classList.remove('nav-hidden');
+          } else if (y > lastY) {
+            nav.classList.add('nav-hidden');
+          } else {
+            nav.classList.remove('nav-hidden');
+          }
+          lastY = y;
+          ticking = false;
+        });
+      }, { passive: true });
+    })();
+  </script>
 </body>
 </html>
