@@ -343,9 +343,9 @@
       display: flex;
       align-items: flex-end;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       padding: 80px var(--h-pad) 48px;
-      background: #121212;
+      background: #000;
     }
 
     /* ─── HERO VIDEO BACKGROUND ─── */
@@ -359,19 +359,16 @@
       pointer-events: none;
     }
 
+    /* Micro-fade : efface uniquement le trait de découpe en bas de la vidéo */
     .hero-video-fade {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 45%;
-      background: linear-gradient(to bottom, transparent 0%, #121212 100%);
+      height: 10%;
+      background: linear-gradient(to bottom, transparent 0%, #000 100%);
       z-index: 1;
       pointer-events: none;
-    }
-
-    @media (max-width: 768px) {
-      .hero-video-fade { height: 28%; }
     }
 
     /* ─── FLOATING PARTICLES ─── */
@@ -655,17 +652,7 @@
       position: relative;
       overflow: hidden;
     }
-    .tl-wrapper::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 180px;
-      background: linear-gradient(to bottom, #121212 0%, transparent 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
+    /* .tl-wrapper::before supprimé — transition assurée par .hero-cloud-transition */
     .tl-tiles-bg {
       position: absolute;
       inset: 0;
@@ -2061,6 +2048,31 @@
     .loader-bar-wrap { width: min(200px, 50vw); height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
     .loader-bar { height: 100%; width: 0%; background: #c9a84c; border-radius: 2px; transition: width 0.25s ease; }
 
+    /* ─── CLOUD TRANSITION (hero → projets) ─── */
+    .hero-cloud-transition {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;          /* derrière hero-inner (z:2) mais devant la vidéo (z:0) */
+      pointer-events: none;
+      line-height: 0;
+      font-size: 0;
+      background: transparent;
+      transform: translateY(100%); /* cloud collé au bord inférieur du hero */
+    }
+
+    .hero-cloud-transition img {
+      width: 100%;
+      display: block;
+      transform: scaleY(-1);
+    }
+
+    @media (max-width: 768px) {
+      /* Sur mobile, léger empiètement pour couvrir le trait de bordure vidéo */
+      .hero-cloud-transition { transform: translateY(96%); }
+    }
+
   </style>
 </head>
 <body>
@@ -2154,8 +2166,6 @@
       <source src="Brand/hero_vid.webm" type="video/webm">
       <source src="Brand/hero_vid.mp4" type="video/mp4">
     </video>
-    <div class="hero-video-fade" aria-hidden="true"></div>
-
     <div class="hero-tag hero-tag-top">
       <span class="hero-tag-dot"></span>
       Étudiant BUT Info Com · Développeur Web
@@ -2192,6 +2202,11 @@
           </a>
         </div>
       </div>
+    </div>
+
+    <!-- Cloud transition hero → projets (à l'intérieur du hero, z-index:1) -->
+    <div class="hero-cloud-transition" aria-hidden="true">
+      <img src="Brand/nuagebas.png" alt="">
     </div>
 
   </section>

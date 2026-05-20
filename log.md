@@ -2,6 +2,11 @@
 
 ---
 
+[MODIF] 2026-05-21 — index.html
+Transition cloud hero→projets : ajout de Brand/nuagebas.png (flipé scaleY(-1)) positionné en absolu au bas du hero (z-index:1). Desktop : translateY(100%), cloud collé au bord inférieur sans overlap. Mobile ≤768px : translateY(96%), léger empiètement pour couvrir le trait de bordure vidéo. Fond hero #000. Suppression hero-video-fade et ::before gradient du .tl-wrapper. #hero overflow:visible.
+
+---
+
 [MODIF] 2026-05-20 — index.html, interets/armee.html, interets/boxe.html, interets/musculation.html, projets/media-buying.html, projets/restaurant-authentique.html, projets/trouve-ta-ref.html
 Navbar intelligente : se fixe en haut (déjà `position:fixed`), se cache avec `transform:translateY(-100%)` après 80px de scroll vers le bas, réapparaît dès qu'on rescroll vers le haut. Script léger avec `requestAnimationFrame` + `{ passive: true }`. Transition `cubic-bezier(0.4,0,0.2,1)` ajoutée. Appliqué aux 7 pages.
 
