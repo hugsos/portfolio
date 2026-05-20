@@ -2018,10 +2018,11 @@
     }
     .morphing-text-wrap span {
       position: absolute;
-      inset-inline: 0;
+      left: 50%;
+      transform: translateX(-50%);
       top: 0;
       display: inline-block;
-      width: 100%;
+      width: max-content;
       text-align: center;
       font-size: clamp(2.4rem, 5vw, 5rem);
       font-weight: 700;
