@@ -2,6 +2,11 @@
 
 ---
 
+[MODIF] 2026-05-20 — index.html, interets/armee.html, interets/boxe.html, interets/musculation.html, projets/media-buying.html, projets/restaurant-authentique.html, projets/trouve-ta-ref.html
+Favicon remplacé (10-removebg.png → 6-removebg.png) et nav-logo converti de texte CSS "HB." en image <img> (Brand/logo/6-removebg.png, height:34px) sur l'ensemble des 7 pages du site.
+
+---
+
 [MODIF] 2026-05-20 — index.html (suite 2) — layout hero final
 Tag "Étudiant BUT Info Com" déplacé en absolu en haut centré (top:88px) pour libérer le visage. Boutons remontés au-dessus du h1 (ordre : tag haut → boutons → BOURGEOIS Hugo → morphing text). Padding-bottom hero réduit à 48px. Espace morphing text supprimé (margin-top:0). Contenu encore descendu pour maximiser la visibilité du visage dans la vidéo.
 
