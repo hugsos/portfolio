@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Politique de confidentialité · BOURGEOIS Hugo</title>
+  <meta name="description" content="Politique de confidentialité du portfolio de BOURGEOIS Hugo, conformément au RGPD (Règlement UE 2016/679)." />
+  <link rel="icon" type="image/png" href="Brand/logo/6-removebg.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet" />
+  <style>
+
+    :root {
+      --brand:        #c9a84c;
+      --brand-dim:    rgba(201, 168, 76, 0.08);
+      --brand-glow:   rgba(201, 168, 76, 0.15);
+      --bg:           #111111;
+      --surface:      #161616;
+      --border:       rgba(255, 255, 255, 0.06);
+      --border-med:   rgba(255, 255, 255, 0.10);
+      --text-1:       #eeeeee;
+      --text-2:       #b4b4b4;
+      --text-3:       #7b7b7b;
+      --text-4:       #606060;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-2);
+      font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ── PAGE LOADER ── */
+    #page-loader {
+      position: fixed; inset: 0;
+      z-index: 99999;
+      background: #0e0d0c;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #page-loader.loader-out {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .loader-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .loader-content {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 28px;
+      position: relative; z-index: 1;
+    }
+    .loader-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 700; color: #eee;
+      text-align: center;
+      letter-spacing: -0.04em; line-height: 1.05;
+    }
+    .loader-name span { color: var(--brand); }
+    .loader-bar-wrap {
+      width: min(200px, 50vw); height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; width: 0%;
+      background: var(--brand);
+      border-radius: 2px;
+      transition: width 0.18s ease;
+    }
+
+    /* ── Layout ── */
+    .legal-wrap {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Hero ── */
+    .legal-hero {
+      padding: clamp(120px, 15vw, 196px) 0 clamp(40px, 5vw, 64px);
+      position: relative;
+      overflow: hidden;
+    }
+    .legal-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .legal-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 18px;
+    }
+    .legal-eyebrow-line {
+      width: 28px; height: 1px;
+      background: var(--brand);
+      flex-shrink: 0;
+    }
+
+    .legal-h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .legal-meta {
+      font-size: 0.82rem;
+      color: var(--text-4);
+    }
+
+    .legal-hero-rule {
+      width: 100%; height: 1px;
+      background: var(--border);
+      margin-top: clamp(32px, 4vw, 52px);
+    }
+
+    /* ── Body ── */
+    .legal-body {
+      padding-bottom: clamp(80px, 10vw, 128px);
+    }
+
+    .legal-section {
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-section:last-child {
+      border-bottom: none;
+    }
+
+    .legal-section-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--brand);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .legal-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-med);
+    }
+
+    .legal-section p {
+      font-size: 0.925rem;
+      color: var(--text-2);
+      margin-bottom: 14px;
+      line-height: 1.75;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-card {
+      background: var(--surface);
+      border: 1px solid var(--border-med);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-top: 14px;
+      display: grid;
+      gap: 6px;
+    }
+    .legal-card-row {
+      display: flex;
+      gap: 8px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .legal-card-label {
+      color: var(--text-3);
+      white-space: nowrap;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+    .legal-card-value {
+      color: var(--text-1);
+    }
+    .legal-card-value a {
+      color: var(--brand);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    .legal-card-value a:hover { opacity: 0.7; }
+
+    .legal-section ul {
+      list-style: none;
+      margin: 10px 0 14px;
+      padding: 0;
+    }
+    .legal-section ul li {
+      position: relative;
+      padding: 5px 0 5px 20px;
+      font-size: 0.925rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+    .legal-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 14px;
+      width: 5px; height: 5px;
+      background: var(--brand);
+      border-radius: 50%;
+    }
+
+    /* Tableau des traitements */
+    .legal-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.875rem;
+    }
+    .legal-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      border-bottom: 1px solid var(--border-med);
+      background: var(--surface);
+    }
+    .legal-table th:first-child { border-radius: 8px 0 0 0; }
+    .legal-table th:last-child  { border-radius: 0 8px 0 0; }
+    .legal-table td {
+      padding: 12px 14px;
+      color: var(--text-2);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .legal-table tr:last-child td { border-bottom: none; }
+    .legal-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .legal-table-wrap {
+      border: 1px solid var(--border-med);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    /* Badge droits */
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .right-item {
+      background: var(--surface);
+      border: 1px solid var(--border-med);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .right-item-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .right-item-ref {
+      font-size: 0.72rem;
+      color: var(--brand);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .right-item-desc {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+
+    /* Bloc CNIL */
+    .cnil-block {
+      background: var(--brand-dim);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 14px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .cnil-icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cnil-icon svg { width: 18px; height: 18px; }
+    .cnil-text p {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      margin-bottom: 6px !important;
+    }
+    .cnil-text p:last-child { margin-bottom: 0 !important; }
+    .cnil-text a {
+      color: var(--brand);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    .cnil-text a:hover { opacity: 0.7; }
+
+    .legal-inline-link {
+      color: var(--brand);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    .legal-inline-link:hover { opacity: 0.7; }
+
+    @media (max-width: 640px) {
+      .legal-h1 { font-size: 2rem; }
+      .legal-table th, .legal-table td { padding: 8px 10px; font-size: 0.82rem; }
+      .rights-grid { grid-template-columns: 1fr 1fr; }
+      .legal-card-label { min-width: 110px; }
+    }
+    @media (max-width: 400px) {
+      .legal-card-row { flex-direction: column; gap: 2px; }
+      .legal-card-label { min-width: unset; }
+      .rights-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ════ PAGE LOADER ════ -->
+  <div id="page-loader" aria-hidden="true">
+    <div class="loader-grain"></div>
+    <div class="loader-content">
+      <div class="loader-name">BOURGEOIS<br><span>Hugo</span></div>
+      <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- ════ NAVIGATION (partagée) ════ -->
+  <script src="js/site-nav.js"></script>
+
+  <!-- ════ HERO ════ -->
+  <header class="legal-hero">
+    <div class="legal-wrap">
+      <div class="legal-eyebrow">
+        <span class="legal-eyebrow-line"></span>
+        Légal
+      </div>
+      <h1 class="legal-h1">Politique de<br>confidentialité</h1>
+      <p class="legal-meta">Dernière mise à jour : 25 mai 2026 · Conforme au RGPD (Règlement UE 2016/679)</p>
+      <div class="legal-hero-rule"></div>
+    </div>
+  </header>
+
+  <!-- ════ CONTENU ════ -->
+  <main class="legal-body">
+    <div class="legal-wrap">
+
+      <!-- 1. Introduction -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Introduction</h2>
+        <p>
+          La présente politique de confidentialité décrit la façon dont
+          BOURGEOIS Hugo collecte, utilise et protège les informations
+          personnelles des visiteurs de ce site portfolio.
+        </p>
+        <p>
+          Ce site est un portfolio personnel non commercial. Il ne collecte
+          aucune donnée personnelle automatiquement à des fins de suivi ou
+          de profilage. Les seules situations où des données peuvent être
+          traitées sont décrites ci-dessous.
+        </p>
+      </section>
+
+      <!-- 2. Responsable du traitement -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Responsable du traitement</h2>
+        <p>
+          Au sens de l'article 4 du RGPD, le responsable du traitement est :
+        </p>
+        <div class="legal-card">
+          <div class="legal-card-row">
+            <span class="legal-card-label">Nom</span>
+            <span class="legal-card-value">BOURGEOIS Hugo</span>
+          </div>
+          <div class="legal-card-row">
+            <span class="legal-card-label">Qualité</span>
+            <span class="legal-card-value">Particulier</span>
+          </div>
+          <div class="legal-card-row">
+            <span class="legal-card-label">Contact</span>
+            <span class="legal-card-value">
+              <a href="mailto:hugo.bourg.pro@gmail.com">hugo.bourg.pro@gmail.com</a>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Données collectées -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Données collectées et finalités</h2>
+        <p>
+          Le tableau ci-dessous récapitule les traitements de données
+          effectués sur ce site.
+        </p>
+        <div class="legal-table-wrap">
+          <table class="legal-table">
+            <thead>
+              <tr>
+                <th>Données</th>
+                <th>Finalité</th>
+                <th>Base légale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Adresse e-mail et contenu du message</td>
+                <td>Réponse aux demandes de contact reçues par e-mail</td>
+                <td>Consentement (Art. 6.1.a RGPD)</td>
+              </tr>
+              <tr>
+                <td>Adresse IP (via Google Fonts)</td>
+                <td>Chargement de la police d'écriture depuis les serveurs Google</td>
+                <td>Intérêt légitime (Art. 6.1.f RGPD)</td>
+              </tr>
+              <tr>
+                <td>Logs d'accès (via Vercel)</td>
+                <td>Sécurité, stabilité et débogage de l'hébergement</td>
+                <td>Intérêt légitime (Art. 6.1.f RGPD)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">
+          <strong style="color:var(--text-1);font-weight:500">Aucune donnée n'est vendue, louée, ni partagée à des tiers</strong>
+          à des fins commerciales ou publicitaires.
+        </p>
+      </section>
+
+      <!-- 4. Services tiers -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Services tiers</h2>
+
+        <p><strong style="color:var(--text-1);font-weight:500">Google Fonts</strong></p>
+        <p>
+          Ce site utilise Google Fonts pour afficher la police
+          <em>Bricolage Grotesque</em>. Lors du premier chargement d'une
+          page, votre navigateur effectue une requête vers les serveurs de
+          Google (cdn.googleapis.com), ce qui peut entraîner le traitement
+          de votre adresse IP par Google.
+        </p>
+        <p>
+          Éditeur : Google LLC, 1600 Amphitheatre Parkway, Mountain View,
+          CA 94043, États-Unis. Politique de confidentialité Google :
+          <a href="https://policies.google.com/privacy" target="_blank"
+             rel="noopener noreferrer" class="legal-inline-link">
+            policies.google.com/privacy
+          </a>
+        </p>
+
+        <p style="margin-top:18px"><strong style="color:var(--text-1);font-weight:500">Vercel (hébergeur)</strong></p>
+        <p>
+          L'hébergeur du site, Vercel Inc., peut collecter des journaux
+          d'accès (adresse IP, navigateur, horodatage, pages visitées)
+          à des fins de sécurité et d'analyse de performance.
+          Ces données sont traitées conformément à la politique de
+          confidentialité de Vercel :
+          <a href="https://vercel.com/legal/privacy-policy" target="_blank"
+             rel="noopener noreferrer" class="legal-inline-link">
+            vercel.com/legal/privacy-policy
+          </a>
+        </p>
+      </section>
+
+      <!-- 5. Transferts hors UE -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Transferts hors Union européenne</h2>
+        <p>
+          Vercel Inc. et Google LLC sont des sociétés américaines. Les
+          données traitées par ces prestataires peuvent donc être transférées
+          vers les États-Unis.
+        </p>
+        <p>
+          Ces transferts sont encadrés par des garanties appropriées,
+          notamment les <strong style="color:var(--text-1);font-weight:500">Clauses Contractuelles Types (CCT)</strong>
+          adoptées par la Commission européenne, conformément à
+          l'article 46 du RGPD.
+        </p>
+      </section>
+
+      <!-- 6. Cookies -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Cookies</h2>
+        <p>
+          Ce site <strong style="color:var(--text-1);font-weight:500">n'utilise aucun cookie
+          de mesure d'audience, de ciblage publicitaire ou de traçage
+          comportemental</strong>.
+        </p>
+        <p>
+          Des cookies strictement techniques peuvent être déposés par le
+          navigateur ou par Vercel pour assurer le bon fonctionnement
+          du site (session, sécurité). Ces cookies ne nécessitent pas
+          votre consentement préalable au titre de l'article 82 de la
+          loi Informatique et Libertés.
+        </p>
+      </section>
+
+      <!-- 7. Durée de conservation -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Durée de conservation</h2>
+        <p>Les données sont conservées pour les durées suivantes :</p>
+        <ul>
+          <li>
+            <strong style="color:var(--text-1);font-weight:500">Correspondances e-mail :</strong>
+            durée nécessaire au traitement de la demande, puis supprimées
+            dans un délai maximum d'<strong style="color:var(--text-1);font-weight:500">1 an</strong>.
+          </li>
+          <li>
+            <strong style="color:var(--text-1);font-weight:500">Journaux d'accès Vercel :</strong>
+            conformément à la politique de Vercel (généralement 30 jours).
+          </li>
+          <li>
+            <strong style="color:var(--text-1);font-weight:500">Données Google Fonts :</strong>
+            conformément à la politique de confidentialité de Google.
+          </li>
+        </ul>
+      </section>
+
+      <!-- 8. Vos droits -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Vos droits</h2>
+        <p>
+          Conformément au RGPD, vous disposez des droits suivants
+          concernant vos données personnelles :
+        </p>
+        <div class="rights-grid">
+          <div class="right-item">
+            <div class="right-item-ref">Art. 15</div>
+            <div class="right-item-title">Droit d'accès</div>
+            <div class="right-item-desc">Obtenir une copie des données vous concernant.</div>
+          </div>
+          <div class="right-item">
+            <div class="right-item-ref">Art. 16</div>
+            <div class="right-item-title">Droit de rectification</div>
+            <div class="right-item-desc">Corriger des données inexactes ou incomplètes.</div>
+          </div>
+          <div class="right-item">
+            <div class="right-item-ref">Art. 17</div>
+            <div class="right-item-title">Droit à l'effacement</div>
+            <div class="right-item-desc">Demander la suppression de vos données.</div>
+          </div>
+          <div class="right-item">
+            <div class="right-item-ref">Art. 18</div>
+            <div class="right-item-title">Droit à la limitation</div>
+            <div class="right-item-desc">Restreindre l'utilisation de vos données.</div>
+          </div>
+          <div class="right-item">
+            <div class="right-item-ref">Art. 20</div>
+            <div class="right-item-title">Droit à la portabilité</div>
+            <div class="right-item-desc">Récupérer vos données dans un format structuré.</div>
+          </div>
+          <div class="right-item">
+            <div class="right-item-ref">Art. 21</div>
+            <div class="right-item-title">Droit d'opposition</div>
+            <div class="right-item-desc">Vous opposer au traitement de vos données.</div>
+          </div>
+        </div>
+        <p style="margin-top:18px">
+          Pour exercer ces droits, contactez :
+          <a href="mailto:hugo.bourg.pro@gmail.com" class="legal-inline-link">hugo.bourg.pro@gmail.com</a>.
+          Un accusé de réception vous sera adressé dans les meilleurs
+          délais. Une réponse sera apportée dans un délai maximum
+          d'<strong style="color:var(--text-1);font-weight:500">1 mois</strong>
+          (Art. 12 RGPD).
+        </p>
+      </section>
+
+      <!-- 9. Réclamation CNIL -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Réclamation auprès de la CNIL</h2>
+        <p>
+          Si vous estimez que le traitement de vos données ne respecte
+          pas la réglementation applicable, vous avez le droit d'introduire
+          une réclamation auprès de l'autorité de contrôle compétente :
+        </p>
+        <div class="cnil-block">
+          <div class="cnil-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="cnil-text">
+            <p><strong style="color:var(--text-1);font-weight:600">Commission Nationale de l'Informatique et des Libertés (CNIL)</strong></p>
+            <p>3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07</p>
+            <p>
+              Site web :
+              <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>
+              · Tél. : 01 53 73 22 22
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. Modifications -->
+      <section class="legal-section">
+        <h2 class="legal-section-title">Modifications de la présente politique</h2>
+        <p>
+          Cette politique de confidentialité peut être mise à jour pour
+          refléter des changements dans les pratiques ou la législation
+          applicable. La date de dernière mise à jour est indiquée en haut
+          de cette page. Il vous est recommandé de la consulter
+          périodiquement.
+        </p>
+        <p>
+          Pour toute question relative à la présente politique :
+          <a href="mailto:hugo.bourg.pro@gmail.com" class="legal-inline-link">hugo.bourg.pro@gmail.com</a>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ════ FOOTER (partagé) ════ -->
+  <script src="js/site-footer.js"></script>
+
+  <!-- ════ PAGE LOADER SCRIPT ════ -->
+  <script>
+    (function () {
+      var loader = document.getElementById('page-loader');
+      var bar    = document.getElementById('loader-bar');
+      if (!loader || !bar) return;
+
+      var START = Date.now(), MIN_MS = 400, fired = false;
+      var prog  = 0;
+
+      var tick = setInterval(function () {
+        prog = Math.min(prog + Math.random() * 6, 88);
+        bar.style.width = prog + '%';
+      }, 180);
+
+      var fallback = setTimeout(finish, 6000);
+
+      function finish() {
+        if (fired) return; fired = true;
+        clearInterval(tick); clearTimeout(fallback);
+        bar.style.width = '100%';
+        var delay = Math.max(0, MIN_MS - (Date.now() - START));
+        setTimeout(function () {
+          loader.classList.add('loader-out');
+          loader.addEventListener('transitionend', function () {
+            loader.style.display = 'none';
+          }, { once: true });
+        }, delay);
+      }
+
+      window.addEventListener('load', finish, { once: true });
+    })();
+  </script>
+
+</body>
+</html>
