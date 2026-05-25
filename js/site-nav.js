@@ -183,7 +183,7 @@
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       display: flex; flex-direction: column;
       justify-content: center; align-items: center;
-      padding: 48px 32px;
+      padding: 60px 32px;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease;
     }
@@ -192,15 +192,24 @@
     .mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; }
     .mobile-menu-item {
       width: 100%;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+    /* Séparateur court centré sous chaque item */
+    .mobile-menu-item::after {
+      content: '';
+      display: block;
+      width: clamp(140px, 44%, 200px);
+      height: 1px;
+      background: rgba(255,255,255,0.14);
+      margin: 0 auto;
     }
     .mobile-menu-item > a,
     .mobile-menu-item-trigger {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      font-size: 1.6rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 2.5rem; font-weight: 700;
       color: #eee; text-decoration: none;
-      letter-spacing: -0.04em;
-      padding: 18px 0;
+      letter-spacing: -0.03em;
+      padding: 22px 0 20px;
       background: none; border: none;
       width: 100%; text-align: center; cursor: pointer;
       font-family: inherit;
@@ -210,13 +219,13 @@
     .mobile-menu-item-trigger:hover { color: var(--brand-9, #c9a84c); }
 
     .mobile-submenu {
-      display: none; padding: 4px 0 12px;
+      display: none; padding: 2px 0 14px;
       flex-direction: column; gap: 0; align-items: center;
     }
     .mobile-menu-item.open .mobile-submenu { display: flex; }
     .mobile-submenu a {
       display: flex; align-items: center; gap: 8px;
-      font-size: 1rem; font-weight: 500;
+      font-size: 1.05rem; font-weight: 500;
       color: rgba(255,255,255,0.45); text-decoration: none;
       padding: 9px 0; letter-spacing: -0.01em;
       transition: color 0.2s ease; border: none;
@@ -224,20 +233,20 @@
     }
     .mobile-submenu a:hover { color: var(--brand-9, #c9a84c); }
 
-    .mobile-menu-bottom { margin-top: 40px; align-self: center; }
+    .mobile-menu-bottom { margin-top: 52px; align-self: center; }
     .mobile-menu-bottom a {
       display: inline-flex;
       background: var(--brand-9, #c9a84c); color: #000;
       font-weight: 700; font-family: inherit;
-      padding: 14px 32px; border-radius: 100px;
-      text-decoration: none; font-size: 1rem; letter-spacing: -0.02em;
+      padding: 18px 52px; border-radius: 100px;
+      text-decoration: none; font-size: 1.05rem; letter-spacing: -0.02em;
     }
   `;
   document.head.appendChild(style);
 
   /* ── Injection HTML nav + mobile menu ─────────────────────────────────── */
   var svg12 = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var svg16 = '<svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var svg16 = '<svg width="22" height="22" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var navHTML = `
     <div id="navTopGradient"></div>

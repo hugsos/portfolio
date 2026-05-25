@@ -3,7 +3,7 @@
 ---
 
 [MODIF] 2026-05-25 — js/site-nav.js
-Menu mobile : centrage des éléments (items, sous-menus, bouton). align-items:center sur .mobile-menu et nav.mobile-menu-links, justify-content:center + gap:8px sur les items (chevron inline avec le texte), border-bottom déplacé du >a vers .mobile-menu-item pour des séparateurs pleine largeur propres.
+Menu mobile : adoption du format de référence. Texte agrandi à 2.5rem/700, séparateurs courts centrés (clamp 140-200px) via ::after pseudo-élément, chevron SVG 22px inline gap:6px, bouton "Me contacter" élargi (padding 18px 52px). Identique sur les 8 pages.
 
 ---
 
