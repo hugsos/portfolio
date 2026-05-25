@@ -154,7 +154,7 @@
       .nav-burger { display: flex; }
     }
 
-    /* ─── Reset : annule le "nav { position:fixed }" des pages inline ─── */
+    /* ─── Reset : annule le "nav { position:fixed; align-items:center... }" des pages inline ─── */
     nav.mobile-menu-links {
       position: static;
       top: auto; left: auto; right: auto;
@@ -167,6 +167,13 @@
       opacity: 1;
       visibility: visible;
       transition: none;
+      /* Annule le align-items/justify-content du sélecteur nav{} des pages */
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      width: 100%;
+      gap: 0;
     }
 
     /* ─── Mobile menu ─── */

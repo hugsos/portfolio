@@ -2,6 +2,11 @@
 
 ---
 
+[BUGFIX] 2026-05-25 — js/site-nav.js
+Correction des incohérences visuelles du menu mobile entre les pages. Cause racine : la règle `nav { align-items: center; justify-content: space-between; }` présente dans les styles inline de chaque page s'appliquait aussi à `<nav class="mobile-menu-links">`, centrant les items et empêchant le `width: 100%` de fonctionner (items de la largeur du texte seulement, chevrons collés). Fix : ajout de `align-items: stretch; justify-content: flex-start; display: flex; flex-direction: column; width: 100%; gap: 0;` dans le bloc reset `nav.mobile-menu-links` de site-nav.js (spécificité 0,1,1 > 0,0,1 du `nav {}`). Menu désormais identique sur les 8 pages du site.
+
+---
+
 [AJOUT] 2026-05-25 — mentions-legales.html, confidentialite.html (CRÉÉS)
 Pages légales obligatoires : Mentions légales (LCEN 2004) et Politique de confidentialité (RGPD UE 2016/679). Contenu rédigé selon les textes législatifs applicables : éditeur, directeur de publication, hébergeur Vercel, propriété intellectuelle, cookies, droits RGPD (Art. 15-21), CNIL, transferts hors UE. Design thème sombre cohérent avec le reste du site (fond #111, accent #c9a84c), loading screen gold, nav + footer partagés via site-nav.js / site-footer.js.
 
