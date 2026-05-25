@@ -167,10 +167,10 @@
       opacity: 1;
       visibility: visible;
       transition: none;
-      /* Annule le align-items/justify-content du sélecteur nav{} des pages */
+      /* Alignement centré cohérent sur toutes les pages */
       display: flex;
       flex-direction: column;
-      align-items: stretch;
+      align-items: center;
       justify-content: flex-start;
       width: 100%;
       gap: 0;
@@ -182,23 +182,27 @@
       background: rgba(8,8,8,0.97);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
+      justify-content: center; align-items: center;
       padding: 48px 32px;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease;
     }
     .mobile-menu.open { opacity: 1; pointer-events: all; }
 
-    .mobile-menu-links { display: flex; flex-direction: column; gap: 0; width: 100%; }
+    .mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; }
+    .mobile-menu-item {
+      width: 100%;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
     .mobile-menu-item > a,
     .mobile-menu-item-trigger {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       font-size: 1.6rem; font-weight: 700;
       color: #eee; text-decoration: none;
       letter-spacing: -0.04em;
-      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: none; border-left: none; border-right: none; border-top: none;
-      width: 100%; text-align: left; cursor: pointer;
+      padding: 18px 0;
+      background: none; border: none;
+      width: 100%; text-align: center; cursor: pointer;
       font-family: inherit;
       transition: color 0.2s ease;
     }
@@ -206,16 +210,17 @@
     .mobile-menu-item-trigger:hover { color: var(--brand-9, #c9a84c); }
 
     .mobile-submenu {
-      display: none; padding: 8px 0 8px 16px;
-      flex-direction: column; gap: 0;
+      display: none; padding: 4px 0 12px;
+      flex-direction: column; gap: 0; align-items: center;
     }
     .mobile-menu-item.open .mobile-submenu { display: flex; }
     .mobile-submenu a {
       display: flex; align-items: center; gap: 8px;
       font-size: 1rem; font-weight: 500;
-      color: rgba(255,255,255,0.55); text-decoration: none;
-      padding: 10px 0; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.45); text-decoration: none;
+      padding: 9px 0; letter-spacing: -0.01em;
       transition: color 0.2s ease; border: none;
+      justify-content: center;
     }
     .mobile-submenu a:hover { color: var(--brand-9, #c9a84c); }
 
