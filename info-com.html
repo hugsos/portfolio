@@ -334,6 +334,14 @@
       inset: 0;
       z-index: 0;
       overflow: hidden;
+      /* Fix Chrome mobile "dynamic toolbar" bug :
+         will-change:transform promeut l'élément sur sa propre couche GPU compositor.
+         Le compositor met à jour la couche chaque frame pendant le scroll,
+         sans attendre le repaint du main thread → plus d'espace noir en bas
+         quand la barre URL disparaît lors du scroll. */
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
     #heroVid {
       position: absolute;
@@ -370,7 +378,9 @@
 
     /* ─── Hero Section ─── */
     .hero {
-      min-height: 100vh;
+      min-height: 100vh;    /* fallback navigateurs anciens */
+      min-height: 100svh;   /* svh = "small viewport height" = stable, ne saute pas
+                               quand la barre URL Chrome mobile apparaît/disparaît */
       display: flex;
       flex-direction: column;
       align-items: center;

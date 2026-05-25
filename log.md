@@ -2,6 +2,14 @@
 
 ---
 
+[BUGFIX] 2026-05-25 — info-com.html
+Fix Chrome mobile "dynamic toolbar" bug : espace noir en bas de l'écran lors du scroll (barre URL qui disparaît).
+Cause : le compositor Chrome rendait .video-bg via un tile statique, non mis à jour pendant le scroll momentum.
+Fix 1 : will-change:transform + translateZ(0) sur .video-bg → promeut l'élément sur sa propre couche GPU compositor, mise à jour chaque frame.
+Fix 2 : min-height:100svh sur .hero (svh = stable, ne saute pas avec la barre URL) avec fallback 100vh.
+
+---
+
 [MODIF] 2026-05-25 — js/site-nav.js
 Menu mobile : calage sur la référence. Texte 2rem/700 (réduit de 2.5rem), séparateurs courts centrés via ::after uniquement (border-bottom:none sur .mobile-menu-item pour annuler le doublon des CSS inline), flex:none sur nav.mobile-menu-links pour corriger le centrage vertical (annule le flex:1 des pages). Chevron SVG 22px, bouton padding 17px 48px. Identique sur les 8 pages.
 
