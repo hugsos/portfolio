@@ -194,27 +194,24 @@
     .mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; flex: none; }
     .mobile-menu-item {
       width: 100%;
-      text-align: center;
-      border-bottom: none; /* annule le border-bottom des pages inline */
+      display: flex;
+      flex-direction: column;
+      align-items: center;   /* centre l'enfant <a>/<button> horizontalement */
+      border-bottom: none;   /* annule le border-bottom des pages inline */
     }
-    /* Séparateur court centré sous chaque item — source unique */
-    .mobile-menu-item::after {
-      content: '';
-      display: block;
-      width: clamp(120px, 40%, 180px);
-      height: 1px;
-      background: rgba(255,255,255,0.15);
-      margin: 0 auto;
-    }
+    /* Séparateur adaptatif : border-bottom sur l'élément lui-même (width: auto = largeur du texte) */
     .mobile-menu-item > a,
     .mobile-menu-item-trigger {
       display: flex; align-items: center; justify-content: center; gap: 6px;
       font-size: 1.65rem; font-weight: 700;
       color: #eee; text-decoration: none;
       letter-spacing: -0.03em;
-      padding: 15px 0;
-      background: none; border: none;
-      width: 100%; text-align: center; cursor: pointer;
+      padding: 12px 0 11px;
+      background: none;
+      border-top: none; border-left: none; border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      width: auto;           /* s'adapte à la largeur du contenu */
+      cursor: pointer;
       font-family: inherit;
       transition: color 0.2s ease;
     }
