@@ -209,10 +209,10 @@
     .mobile-menu-item > a,
     .mobile-menu-item-trigger {
       display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 2rem; font-weight: 700;
+      font-size: 1.65rem; font-weight: 700;
       color: #eee; text-decoration: none;
       letter-spacing: -0.03em;
-      padding: 18px 0;
+      padding: 15px 0;
       background: none; border: none;
       width: 100%; text-align: center; cursor: pointer;
       font-family: inherit;
