@@ -3,7 +3,7 @@
 ---
 
 [MODIF] 2026-05-25 — js/site-nav.js
-Menu mobile : adoption du format de référence. Texte agrandi à 2.5rem/700, séparateurs courts centrés (clamp 140-200px) via ::after pseudo-élément, chevron SVG 22px inline gap:6px, bouton "Me contacter" élargi (padding 18px 52px). Identique sur les 8 pages.
+Menu mobile : calage sur la référence. Texte 2rem/700 (réduit de 2.5rem), séparateurs courts centrés via ::after uniquement (border-bottom:none sur .mobile-menu-item pour annuler le doublon des CSS inline), flex:none sur nav.mobile-menu-links pour corriger le centrage vertical (annule le flex:1 des pages). Chevron SVG 22px, bouton padding 17px 48px. Identique sur les 8 pages.
 
 ---
 

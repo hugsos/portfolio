@@ -167,6 +167,8 @@
       opacity: 1;
       visibility: visible;
       transition: none;
+      /* Annule flex:1 des pages inline → permet le centrage vertical */
+      flex: none;
       /* Alignement centré cohérent sur toutes les pages */
       display: flex;
       flex-direction: column;
@@ -189,27 +191,28 @@
     }
     .mobile-menu.open { opacity: 1; pointer-events: all; }
 
-    .mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; }
+    .mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; flex: none; }
     .mobile-menu-item {
       width: 100%;
       text-align: center;
+      border-bottom: none; /* annule le border-bottom des pages inline */
     }
-    /* Séparateur court centré sous chaque item */
+    /* Séparateur court centré sous chaque item — source unique */
     .mobile-menu-item::after {
       content: '';
       display: block;
-      width: clamp(140px, 44%, 200px);
+      width: clamp(120px, 40%, 180px);
       height: 1px;
-      background: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.15);
       margin: 0 auto;
     }
     .mobile-menu-item > a,
     .mobile-menu-item-trigger {
       display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 2.5rem; font-weight: 700;
+      font-size: 2rem; font-weight: 700;
       color: #eee; text-decoration: none;
       letter-spacing: -0.03em;
-      padding: 22px 0 20px;
+      padding: 18px 0;
       background: none; border: none;
       width: 100%; text-align: center; cursor: pointer;
       font-family: inherit;
@@ -219,13 +222,13 @@
     .mobile-menu-item-trigger:hover { color: var(--brand-9, #c9a84c); }
 
     .mobile-submenu {
-      display: none; padding: 2px 0 14px;
+      display: none; padding: 2px 0 12px;
       flex-direction: column; gap: 0; align-items: center;
     }
     .mobile-menu-item.open .mobile-submenu { display: flex; }
     .mobile-submenu a {
       display: flex; align-items: center; gap: 8px;
-      font-size: 1.05rem; font-weight: 500;
+      font-size: 1rem; font-weight: 500;
       color: rgba(255,255,255,0.45); text-decoration: none;
       padding: 9px 0; letter-spacing: -0.01em;
       transition: color 0.2s ease; border: none;
@@ -233,13 +236,13 @@
     }
     .mobile-submenu a:hover { color: var(--brand-9, #c9a84c); }
 
-    .mobile-menu-bottom { margin-top: 52px; align-self: center; }
+    .mobile-menu-bottom { margin-top: 44px; align-self: center; }
     .mobile-menu-bottom a {
       display: inline-flex;
       background: var(--brand-9, #c9a84c); color: #000;
       font-weight: 700; font-family: inherit;
-      padding: 18px 52px; border-radius: 100px;
-      text-decoration: none; font-size: 1.05rem; letter-spacing: -0.02em;
+      padding: 17px 48px; border-radius: 100px;
+      text-decoration: none; font-size: 1rem; letter-spacing: -0.02em;
     }
   `;
   document.head.appendChild(style);
